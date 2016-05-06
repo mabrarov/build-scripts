@@ -10,7 +10,7 @@ rem -------------------------------------
 
 rem -------------------------------------
 call "%VS2010_DIR%\VC\vcvarsall.bat" x86_amd64
-if errorlevel 1 goto exit
+if errorlevel 1 goto error_exit
 rem -------------------------------------
 
 rem -------------------------------------
@@ -27,7 +27,19 @@ rem -------------------------------------
 
 cd /d "%BOOST_ROOT_DIR%"
 "%B2_BIN%" -j2 --toolset=msvc-10.0 address-model=64 debug release link=static runtime-link=static threading=multi install --prefix="%INSTALL_DIR%"
+if errorlevel 1 goto error_exit
+
 "%B2_BIN%" -j2 --toolset=msvc-10.0 address-model=64 debug release link=static runtime-link=shared threading=multi install --prefix="%INSTALL_DIR%"
+if errorlevel 1 goto error_exit
+
 "%B2_BIN%" -j2 --toolset=msvc-10.0 address-model=64 debug release link=shared threading=multi install --prefix="%INSTALL_DIR%"
+if errorlevel 1 goto error_exit
+
+goto exit
+
+:error_exit
+
+echo Failed to build!
+goto exit
 
 :exit
