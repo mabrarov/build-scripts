@@ -26,13 +26,13 @@ echo Install directory       : %INSTALL_DIR%
 rem -------------------------------------
 
 cd /d "%BOOST_ROOT_DIR%"
-"%B2_BIN%" -j2 --toolset=intel-16.0-vc14 address-model=64 debug release link=static runtime-link=static threading=multi install --prefix="%INSTALL_DIR%"
+"%B2_BIN%" -j2 --toolset=intel-16.0-vc14 cxxflags="/Qstd=c++11" address-model=64 debug release link=static runtime-link=static threading=multi install --prefix="%INSTALL_DIR%"
 if errorlevel 1 goto error_exit
 
-"%B2_BIN%" -j2 --toolset=intel-16.0-vc14 address-model=64 debug release link=static runtime-link=shared threading=multi install --prefix="%INSTALL_DIR%"
+"%B2_BIN%" -j2 --toolset=intel-16.0-vc14 cxxflags="/Qstd=c++11" address-model=64 debug release link=static runtime-link=shared threading=multi install --prefix="%INSTALL_DIR%"
 if errorlevel 1 goto error_exit
 
-"%B2_BIN%" -j2 --toolset=intel-16.0-vc14 address-model=64 debug release link=shared threading=multi install --prefix="%INSTALL_DIR%"
+"%B2_BIN%" -j2 --toolset=intel-16.0-vc14 cxxflags="/Qstd=c++11" address-model=64 debug release link=shared threading=multi install --prefix="%INSTALL_DIR%"
 if errorlevel 1 goto error_exit
 
 goto exit
