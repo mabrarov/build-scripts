@@ -8,14 +8,14 @@
 FROM microsoft/windowsservercore:10.0.14393.1198
 
 ENV MSVS_DOWNLOAD_URL=https://aka.ms/vs/15/release/vs_community.exe \
-    MSVS_INSTALL_TMP_DIR=%TMP%\vs_install \
+    MSVS_INSTALL_TMP_DIR=C:\vs_install \
     MSVS_INSTALL_EXECUTABLE=vs_community.exe
 
 LABEL name="Micorsoft Visual C++ 2017" \
     version="0.0.1" \
-    description="Docker image with Micorsoft Visual C++ installed as part of Micorsoft Visual Studio 2017 Community"
+    description="Docker image with Microsoft Visual C++ installed as part of Microsoft Visual Studio 2017 Community"
 
 RUN mkdir "%MSVS_INSTALL_TMP_DIR%" && \
     powershell "Invoke-WebRequest -Uri \"$env:MSVS_DOWNLOAD_URL\" -OutFile \"$env:MSVS_INSTALL_TMP_DIR\$env:MSVS_INSTALL_EXECUTABLE\"" && \
     powershell "Start-Process -FilePath \"$env:MSVS_INSTALL_TMP_DIR\$env:MSVS_INSTALL_EXECUTABLE\" -ArgumentList (\"--locale en-US\", \"--quiet\", \"--norestart\", \"--wait\", \"--nocache\", \"--add Microsoft.VisualStudio.Workload.NativeDesktop\", \"--add Microsoft.VisualStudio.Component.VC.ATLMFC\", \"--includeRecommended\") -Wait" && \
-    rd /q /s "%TMP%" && mkdir "%TMP%"
+    rd /q /s "%MSVS_INSTALL_TMP_DIR%"
