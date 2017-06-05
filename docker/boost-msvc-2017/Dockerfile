@@ -14,8 +14,9 @@ LABEL name="abrarov/boost-msvc-2017" \
     version="0.0.1" \
     description="Builder of Boost C++ Libraries with Microsoft Visual C++ 2017"
 
-ENV BUILD_DIR=C:\\build \
-    SCRIPT_DIR=C:\\app \
+ENV SCRIPT_DIR=C:\\app \
+    DOWNLOAD_DIR=C:\\download \
+    BUILD_DIR=C:\\build \
     TARGET_DIR=C:\\target
 
 ADD ["app", "C:/app/"]

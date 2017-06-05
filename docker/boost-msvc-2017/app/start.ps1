@@ -24,10 +24,14 @@ $boost_version_underscore = "$env:BOOST_VERSION" -replace "\.", '_'
 $env:BOOST_ROOT_DIR = "$env:BUILD_DIR\boost_$boost_version_underscore"
 Write-Host "Assuming root folder for sources is: $env:BOOST_ROOT_DIR"
 
-if (!(Test-Path -Path "$env:BOOST_ROOT_DIR")) {
-  # Boost sources were not mounted
-  $boost_archive_file = "$env:BUILD_DIR\boost.zip"
-  if (!(Test-Path -Path "$boost_archive_file")) {
+if (Test-Path -Path "$env:BOOST_ROOT_DIR") {
+  Write-Host "Found existing folder $env:BOOST_ROOT_DIR, assuming that sources are in place and skipping downloading and unpacking of sources"
+} else {
+  # Boost sources were not mounted or were not deployed yet
+  $boost_archive_file = "$env:DOWNLOAD_DIR\boost_$boost_version_underscore.zip"
+  if (Test-Path -Path "$boost_archive_file") {
+    Write-Host "Found existing file $boost_archive_file, assuming that sources are downloaded and skipping downloading of sources"
+  } else {
     # Download Boost C++ Libraries
     $boost_download_url = "$env:BOOST_RELEASE_URL/$env:BOOST_VERSION/source/boost_$boost_version_underscore.zip"
     Write-Host "Downloading Boost C++ Libraries (source code archive) from: $boost_download_url into: $boost_archive_file"
@@ -111,3 +115,5 @@ foreach ($address_model in $address_models) {
     }
   }
 }
+
+Write-Host "Build completes successfully"
