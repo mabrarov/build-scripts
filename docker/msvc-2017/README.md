@@ -16,5 +16,5 @@ docker run --rm -it abrarov/msvc-2017 cmd
 Get folder where MS Visual Studio 2017 in installed:
 
 ```bash
-docker run --rm abrarov/msvc-2017 "vswhere -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0\) -property installationPath"
+docker run --rm abrarov/msvc-2017 vswhere -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0\) -property installationPath
 ```
