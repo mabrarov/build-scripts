@@ -94,7 +94,7 @@ foreach ($address_model in $address_models) {
   foreach ($boost_linkage in $runtime_linkages) {
     $env:BOOST_LINKAGE = $boost_linkage
     foreach ($runtime_linkage in $runtime_linkages) {
-      if ($runtime_linkage -eq "shared" -and -not ($boost_linkage -eq "shared")) {
+      if ($runtime_linkage -eq "static" -and -not ($boost_linkage -eq "static")) {
         # Nothing to do with this type of configuration - just skip it
         continue
       }

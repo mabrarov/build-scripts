@@ -21,7 +21,8 @@ ENV SCRIPT_DIR=C:\\app \
 
 ADD ["app", "C:/app/"]
 
-RUN mkdir C:\build && \
+RUN mkdir C:\download && \
+    mkdir C:\build && \
     mkdir C:\target
 
 VOLUME ["C:/target"]
