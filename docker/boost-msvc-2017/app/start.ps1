@@ -20,53 +20,72 @@ $env:MSVC_TOOLS_VERSION = [IO.File]::ReadAllLines("$env:MSVC_BUILD_DIR\Microsoft
 $env:MSVC_TOOLS_DIR = "$env:MSVS_INSTALL_DIR\VC\Tools\MSVC\$env:MSVC_TOOLS_VERSION"
 Write-Host "MSVC_TOOLS_DIR: $env:MSVC_TOOLS_DIR"
 
-# Create scripts required by Boost.Build
-$vcvars_bat_src = "$env:SCRIPT_DIR\vcvars32.bat"
-$vcvars_bat_dst = "$env:MSVC_TOOLS_DIR\bin\HostX86\vcvarsall.bat"
-Write-Host "Copying $vcvars_bat_src to $vcvars_bat_dst"
-Copy-Item -Force -Path $vcvars_bat_src -Destination $vcvars_bat_dst
-$vcvars_bat_src = "$env:SCRIPT_DIR\vcvars64.bat"
-$vcvars_bat_dst = "$env:MSVC_TOOLS_DIR\bin\HostX64\vcvarsall.bat"
-Write-Host "Copying $vcvars_bat_src to $vcvars_bat_dst"
-Copy-Item -Force -Path $vcvars_bat_src -Destination $vcvars_bat_dst
-
-# Download and unpack Boost C++ Libraries
 $boost_version_underscore = "$env:BOOST_VERSION" -replace "\.", '_'
-$boost_download_url = "$env:BOOST_RELEASE_URL/$env:BOOST_VERSION/source/boost_$boost_version_underscore.zip"
-
-Write-Host "Downloading Boost C++ Libraries (source code archive) from: $boost_download_url"
-Invoke-WebRequest -Uri "$boost_download_url" -OutFile "$env:TMP\boost.zip"
-
-Write-Host "Extracting source code archive to: $env:BUILD_DIR"
-Expand-Archive "$env:TMP\boost.zip" -DestinationPath "$env:BUILD_DIR"
-
 $env:BOOST_ROOT_DIR = "$env:BUILD_DIR\boost_$boost_version_underscore"
-Write-Host "Extracted source code archive, assuming root folder for sources is: $env:BOOST_ROOT_DIR"
+Write-Host "Assuming root folder for sources is: $env:BOOST_ROOT_DIR"
+
+if (!(Test-Path -Path "$env:BOOST_ROOT_DIR")) {
+  # Boost sources were not mounted
+  $boost_archive_file = "$env:BUILD_DIR\boost.zip"
+  if (!(Test-Path -Path "$boost_archive_file")) {
+    # Download Boost C++ Libraries
+    $boost_download_url = "$env:BOOST_RELEASE_URL/$env:BOOST_VERSION/source/boost_$boost_version_underscore.zip"
+    Write-Host "Downloading Boost C++ Libraries (source code archive) from: $boost_download_url into: $boost_archive_file"
+    Invoke-WebRequest -Uri "$boost_download_url" -OutFile "$boost_archive_file"
+  }
+  # Unpack Boost C++ Libraries
+  Write-Host "Extracting source code archive to: $env:BUILD_DIR"
+  Expand-Archive -Force -Path "$boost_archive_file" -DestinationPath "$env:BUILD_DIR"
+  Write-Host "Extracted source code archive"
+}
 
 $env:B2_BIN = "$env:BOOST_ROOT_DIR\b2.exe"
 $env:B2_TOOLSET = "msvc-15.0"
 
+# Build Boost.Build
 $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
 $env:BOOST_BOOTSTRAP = "$env:BOOST_ROOT_DIR\bootstrap.bat"
-
-# Build Boost.Build
 Set-Location -Path "$env:BOOST_ROOT_DIR"
+Write-Host "Building Boost.Build engine"
 & "$env:SCRIPT_DIR\bootstrap.bat"
 if ($LastExitCode -ne 0) {
   throw "Failed to build Boost.Build"
 }
 
 # Build Boost C++ Libraries
-$msvc_cmd_bootstraps = @("vcvars64.bat", "vcvars32.bat")
 $address_models = @("64", "32")
-$target_dir_suffixes = @("x64", "x86")
 $boost_linkages = @("shared", "static")
 $runtime_linkages = @("shared", "static")
 
-for ($address_model_idx = 0; $address_model_idx -lt 2; $address_model_idx++) {
-  $env:MSVC_CMD_BOOTSTRAP = $msvc_cmd_bootstraps[$address_model_idx]
-  $env:BOOST_ADDRESS_MODEL = $address_models[$address_model_idx]
-  $target_dir_suffix = $target_dir_suffixes[$address_model_idx]
+# Limit build configurations if user asked for that
+if (Test-Path env:BOOST_ADDRESS_MODEL) {
+  $address_models = @("$env:BOOST_ADDRESS_MODEL")
+}
+if (Test-Path env:BOOST_LINKAGE) {
+  $boost_linkages = @("$env:BOOST_LINKAGE")
+}
+if (Test-Path env:BOOST_RUNTIME_LINKAGE) {
+  $runtime_linkages = @("$env:BOOST_RUNTIME_LINKAGE")
+}
+
+foreach ($address_model in $address_models) {
+  $env:BOOST_ADDRESS_MODEL = $address_model
+
+  # Determine parameters dependent on address model
+  switch ($env:BOOST_ADDRESS_MODEL) {
+    "32" {
+      $env:MSVC_CMD_BOOTSTRAP = "vcvars32.bat"
+      $target_dir_suffix = "x86"
+    }
+    "64" {
+      $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
+      $target_dir_suffix = "x64"
+    }
+    default {
+      throw "Unsupported address model: $env:BOOST_ADDRESS_MODEL"
+    }
+  }
+
   $env:BOOST_INSTALL_DIR = "$env:TARGET_DIR\boost-$env:BOOST_VERSION-$target_dir_suffix-vs2017"
   foreach ($boost_linkage in $runtime_linkages) {
     $env:BOOST_LINKAGE = $boost_linkage
