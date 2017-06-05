@@ -9,17 +9,26 @@
 $ErrorActionPreference = "Stop"
 
 # Find location of Visual Studio
-$env:MSVS_INSTALL_DIR = vswhere -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0) -requires Microsoft.VisualStudio.Workload.NativeDesktop -property installationPath
-$env:MSVC_AUXILARY_DIR = "$env:MSVS_INSTALL_DIR/Community/VC/Auxiliary"
-$env:MSVC_BUILD_DIR = "$env:MSVC_AUXILARY_DIR/Build"
+$env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0) -requires Microsoft.VisualStudio.Workload.NativeDesktop -property installationPath
+Write-Host "MSVS_INSTALL_DIR: $env:MSVS_INSTALL_DIR"
+
+$env:MSVC_AUXILARY_DIR = "$env:MSVS_INSTALL_DIR\VC\Auxiliary"
+$env:MSVC_BUILD_DIR = "$env:MSVC_AUXILARY_DIR\Build"
 
 # Find location of VC Tools
-$env:MSVC_TOOLS_VERSION = [IO.File]::ReadAllText("$env:MSVC_BUILD_DIR\Microsoft.VCToolsVersion.default.txt")
-$env:MSVC_TOOLS_DIR = "$env:MSVS_INSTALL_DIR/Community/VC/Tools/MSVC/$env:MSVC_TOOLS_VERSION"
+$env:MSVC_TOOLS_VERSION = [IO.File]::ReadAllLines("$env:MSVC_BUILD_DIR\Microsoft.VCToolsVersion.default.txt")[0].trimend()
+$env:MSVC_TOOLS_DIR = "$env:MSVS_INSTALL_DIR\VC\Tools\MSVC\$env:MSVC_TOOLS_VERSION"
+Write-Host "MSVC_TOOLS_DIR: $env:MSVC_TOOLS_DIR"
 
 # Create scripts required by Boost.Build
-Copy-Item -Force -Path "$env:SCRIPT_DIR\vcvars32.bat" -Destination "$env:MSVC_TOOLS_DIR/bin/HostX86/vcvarsall.bat"
-Copy-Item -Force -Path "$env:SCRIPT_DIR\vcvars64.bat" -Destination "$env:MSVC_TOOLS_DIR/bin/HostX64/vcvarsall.bat"
+$vcvars_bat_src = "$env:SCRIPT_DIR\vcvars32.bat"
+$vcvars_bat_dst = "$env:MSVC_TOOLS_DIR\bin\HostX86\vcvarsall.bat"
+Write-Host "Copying $vcvars_bat_src to $vcvars_bat_dst"
+Copy-Item -Force -Path $vcvars_bat_src -Destination $vcvars_bat_dst
+$vcvars_bat_src = "$env:SCRIPT_DIR\vcvars64.bat"
+$vcvars_bat_dst = "$env:MSVC_TOOLS_DIR\bin\HostX64\vcvarsall.bat"
+Write-Host "Copying $vcvars_bat_src to $vcvars_bat_dst"
+Copy-Item -Force -Path $vcvars_bat_src -Destination $vcvars_bat_dst
 
 # Download and unpack Boost C++ Libraries
 $boost_version_underscore = "$env:BOOST_VERSION" -replace "\.", '_'
