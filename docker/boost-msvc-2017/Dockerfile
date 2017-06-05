@@ -5,13 +5,13 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-FROM abrarov/msvc-2017:0.0.1
+FROM abrarov/msvc-2017:1.0.0
 
 ENV BOOST_VERSION=1.64.0 \
     BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release
 
 LABEL name="abrarov/boost-msvc-2017" \
-    version="0.0.1" \
+    version="1.0.0" \
     description="Builder of Boost C++ Libraries with Microsoft Visual C++ 2017"
 
 ENV SCRIPT_DIR=C:\\app \
