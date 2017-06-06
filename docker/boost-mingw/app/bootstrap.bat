@@ -10,6 +10,6 @@ REM
 set PATH=%PATH%;%MINGW_HOME%\bin
 if errorlevel 1 goto exit
 
-call "%BOOST_BOOTSTRAP%"
+call "%BOOST_BOOTSTRAP%" gcc
 
 :exit
