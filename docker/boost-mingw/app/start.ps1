@@ -91,17 +91,24 @@ foreach ($address_model in $address_models) {
         # Nothing to do with this type of configuration - just skip it
         continue
       }
+      if ($boost_linkage -eq "shared") {
+        # Skip Boost.Serialization when building shared libraries because of https://svn.boost.org/trac/boost/ticket/12450 bug
+        $b2_additional_options = "--without-python --without-mpi --without-serialization".Split(" ")
+      } else {
+        $b2_additional_options = "--without-python --without-mpi".Split(" ")
+      }
       $env:BOOST_RUNTIME_LINKAGE = $runtime_linkage
       Set-Location -Path "$env:BOOST_ROOT_DIR"
       Write-Host "Building Boost C++ Libraries with theses parameters:"
-      Write-Host "MINGW_HOME           : $env:MINGW_HOME"
-      Write-Host "B2_BIN               : $env:B2_BIN"
-      Write-Host "B2_TOOLSET           : $env:B2_TOOLSET"
-      Write-Host "BOOST_INSTALL_DIR    : $env:BOOST_INSTALL_DIR"
-      Write-Host "BOOST_ADDRESS_MODEL  : $env:BOOST_ADDRESS_MODEL"
-      Write-Host "BOOST_LINKAGE        : $env:BOOST_LINKAGE"
-      Write-Host "BOOST_RUNTIME_LINKAGE: $env:BOOST_RUNTIME_LINKAGE"
-      & "$env:SCRIPT_DIR\build.bat"
+      Write-Host "MINGW_HOME              : $env:MINGW_HOME"
+      Write-Host "B2_BIN                  : $env:B2_BIN"
+      Write-Host "B2_TOOLSET              : $env:B2_TOOLSET"
+      Write-Host "BOOST_INSTALL_DIR       : $env:BOOST_INSTALL_DIR"
+      Write-Host "BOOST_ADDRESS_MODEL     : $env:BOOST_ADDRESS_MODEL"
+      Write-Host "BOOST_LINKAGE           : $env:BOOST_LINKAGE"
+      Write-Host "BOOST_RUNTIME_LINKAGE   : $env:BOOST_RUNTIME_LINKAGE"
+      Write-Host "Additional build options: $b2_additional_options"
+      & "$env:SCRIPT_DIR\build.bat" $b2_additional_options
       if ($LastExitCode -ne 0) {
           throw "Failed to build Boost with BOOST_ADDRESS_MODEL = $env:BOOST_ADDRESS_MODEL, BOOST_LINKAGE = $env:BOOST_LINKAGE, BOOST_RUNTIME_LINKAGE = $env:BOOST_RUNTIME_LINKAGE"
       }
