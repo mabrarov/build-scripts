@@ -24,7 +24,7 @@ ENV MINGW_VERSION=7.1.0 \
     SEVEN_ZIP_VERSION=1604 \
     SEVEN_ZIP_DOWNLOAD_URL=http://www.7-zip.org/a
 
-LABEL name="abrarov/mingw-w64" \
+LABEL name="abrarov/mingw" \
     version="1.0.0" \
     description="MinGW-w64 from MinGW-builds"
 
