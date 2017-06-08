@@ -84,7 +84,7 @@ foreach ($address_model in $address_models) {
 
   $mingw_version_suffix = "$env:MINGW_VERSION" -replace "\.", ''
   $env:BOOST_INSTALL_DIR = "$env:TARGET_DIR\boost-$env:BOOST_VERSION-$target_dir_suffix-mingw$mingw_version_suffix"
-  foreach ($boost_linkage in $runtime_linkages) {
+  foreach ($boost_linkage in $boost_linkages) {
     $env:BOOST_LINKAGE = $boost_linkage
     foreach ($runtime_linkage in $runtime_linkages) {
       if ($runtime_linkage -eq "static" -and -not ($boost_linkage -eq "static")) {

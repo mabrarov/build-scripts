@@ -1,6 +1,6 @@
 # Builder of Boost C++ Libraries with MinGW
 
-This docker image can be used for building of Boost C++ Libraries with help of MinGW.
+This docker image can be used for building of [Boost C++ Libraries](http://www.boost.org/) with help of MinGW.
 
 ## Examples of usage
 

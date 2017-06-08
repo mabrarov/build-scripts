@@ -91,7 +91,7 @@ foreach ($address_model in $address_models) {
   }
 
   $env:BOOST_INSTALL_DIR = "$env:TARGET_DIR\boost-$env:BOOST_VERSION-$target_dir_suffix-vs2017"
-  foreach ($boost_linkage in $runtime_linkages) {
+  foreach ($boost_linkage in $boost_linkages) {
     $env:BOOST_LINKAGE = $boost_linkage
     foreach ($runtime_linkage in $runtime_linkages) {
       if ($runtime_linkage -eq "static" -and -not ($boost_linkage -eq "static")) {
