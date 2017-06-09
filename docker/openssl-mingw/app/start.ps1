@@ -42,10 +42,12 @@ foreach ($address_model in $address_models) {
   switch ($env:OPENSSL_ADDRESS_MODEL) {
     "32" {
       $env:MINGW_HOME = "$env:MINGW32_HOME"
+      $env:OPENSSL_TOOLSET = "mingw"
       $address_model_target_dir_suffix = "x86"
     }
     "64" {
       $env:MINGW_HOME = "$env:MINGW64_HOME"
+      $env:OPENSSL_TOOLSET = "mingw64"
       $address_model_target_dir_suffix = "x64"
     }
     default {
@@ -55,7 +57,7 @@ foreach ($address_model in $address_models) {
 
   $openssl_downloaded = "False"
   $mingw_version_suffix = "$env:MINGW_VERSION" -replace "\.", ''
-  $env:OPENSSL_INSTALL_DIR = "$env:TARGET_DIR\openssl-$env:OPENSSL_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix"
+
   foreach ($openssl_linkage in $openssl_linkages) {
     $env:OPENSSL_LINKAGE = $openssl_linkage
     foreach ($runtime_linkage in $runtime_linkages) {
@@ -83,7 +85,7 @@ foreach ($address_model in $address_models) {
           $openssl_downloaded = "True"
         }
 
-        New-Item -path "$env:OPENSSL_BUILD_DIR" -type directory
+        New-Item -path "$env:OPENSSL_BUILD_DIR" -type directory | out-null
 
         # Unpack OpenSSL
         Write-Host "Extracting source code archive from $openssl_archive_file to $env:TMP"
@@ -99,10 +101,13 @@ foreach ($address_model in $address_models) {
         Write-Host "Extracted source code archive"
       }
 
+      $env:OPENSSL_INSTALL_DIR = "$env:TARGET_DIR\openssl-$env:OPENSSL_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:OPENSSL_LINKAGE-$env:OPENSSL_RUNTIME_LINKAGE"
+
       Set-Location -Path "$env:OPENSSL_HOME"
       Write-Host "Building OpenSSL with theses parameters:"
       Write-Host "MINGW_HOME             : $env:MINGW_HOME"
       Write-Host "OPENSSL_INSTALL_DIR    : $env:OPENSSL_INSTALL_DIR"
+      Write-Host "OPENSSL_TOOLSET        : $env:OPENSSL_TOOLSET"
       Write-Host "OPENSSL_ADDRESS_MODEL  : $env:OPENSSL_ADDRESS_MODEL"
       Write-Host "OPENSSL_LINKAGE        : $env:OPENSSL_LINKAGE"
       Write-Host "OPENSSL_RUNTIME_LINKAGE: $env:OPENSSL_RUNTIME_LINKAGE"
