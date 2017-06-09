@@ -35,6 +35,8 @@ if (Test-Path env:OPENSSL_RUNTIME_LINKAGE) {
   $runtime_linkages = @("$env:OPENSSL_RUNTIME_LINKAGE")
 }
 
+$openssl_downloaded = "False"
+
 foreach ($address_model in $address_models) {
   $env:OPENSSL_ADDRESS_MODEL = $address_model
 
@@ -55,7 +57,6 @@ foreach ($address_model in $address_models) {
     }
   }
 
-  $openssl_downloaded = "False"
   $mingw_version_suffix = "$env:MINGW_VERSION" -replace "\.", ''
 
   foreach ($openssl_linkage in $openssl_linkages) {
@@ -65,9 +66,13 @@ foreach ($address_model in $address_models) {
         # Nothing to do with this type of configuration - just skip it
         continue
       }
+      if ($openssl_linkage -eq "static" -and -not ($runtime_linkage -eq "static")) {
+        # Nothing to do with this type of configuration - just skip it
+        continue
+      }
       $env:OPENSSL_RUNTIME_LINKAGE = $runtime_linkage
 
-      $env:OPENSSL_BUILD_DIR="$env:BUILD_DIR\openssl-$env:OPENSSL_VERSION\$address_model\$env:OPENSSL_LINKAGE\$env:OPENSSL_RUNTIME_LINKAGE"
+      $env:OPENSSL_BUILD_DIR="$env:BUILD_DIR\openssl-$env:OPENSSL_VERSION\$address_model\$env:OPENSSL_LINKAGE"
       $env:OPENSSL_HOME="$env:OPENSSL_BUILD_DIR\openssl-$env:OPENSSL_VERSION"
       Write-Host "Assuming root folder for sources is: $env:OPENSSL_HOME"
 
@@ -85,23 +90,28 @@ foreach ($address_model in $address_models) {
           $openssl_downloaded = "True"
         }
 
-        New-Item -path "$env:OPENSSL_BUILD_DIR" -type directory | out-null
+        if (-not (Test-Path -Path "$env:OPENSSL_BUILD_DIR")) {
+          New-Item -path "$env:OPENSSL_BUILD_DIR" -type directory | out-null
+        }
 
         # Unpack OpenSSL
-        Write-Host "Extracting source code archive from $openssl_archive_file to $env:TMP"
-        & "$env:ProgramFiles\7-Zip\7z.exe" x "$openssl_archive_file" -o"$env:TMP" -aoa -y | out-null
-        if ($LastExitCode -ne 0) {
-          throw "Failed to extract OpenSSL from $openssl_archive_file to $env:OPENSSL_BUILD_DIR"
+        $openssl_tar_archive_file_path = "$env:TMP\$openssl_tar_archive_file"
+        if (-not (Test-Path -Path "$openssl_tar_archive_file_path")) {
+          Write-Host "Extracting source code archive from $openssl_archive_file to $env:TMP"
+          & "$env:ProgramFiles\7-Zip\7z.exe" x "$openssl_archive_file" -o"$env:TMP" -aoa -y | out-null
+          if ($LastExitCode -ne 0) {
+            throw "Failed to extract OpenSSL from $openssl_archive_file to $env:TMP"
+          }
         }
-        Write-Host "Extracting source code archive from $env:TMP\$openssl_tar_archive_file to $env:OPENSSL_BUILD_DIR"
-        & "$env:ProgramFiles\7-Zip\7z.exe" x "$env:TMP\$openssl_tar_archive_file" -o"$env:OPENSSL_BUILD_DIR" -aoa -y | out-null
+        Write-Host "Extracting source code archive from $openssl_tar_archive_file_path to $env:OPENSSL_BUILD_DIR"
+        & "$env:ProgramFiles\7-Zip\7z.exe" x "$openssl_tar_archive_file_path" -o"$env:OPENSSL_BUILD_DIR" -aoa -y | out-null
         if ($LastExitCode -ne 0) {
           throw "Failed to extract OpenSSL from $openssl_archive_file to $env:OPENSSL_BUILD_DIR"
         }
         Write-Host "Extracted source code archive"
       }
 
-      $env:OPENSSL_INSTALL_DIR = "$env:TARGET_DIR\openssl-$env:OPENSSL_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:OPENSSL_LINKAGE-$env:OPENSSL_RUNTIME_LINKAGE"
+      $env:OPENSSL_INSTALL_DIR = "$env:TARGET_DIR\openssl-$env:OPENSSL_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:OPENSSL_LINKAGE"
 
       Set-Location -Path "$env:OPENSSL_HOME"
       Write-Host "Building OpenSSL with theses parameters:"
