@@ -87,12 +87,12 @@ foreach ($address_model in $address_models) {
 
         # Unpack OpenSSL
         Write-Host "Extracting source code archive from $openssl_archive_file to $env:TMP"
-        & "$env:ProgramFiles\7-Zip\7z.exe" x "$openssl_archive_file" -o"$env:TMP" -aoa -y
+        & "$env:ProgramFiles\7-Zip\7z.exe" x "$openssl_archive_file" -o"$env:TMP" -aoa -y | out-null
         if ($LastExitCode -ne 0) {
           throw "Failed to extract OpenSSL from $openssl_archive_file to $env:OPENSSL_BUILD_DIR"
         }
         Write-Host "Extracting source code archive from $env:TMP\$openssl_tar_archive_file to $env:OPENSSL_BUILD_DIR"
-        & "$env:ProgramFiles\7-Zip\7z.exe" x "$env:TMP\$openssl_tar_archive_file" -o"$env:OPENSSL_BUILD_DIR" -aoa -y
+        & "$env:ProgramFiles\7-Zip\7z.exe" x "$env:TMP\$openssl_tar_archive_file" -o"$env:OPENSSL_BUILD_DIR" -aoa -y | out-null
         if ($LastExitCode -ne 0) {
           throw "Failed to extract OpenSSL from $openssl_archive_file to $env:OPENSSL_BUILD_DIR"
         }
