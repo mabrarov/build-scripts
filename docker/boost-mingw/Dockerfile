@@ -5,13 +5,13 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-FROM abrarov/mingw:1.0.0
+FROM abrarov/mingw:1.0.1
 
 ENV BOOST_VERSION=1.64.0 \
     BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release
 
 LABEL name="abrarov/boost-mingw" \
-    version="1.0.0" \
+    version="1.0.1" \
     description="Builder of Boost C++ Libraries with MinGW"
 
 ENV SCRIPT_DIR=C:\\app \

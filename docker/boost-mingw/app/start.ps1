@@ -27,7 +27,7 @@ if (Test-Path -Path "$env:BOOST_ROOT_DIR") {
     # Download Boost C++ Libraries
     $boost_download_url = "$env:BOOST_RELEASE_URL/$env:BOOST_VERSION/source/boost_$boost_version_underscore.zip"
     Write-Host "Downloading Boost C++ Libraries (source code archive) from: $boost_download_url into: $boost_archive_file"
-    Invoke-WebRequest -Uri "$boost_download_url" -OutFile "$boost_archive_file"
+    (New-Object System.Net.WebClient).DownloadFile("$boost_download_url", "$boost_archive_file")
   }
   # Unpack Boost C++ Libraries
   Write-Host "Extracting source code archive to: $env:BUILD_DIR"
