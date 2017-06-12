@@ -7,14 +7,13 @@
 
 FROM abrarov/msvc-2017:1.0.1
 
-ENV BOOST_VERSION=1.64.0 \
-    BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release
-
 LABEL name="abrarov/boost-msvc-2017" \
     version="1.0.1" \
     description="Builder of Boost C++ Libraries with Microsoft Visual C++ 2017"
 
-ENV SCRIPT_DIR=C:\\app \
+ENV BOOST_VERSION=1.64.0 \
+    BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
+    SCRIPT_DIR=C:\\app \
     DOWNLOAD_DIR=C:\\download \
     BUILD_DIR=C:\\build \
     TARGET_DIR=C:\\target

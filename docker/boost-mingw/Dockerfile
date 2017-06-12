@@ -7,14 +7,13 @@
 
 FROM abrarov/mingw:1.0.1
 
-ENV BOOST_VERSION=1.64.0 \
-    BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release
-
 LABEL name="abrarov/boost-mingw" \
     version="1.0.1" \
     description="Builder of Boost C++ Libraries with MinGW"
 
-ENV SCRIPT_DIR=C:\\app \
+ENV BOOST_VERSION=1.64.0 \
+    BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
+    SCRIPT_DIR=C:\\app \
     DOWNLOAD_DIR=C:\\download \
     BUILD_DIR=C:\\build \
     TARGET_DIR=C:\\target
