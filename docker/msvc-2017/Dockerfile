@@ -8,7 +8,6 @@
 FROM microsoft/windowsservercore:10.0.14393.1198
 
 ENV MSVS_INSTALL_URL=https://aka.ms/vs/15/release/vs_community.exe \
-    MSVS_INSTALL_TMP_DIR=C:\vs_install \
     MSVS_INSTALL_EXECUTABLE=vs_community.exe \
     VSWHERE_RELEASE_URL=https://github.com/Microsoft/vswhere/releases/download \
     VSWHERE_VERSION=1.0.62 \
@@ -18,9 +17,7 @@ LABEL name="abrarov/msvc-2017" \
     version="1.0.1" \
     description="Microsoft Visual C++ as part of Microsoft Visual Studio 2017 Community"
 
-RUN mkdir "%MSVS_INSTALL_TMP_DIR%" && \
-    powershell "Invoke-WebRequest -Uri \"$env:MSVS_INSTALL_URL\" -OutFile \"$env:MSVS_INSTALL_TMP_DIR\$env:MSVS_INSTALL_EXECUTABLE\"" && \
-    powershell "Start-Process -FilePath \"$env:MSVS_INSTALL_TMP_DIR\$env:MSVS_INSTALL_EXECUTABLE\" -ArgumentList (\"--locale en-US\", \"--quiet\", \"--norestart\", \"--wait\", \"--nocache\", \"--add Microsoft.VisualStudio.Workload.NativeDesktop\", \"--add Microsoft.VisualStudio.Component.VC.ATLMFC\", \"--includeRecommended\") -Wait" && \
-    rd /q /s "%MSVS_INSTALL_TMP_DIR%" && \
-    powershell "Remove-Item \"$env:TMP\*\" -Recurse -Force" && \
-    powershell "Invoke-WebRequest -Uri \"$env:VSWHERE_RELEASE_URL/$env:VSWHERE_VERSION/$env:VSWHERE_EXECTUABLE\" -OutFile \"$env:SystemRoot\$env:VSWHERE_EXECTUABLE\""
+RUN powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:MSVS_INSTALL_URL\", \"$env:TMP\$env:MSVS_INSTALL_EXECUTABLE\")" && \
+    powershell "Start-Process -FilePath \"$env:TMP\$env:MSVS_INSTALL_EXECUTABLE\" -ArgumentList (\"--locale en-US\", \"--quiet\", \"--norestart\", \"--wait\", \"--nocache\", \"--add Microsoft.VisualStudio.Workload.NativeDesktop\", \"--add Microsoft.VisualStudio.Component.VC.ATLMFC\", \"--includeRecommended\") -Wait" && \
+    powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:VSWHERE_RELEASE_URL/$env:VSWHERE_VERSION/$env:VSWHERE_EXECTUABLE\", \"$env:SystemRoot\$env:VSWHERE_EXECTUABLE\")"  && \
+    powershell "Remove-Item -Path \"$env:TMP\*\" -Recurse -Force"
