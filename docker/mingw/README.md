@@ -10,11 +10,11 @@ Docker image with MinGW. Contains:
 Get version of MinGW x64 compiler:
 
 ```bash
-docker run --rm abrarov/mingw "/C:\Program Files\mingw64\bin\g++" --version
+docker run --rm abrarov/mingw "/C:\mingw64\bin\g++" --version
 ```
 
 Get version of MinGW x86 compiler:
 
 ```bash
-docker run --rm abrarov/mingw "/C:\Program Files (x86)\mingw32\bin\g++" --version
+docker run --rm abrarov/mingw "/C:\mingw32\bin\g++" --version
 ```

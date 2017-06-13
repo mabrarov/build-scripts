@@ -9,8 +9,8 @@
 $ErrorActionPreference = "Stop"
 
 # Location of MinGW
-$env:MINGW64_HOME = "$env:ProgramFiles\mingw64"
-$env:MINGW32_HOME = "${env:ProgramFiles(x86)}\mingw32"
+$env:MINGW64_HOME = "C:\mingw64"
+$env:MINGW32_HOME = "C:\mingw32"
 
 # Location of MSYS2
 $env:MSYS_HOME = "C:\msys64"

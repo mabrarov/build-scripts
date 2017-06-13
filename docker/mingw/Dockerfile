@@ -27,8 +27,8 @@ LABEL name="abrarov/mingw" \
 RUN powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:SEVEN_ZIP_DOWNLOAD_URL/7z$env:SEVEN_ZIP_VERSION-x64.msi\", \"$env:TMP\7z$env:SEVEN_ZIP_VERSION-x64.msi\")" && \
     powershell "Start-Process -FilePath msiexec -ArgumentList (\"/package\", \"$env:TMP\7z$env:SEVEN_ZIP_VERSION-x64.msi\", \"/quiet\", \"/qn\", \"/norestart\") -Wait" && \
     powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:MINGW_RELEASE_URL%2F$env:MINGW_64_TARGET%2F$env:MINGW_VERSION-rev$env:MINGW_REVISON%2Fthreads-$env:MINGW_64_THREADS%2F$env:MINGW_64_EXCEPTIONS%2F$env:MINGW_64_TARGET-$env:MINGW_VERSION-release-$env:MINGW_64_THREADS-$env:MINGW_64_EXCEPTIONS-rt_v$env:MINGW_RT_FILE_SUFFIX-rev$env:MINGW_REVISON.7z\", \"$env:TMP\mingw.7z\")" && \
-    "%ProgramFiles%\7-Zip\7z.exe" x "%TMP%\mingw.7z" -o"%ProgramFiles%" -aoa -y && \
+    "%ProgramFiles%\7-Zip\7z.exe" x "%TMP%\mingw.7z" -o"C:\" -aoa -y && \
     powershell "Remove-Item -Path \"$env:TMP\*\" -Recurse -Force"  && \
     powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:MINGW_RELEASE_URL%2F$env:MINGW_32_TARGET%2F$env:MINGW_VERSION-rev$env:MINGW_REVISON%2Fthreads-$env:MINGW_32_THREADS%2F$env:MINGW_32_EXCEPTIONS%2F$env:MINGW_32_TARGET-$env:MINGW_VERSION-release-$env:MINGW_32_THREADS-$env:MINGW_32_EXCEPTIONS-rt_v$env:MINGW_RT_FILE_SUFFIX-rev$env:MINGW_REVISON.7z\", \"$env:TMP\mingw.7z\")" && \
-    "%ProgramFiles%\7-Zip\7z.exe" x "%TMP%\mingw.7z" -o"%ProgramFiles(x86)%" -aoa -y && \
+    "%ProgramFiles%\7-Zip\7z.exe" x "%TMP%\mingw.7z" -o"C:\" -aoa -y && \
     powershell "Remove-Item -Path \"$env:TMP\*\" -Recurse -Force"
