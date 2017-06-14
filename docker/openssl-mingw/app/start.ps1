@@ -119,11 +119,15 @@ foreach ($address_model in $address_models) {
         $env:OPENSSL_INSTALL_MSYS_DIR = "$env:OPENSSL_INSTALL_DIR" -replace "\\", "/"
         $env:OPENSSL_INSTALL_MSYS_DIR = "$env:OPENSSL_INSTALL_MSYS_DIR" -replace "^(C):", "/c"
 
+        $env:OPENSSL_MSYS_HOME = "$env:OPENSSL_HOME" -replace "\\", "/"
+        $env:OPENSSL_MSYS_HOME = "$env:OPENSSL_MSYS_HOME" -replace "^(C):", "/c"
+
         Set-Location -Path "$env:OPENSSL_HOME"
         Write-Host "Building OpenSSL with theses parameters:"
         Write-Host "MINGW_HOME              : $env:MINGW_HOME"
         Write-Host "MSYS_HOME               : $env:MSYS_HOME"
         Write-Host "OPENSSL_HOME            : $env:OPENSSL_HOME"
+        Write-Host "OPENSSL_MSYS_HOME       : $env:OPENSSL_MSYS_HOME"
         Write-Host "OPENSSL_INSTALL_DIR     : $env:OPENSSL_INSTALL_DIR"
         Write-Host "OPENSSL_INSTALL_MSYS_DIR: $env:OPENSSL_INSTALL_MSYS_DIR"
         Write-Host "OPENSSL_TOOLSET         : $env:OPENSSL_TOOLSET"
