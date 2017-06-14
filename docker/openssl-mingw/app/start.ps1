@@ -116,20 +116,21 @@ foreach ($address_model in $address_models) {
         }
 
         $env:OPENSSL_INSTALL_DIR = "$env:TARGET_DIR\openssl-$env:OPENSSL_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:OPENSSL_LINKAGE"
-        Set-Location -Path "$env:OPENSSL_HOME"
-        Write-Host "Building OpenSSL with theses parameters:"
-        Write-Host "MINGW_HOME             : $env:MINGW_HOME"
-        Write-Host "MSYS_HOME              : $env:MSYS_HOME"
-        Write-Host "OPENSSL_HOME           : $env:OPENSSL_HOME"
-        Write-Host "OPENSSL_INSTALL_DIR    : $env:OPENSSL_INSTALL_DIR"
-        Write-Host "OPENSSL_TOOLSET        : $env:OPENSSL_TOOLSET"
-        Write-Host "OPENSSL_ADDRESS_MODEL  : $env:OPENSSL_ADDRESS_MODEL"
-        Write-Host "OPENSSL_LINKAGE        : $env:OPENSSL_LINKAGE"
-        Write-Host "OPENSSL_RUNTIME_LINKAGE: $env:OPENSSL_RUNTIME_LINKAGE"
-        Write-Host "OPENSSL_BUILD_TYPE     : $env:OPENSSL_BUILD_TYPE"
-
         $env:OPENSSL_INSTALL_MSYS_DIR = "$env:OPENSSL_INSTALL_DIR" -replace "\\", "/"
         $env:OPENSSL_INSTALL_MSYS_DIR = "$env:OPENSSL_INSTALL_MSYS_DIR" -replace "^(C):", "/c"
+
+        Set-Location -Path "$env:OPENSSL_HOME"
+        Write-Host "Building OpenSSL with theses parameters:"
+        Write-Host "MINGW_HOME              : $env:MINGW_HOME"
+        Write-Host "MSYS_HOME               : $env:MSYS_HOME"
+        Write-Host "OPENSSL_HOME            : $env:OPENSSL_HOME"
+        Write-Host "OPENSSL_INSTALL_DIR     : $env:OPENSSL_INSTALL_DIR"
+        Write-Host "OPENSSL_INSTALL_MSYS_DIR: $env:OPENSSL_INSTALL_MSYS_DIR"
+        Write-Host "OPENSSL_TOOLSET         : $env:OPENSSL_TOOLSET"
+        Write-Host "OPENSSL_ADDRESS_MODEL   : $env:OPENSSL_ADDRESS_MODEL"
+        Write-Host "OPENSSL_LINKAGE         : $env:OPENSSL_LINKAGE"
+        Write-Host "OPENSSL_RUNTIME_LINKAGE : $env:OPENSSL_RUNTIME_LINKAGE"
+        Write-Host "OPENSSL_BUILD_TYPE      : $env:OPENSSL_BUILD_TYPE"
 
         & "$env:SCRIPT_DIR\build.bat"
         if ($LastExitCode -ne 0) {
