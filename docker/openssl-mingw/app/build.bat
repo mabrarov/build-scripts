@@ -10,18 +10,10 @@ rem
 set PATH=%MINGW_HOME%\bin;%PATH%
 if errorlevel 1 goto exit
 
-set BUILD_TYPE_OPTIONS=
-if "%OPENSSL_BUILD_TYPE%" == "debug" (
-  set BUILD_TYPE_OPTIONS=-d
-) else (
-  set BUILD_TYPE_OPTIONS=
-)
-if errorlevel 1 goto exit
-
 if "%OPENSSL_LINKAGE%" == "shared" (
-  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% no-asm shared %BUILD_TYPE_OPTIONS%
+  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% no-asm shared
 ) else (
-  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% enable-static-engine no-asm no-shared %BUILD_TYPE_OPTIONS%
+  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% enable-static-engine no-asm no-shared
 )
 if errorlevel 1 goto exit
 
