@@ -81,6 +81,20 @@ foreach ($address_model in $address_models) {
 
       foreach ($build_type in $build_types) {
         $env:OPENSSL_BUILD_TYPE = "$build_type"
+
+        $build_type_target_dir_suffix = ""
+        switch ($env:OPENSSL_BUILD_TYPE) {
+          "debug" {
+            $build_type_target_dir_suffix = "-debug"
+          }
+          "release" {
+            $build_type_target_dir_suffix = ""
+          }
+          default {
+            throw "Unsupported build type: $env:OPENSSL_BUILD_TYPE"
+          }
+        }
+
         $env:OPENSSL_BUILD_DIR="$env:BUILD_DIR\openssl-$env:OPENSSL_VERSION\$address_model\$env:OPENSSL_LINKAGE\$env:OPENSSL_BUILD_TYPE"
         $env:OPENSSL_HOME="$env:OPENSSL_BUILD_DIR\openssl-$env:OPENSSL_VERSION"
         Write-Host "Assuming root folder for sources is: $env:OPENSSL_HOME"
@@ -115,9 +129,7 @@ foreach ($address_model in $address_models) {
           Write-Host "Extracted source code archive"
         }
 
-
-        $env:OPENSSL_INSTALL_DIR = "$env:TARGET_DIR\openssl-$env:OPENSSL_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:OPENSSL_LINKAGE"
-
+        $env:OPENSSL_INSTALL_DIR = "$env:TARGET_DIR\openssl-$env:OPENSSL_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:OPENSSL_LINKAGE$build_type_target_dir_suffix"
         $env:OPENSSL_STAGE_DIR = "$env:OPENSSL_HOME\dist"
         $env:OPENSSL_STAGE_MSYS_DIR = "$env:OPENSSL_STAGE_DIR" -replace "\\", "/"
         $env:OPENSSL_STAGE_MSYS_DIR = "$env:OPENSSL_STAGE_MSYS_DIR" -replace "^(C):", "/c"
