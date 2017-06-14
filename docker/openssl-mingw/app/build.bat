@@ -11,9 +11,9 @@ set PATH=%MINGW_HOME%\bin;%PATH%
 if errorlevel 1 goto exit
 
 if "%OPENSSL_LINKAGE%" == "shared" (
-  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% no-asm shared
+  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% shared
 ) else (
-  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% enable-static-engine no-asm no-shared
+  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% enable-static-engine no-shared
 )
 if errorlevel 1 goto exit
 
