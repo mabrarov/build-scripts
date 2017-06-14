@@ -19,12 +19,18 @@ if "%OPENSSL_BUILD_TYPE%" == "debug" (
 if errorlevel 1 goto exit
 
 if "%OPENSSL_LINKAGE%" == "shared" (
-  bash --login -c "cd %OPENSSL_MSYS_HOME% && perl Configure --prefix=%OPENSSL_INSTALL_MSYS_DIR% %OPENSSL_TOOLSET% %BUILD_TYPE% no-asm shared"
+  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% %BUILD_TYPE% no-asm shared
 ) else (
-  bash --login -c "cd %OPENSSL_MSYS_HOME% && perl Configure --prefix=%OPENSSL_INSTALL_MSYS_DIR% %OPENSSL_TOOLSET% %BUILD_TYPE% enable-static-engine no-asm no-shared"
+  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% %BUILD_TYPE% enable-static-engine no-asm no-shared
 )
 if errorlevel 1 goto exit
 
-bash --login -c "cd %OPENSSL_MSYS_HOME% && make depend && make && make install"
+make depend
+if errorlevel 1 goto exit
+
+make
+if errorlevel 1 goto exit
+
+make install
 
 :exit
