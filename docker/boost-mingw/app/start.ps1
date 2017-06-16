@@ -9,8 +9,8 @@
 $ErrorActionPreference = "Stop"
 
 # Location of MinGW
-$env:MINGW64_HOME = "$env:ProgramFiles\mingw64"
-$env:MINGW32_HOME = "${env:ProgramFiles(x86)}\mingw32"
+$env:MINGW64_HOME = "C:\mingw64"
+$env:MINGW32_HOME = "C:\mingw32"
 
 $boost_version_underscore = "$env:BOOST_VERSION" -replace "\.", '_'
 $env:BOOST_ROOT_DIR = "$env:BUILD_DIR\boost_$boost_version_underscore"
@@ -27,7 +27,7 @@ if (Test-Path -Path "$env:BOOST_ROOT_DIR") {
     # Download Boost C++ Libraries
     $boost_download_url = "$env:BOOST_RELEASE_URL/$env:BOOST_VERSION/source/boost_$boost_version_underscore.zip"
     Write-Host "Downloading Boost C++ Libraries (source code archive) from: $boost_download_url into: $boost_archive_file"
-    Invoke-WebRequest -Uri "$boost_download_url" -OutFile "$boost_archive_file"
+    (New-Object System.Net.WebClient).DownloadFile("$boost_download_url", "$boost_archive_file")
   }
   # Unpack Boost C++ Libraries
   Write-Host "Extracting source code archive to: $env:BUILD_DIR"
@@ -84,7 +84,7 @@ foreach ($address_model in $address_models) {
 
   $mingw_version_suffix = "$env:MINGW_VERSION" -replace "\.", ''
   $env:BOOST_INSTALL_DIR = "$env:TARGET_DIR\boost-$env:BOOST_VERSION-$target_dir_suffix-mingw$mingw_version_suffix"
-  foreach ($boost_linkage in $runtime_linkages) {
+  foreach ($boost_linkage in $boost_linkages) {
     $env:BOOST_LINKAGE = $boost_linkage
     foreach ($runtime_linkage in $runtime_linkages) {
       if ($runtime_linkage -eq "static" -and -not ($boost_linkage -eq "static")) {
