@@ -27,11 +27,14 @@ $env:PERL_HOME = "C:\Perl64"
 $env:SEVEN_ZIP_HOME = "$env:ProgramFiles\7-Zip"
 
 # Extension of static library files
-$lib_file_extension = "lib"
+$static_lib_file_extension = "lib"
+
+$openssl_download_url = "$env:OPENSSL_URL/openssl-$env:OPENSSL_VERSION.tar.gz"
 
 $openssl_archive_file = "$env:DOWNLOAD_DIR\openssl-$env:OPENSSL_VERSION.tar.gz"
-$openssl_tar_archive_file = "openssl-$env:OPENSSL_VERSION.tar"
-$openssl_download_url = "$env:OPENSSL_URL/openssl-$env:OPENSSL_VERSION.tar.gz"
+$openssl_tar_archive_dir = "$env:TMP"
+$openssl_tar_archive_file_name = "openssl-$env:OPENSSL_VERSION.tar"
+$openssl_tar_archive_file = "$openssl_tar_archive_dir\$openssl_tar_archive_file_name"
 
 # Build OpenSSL
 $address_models = @("64", "32")
@@ -120,15 +123,17 @@ foreach ($address_model in $address_models) {
         }
 
         # Unpack OpenSSL
-        Write-Host "Extracting source code archive from $openssl_archive_file to $env:TMP"
-        & "$env:SEVEN_ZIP_HOME\7z.exe" x "$openssl_archive_file" -o"$env:TMP" -aoa -y
-        if ($LastExitCode -ne 0) {
-          throw "Failed to extract OpenSSL from $openssl_archive_file to $env:TMP"
+        if (-not (Test-Path -Path "$openssl_tar_archive_file")) {
+          Write-Host "Extracting source code archive from $openssl_archive_file to $openssl_tar_archive_dir"
+          & "$env:SEVEN_ZIP_HOME\7z.exe" x "$openssl_archive_file" -o"$openssl_tar_archive_dir" -aoa -y
+          if ($LastExitCode -ne 0) {
+            throw "Failed to extract OpenSSL from $openssl_archive_file to $openssl_tar_archive_dir"
+          }
         }
-        Write-Host "Extracting source code archive from $env:TMP\$openssl_tar_archive_file to $env:OPENSSL_BUILD_DIR"
-        & "$env:SEVEN_ZIP_HOME\7z.exe" x "$env:TMP\$openssl_tar_archive_file" -o"$env:OPENSSL_BUILD_DIR" -aoa -y
+        Write-Host "Extracting source code archive from $openssl_tar_archive_file to $env:OPENSSL_BUILD_DIR"
+        & "$env:SEVEN_ZIP_HOME\7z.exe" x "$openssl_tar_archive_file" -o"$env:OPENSSL_BUILD_DIR" -aoa -y
         if ($LastExitCode -ne 0) {
-          throw "Failed to extract OpenSSL from $env:TMP\$openssl_tar_archive_file to $env:OPENSSL_BUILD_DIR"
+          throw "Failed to extract OpenSSL from $openssl_tar_archive_file to $env:OPENSSL_BUILD_DIR"
         }
         Write-Host "Extracted source code archive"
       }
@@ -159,10 +164,10 @@ foreach ($address_model in $address_models) {
         Copy-Item -Force -Recurse -Path "$env:OPENSSL_STAGE_DIR" -Destination "$env:OPENSSL_INSTALL_DIR"
       } else {
         # Copy just *.lib files
-        $lib_files = Get-ChildItem "$env:OPENSSL_STAGE_DIR\lib\*.$lib_file_extension"
+        $lib_files = Get-ChildItem "$env:OPENSSL_STAGE_DIR\lib\*.$static_lib_file_extension"
         foreach ($lib_file in $lib_files) {
           $lib_file_base_name = $lib_file | % {$_.BaseName}
-          Copy-Item -Force -Path "$lib_file" -Destination "$env:OPENSSL_INSTALL_DIR\lib\${lib_file_base_name}d.$lib_file_extension"
+          Copy-Item -Force -Path "$lib_file" -Destination "$env:OPENSSL_INSTALL_DIR\lib\${lib_file_base_name}d.$static_lib_file_extension"
         }
       }
     }
