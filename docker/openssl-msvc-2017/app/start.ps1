@@ -24,7 +24,10 @@ Write-Host "MSVC_TOOLS_DIR: $env:MSVC_TOOLS_DIR"
 $env:PERL_HOME = "C:\Perl64"
 
 # Location of 7-Zip
-$env:SEVEN_ZIP_HOME = $env:ProgramFiles\7-Zip
+$env:SEVEN_ZIP_HOME = "$env:ProgramFiles\7-Zip"
+
+# Extension of static library files
+$lib_file_extension = "lib"
 
 $openssl_archive_file = "$env:DOWNLOAD_DIR\openssl-$env:OPENSSL_VERSION.tar.gz"
 $openssl_tar_archive_file = "openssl-$env:OPENSSL_VERSION.tar"
@@ -57,7 +60,7 @@ foreach ($address_model in $address_models) {
       $address_model_target_dir_suffix = "x86"
     }
     "64" {
-      $env:MSVC_CMD_BOOTSTRAP = "vcvars32.bat"
+      $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
       $env:OPENSSL_TOOLSET = "VC-WIN64A"
       $env:OPENSSL_BOOTSTRAP = "do_win64a.bat"
       $address_model_target_dir_suffix = "x64"
@@ -156,10 +159,10 @@ foreach ($address_model in $address_models) {
         Copy-Item -Force -Recurse -Path "$env:OPENSSL_STAGE_DIR" -Destination "$env:OPENSSL_INSTALL_DIR"
       } else {
         # Copy just *.lib files
-        $lib_files = Get-ChildItem "$env:OPENSSL_STAGE_DIR\lib\*.lib"
+        $lib_files = Get-ChildItem "$env:OPENSSL_STAGE_DIR\lib\*.$lib_file_extension"
         foreach ($lib_file in $lib_files) {
           $lib_file_base_name = $lib_file | % {$_.BaseName}
-          Copy-Item -Force -Path "$lib_file" -Destination "$env:OPENSSL_INSTALL_DIR\lib\${lib_file_base_name}d.lib"
+          Copy-Item -Force -Path "$lib_file" -Destination "$env:OPENSSL_INSTALL_DIR\lib\${lib_file_base_name}d.$lib_file_extension"
         }
       }
     }

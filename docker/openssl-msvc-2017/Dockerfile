@@ -7,7 +7,7 @@
 
 FROM abrarov/msvc-2017:1.0.1
 
-LABEL name="abrarov/mingw-msvc-2017" \
+LABEL name="abrarov/openssl-msvc-2017" \
     version="1.0.0" \
     description="Builder of OpenSSL with Microsoft Visual C++ 2017"
 
