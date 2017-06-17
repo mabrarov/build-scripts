@@ -19,7 +19,6 @@ $env:MSYS_HOME = "C:\msys64"
 $env:PATH = "$env:PATH;$env:MSYS_HOME\usr\bin"
 
 $openssl_archive_file = "$env:DOWNLOAD_DIR\openssl-$env:OPENSSL_VERSION.tar.gz"
-$openssl_tar_archive_file = "openssl-$env:OPENSSL_VERSION.tar"
 $openssl_download_url = "$env:OPENSSL_URL/openssl-$env:OPENSSL_VERSION.tar.gz"
 
 # Build OpenSSL
@@ -60,8 +59,8 @@ foreach ($address_model in $address_models) {
 
   foreach ($openssl_linkage in $openssl_linkages) {
     $env:OPENSSL_LINKAGE = $openssl_linkage
-    $env:OPENSSL_BUILD_DIR="$env:BUILD_DIR\openssl-$env:OPENSSL_VERSION\$address_model\$env:OPENSSL_LINKAGE"
-    $env:OPENSSL_HOME="$env:OPENSSL_BUILD_DIR\openssl-$env:OPENSSL_VERSION"
+    $env:OPENSSL_BUILD_DIR = "$env:BUILD_DIR\openssl-$env:OPENSSL_VERSION\$address_model\$env:OPENSSL_LINKAGE"
+    $env:OPENSSL_HOME = "$env:OPENSSL_BUILD_DIR\openssl-$env:OPENSSL_VERSION"
     Write-Host "Assuming root folder for sources is: $env:OPENSSL_HOME"
 
     if (Test-Path -Path "$env:OPENSSL_HOME") {

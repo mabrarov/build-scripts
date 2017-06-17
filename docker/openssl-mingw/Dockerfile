@@ -8,7 +8,7 @@
 FROM abrarov/mingw:1.0.1
 
 LABEL name="abrarov/mingw-openssl" \
-    version="1.0.0" \
+    version="1.0.1" \
     description="Builder of OpenSSL with MinGW"
 
 ENV OPENSSL_VERSION=1.0.2l \
