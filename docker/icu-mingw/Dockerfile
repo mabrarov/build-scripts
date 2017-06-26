@@ -11,7 +11,7 @@ LABEL name="abrarov/icu-mingw" \
     version="1.0.0" \
     description="Builder of ICU with MinGW"
 
-ENV ICU_VERSION=59.1 \
+ENV ICU_VERSION=57.1 \
     ICU_URL=http://download.icu-project.org/files/icu4c \
     SCRIPT_DIR=C:\\app \
     DOWNLOAD_DIR=C:\\download \
