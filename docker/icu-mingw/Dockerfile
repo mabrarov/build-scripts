@@ -5,7 +5,7 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-FROM abrarov/mingw:1.0.1
+FROM abrarov/mingw:1.0.2
 
 LABEL name="abrarov/icu-mingw" \
     version="1.0.0" \
