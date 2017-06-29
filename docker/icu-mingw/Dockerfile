@@ -7,12 +7,12 @@
 
 FROM abrarov/mingw:1.0.2
 
-LABEL name="abrarov/mingw-openssl" \
-    version="1.0.2" \
-    description="Builder of OpenSSL with MinGW"
+LABEL name="abrarov/icu-mingw" \
+    version="1.0.0" \
+    description="Builder of ICU with MinGW"
 
-ENV OPENSSL_VERSION=1.0.2l \
-    OPENSSL_URL=https://www.openssl.org/source \
+ENV ICU_VERSION=57.1 \
+    ICU_URL=http://download.icu-project.org/files/icu4c \
     SCRIPT_DIR=C:\\app \
     DOWNLOAD_DIR=C:\\download \
     BUILD_DIR=C:\\build \
