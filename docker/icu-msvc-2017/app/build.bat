@@ -18,9 +18,9 @@ if not "--%ICU_CONFIGURE_PATCH_MSYS_FILE%" == "--" (
 )
 
 if "%ICU_LINKAGE%" == "shared" (
-  bash -C ./runConfigureICU MSYS/MSVC --prefix=%ICU_STAGE_MSYS_DIR%
+  bash -C ./runConfigureICU MSYS/MSVC --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE%
 ) else (
-  bash -C ./runConfigureICU --static-runtime MSYS/MSVC --prefix=%ICU_STAGE_MSYS_DIR% --enable-static --disable-shared
+  bash -C ./runConfigureICU --static-runtime MSYS/MSVC --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE% --enable-static --disable-shared
 )
 if errorlevel 1 goto exit
 

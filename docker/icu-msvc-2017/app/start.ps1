@@ -59,10 +59,12 @@ foreach ($address_model in $address_models) {
     "32" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars32.bat"
       $address_model_target_dir_suffix = "x86"
+      $env:ICU_BUILD_MACHINE = "i686-pc-msys"
     }
     "64" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
       $address_model_target_dir_suffix = "x64"
+      $env:ICU_BUILD_MACHINE = "x86_64-pc-msys"
     }
     default {
       throw "Unsupported address model: $env:ICU_ADDRESS_MODEL"
