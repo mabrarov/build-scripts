@@ -57,7 +57,7 @@
          ;;
      Cygwin/MSVC2005)
          THE_OS="Windows with Cygwin"
-@@ -311,10 +321,17 @@
+@@ -311,21 +321,33 @@
      MinGW)
          THE_OS="MinGW"
          THE_COMP="the GNU C++"
@@ -75,7 +75,28 @@
          ;;
      MSYS/MSVC)
          THE_OS="MSYS"
-@@ -440,4 +457,4 @@
+         THE_COMP="Microsoft Visual C++"
+         CC=cl; export CC
+         CXX=cl; export CXX
+-        RELEASE_CFLAGS='-Gy -MD'
+-        RELEASE_CXXFLAGS='-Gy -MD'
+-        DEBUG_CFLAGS='-Zi -MDd'
+-        DEBUG_CXXFLAGS='-Zi -MDd'
+-        DEBUG_LDFLAGS='-DEBUG'
++        if [ "${static_runtime}" = "0" ]; then
++            RUNTIME_LINKER_OPTION='MD'
++        else
++            RUNTIME_LINKER_OPTION='MT'
++        fi
++        RUNTIME_LINKER_FLAG='/'${RUNTIME_LINKER_OPTION}
++        RELEASE_CFLAGS='/Gy '${RUNTIME_LINKER_FLAG}
++        RELEASE_CXXFLAGS='/Gy '${RUNTIME_LINKER_FLAG}
++        DEBUG_CFLAGS=${RUNTIME_LINKER_FLAG}d
++        DEBUG_CXXFLAGS=${RUNTIME_LINKER_FLAG}d
+         ;;
+     *BSD)
+         THE_OS="BSD"
+@@ -440,4 +462,4 @@
  else
  	echo $0: ./configure failed
  	exit 1
