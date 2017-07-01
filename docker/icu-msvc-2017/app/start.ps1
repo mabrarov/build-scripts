@@ -8,9 +8,10 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-# Location of MinGW
-$env:MINGW64_HOME = "C:\mingw64"
-$env:MINGW32_HOME = "C:\mingw32"
+# Find location of Visual Studio
+$env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0) -requires Microsoft.VisualStudio.Workload.NativeDesktop -property installationPath
+$env:MSVC_AUXILARY_DIR = "$env:MSVS_INSTALL_DIR\VC\Auxiliary"
+$env:MSVC_BUILD_DIR = "$env:MSVC_AUXILARY_DIR\Build"
 
 # Location of MSYS2
 $env:MSYS_HOME = "C:\msys64"
@@ -45,7 +46,7 @@ if (Test-Path env:ICU_LINKAGE) {
   $icu_linkages = @("$env:ICU_LINKAGE")
 }
 
-$mingw_version_suffix = "$env:MINGW_VERSION" -replace "\.", ''
+$msvc_version_suffix = "vs2017"
 $icu_downloaded = "False"
 
 foreach ($address_model in $address_models) {
@@ -54,14 +55,14 @@ foreach ($address_model in $address_models) {
   # Determine parameters dependent on address model
   switch ($env:ICU_ADDRESS_MODEL) {
     "32" {
-      $env:MINGW_HOME = "$env:MINGW32_HOME"
+      $env:MSVC_CMD_BOOTSTRAP = "vcvars32.bat"
       $address_model_target_dir_suffix = "x86"
-      $env:ICU_BUILD_MACHINE = "i686-w64-mingw32"
+      $env:ICU_BUILD_MACHINE = "i686-w64-mingw32msvc"
     }
     "64" {
-      $env:MINGW_HOME = "$env:MINGW64_HOME"
+      $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
       $address_model_target_dir_suffix = "x64"
-      $env:ICU_BUILD_MACHINE = "x86_64-w64-mingw32"
+      $env:ICU_BUILD_MACHINE = "x86_64-w64-mingw32msvc"
     }
     default {
       throw "Unsupported address model: $env:ICU_ADDRESS_MODEL"
@@ -101,7 +102,7 @@ foreach ($address_model in $address_models) {
       Write-Host "Extracted source code archive"
     }
 
-    $env:ICU_INSTALL_DIR = "$env:TARGET_DIR\icu-$env:ICU_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:ICU_LINKAGE"
+    $env:ICU_INSTALL_DIR = "$env:TARGET_DIR\icu-$env:ICU_VERSION-$address_model_target_dir_suffix-$msvc_version_suffix-$env:ICU_LINKAGE"
     $env:ICU_STAGE_DIR = "$env:ICU_HOME\dist"
     $env:ICU_STAGE_MSYS_DIR = "$env:ICU_STAGE_DIR" -replace "\\", "/"
     $env:ICU_STAGE_MSYS_DIR = "$env:ICU_STAGE_MSYS_DIR" -replace "^(C):", "/c"
@@ -109,7 +110,8 @@ foreach ($address_model in $address_models) {
     Set-Location -Path "$env:ICU_HOME\source"
 
     Write-Host "Building ICU with theses parameters:"
-    Write-Host "MINGW_HOME                    : $env:MINGW_HOME"
+    Write-Host "MSVS_INSTALL_DIR              : $env:MSVS_INSTALL_DIR"
+    Write-Host "MSVC_BUILD_DIR                : $env:MSVC_BUILD_DIR"
     Write-Host "MSYS_HOME                     : $env:MSYS_HOME"
     Write-Host "ICU_HOME                      : $env:ICU_HOME"
     Write-Host "ICU_INSTALL_DIR               : $env:ICU_INSTALL_DIR"
