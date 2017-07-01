@@ -10,8 +10,6 @@ $ErrorActionPreference = "Stop"
 
 # Find location of Visual Studio
 $env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0) -requires Microsoft.VisualStudio.Workload.NativeDesktop -property installationPath
-Write-Host "MSVS_INSTALL_DIR: $env:MSVS_INSTALL_DIR"
-
 $env:MSVC_AUXILARY_DIR = "$env:MSVS_INSTALL_DIR\VC\Auxiliary"
 $env:MSVC_BUILD_DIR = "$env:MSVC_AUXILARY_DIR\Build"
 
@@ -112,6 +110,8 @@ foreach ($address_model in $address_models) {
     Set-Location -Path "$env:ICU_HOME\source"
 
     Write-Host "Building ICU with theses parameters:"
+    Write-Host "MSVS_INSTALL_DIR              : $env:MSVS_INSTALL_DIR"
+    Write-Host "MSVC_BUILD_DIR                : $env:MSVC_BUILD_DIR"
     Write-Host "MSYS_HOME                     : $env:MSYS_HOME"
     Write-Host "ICU_HOME                      : $env:ICU_HOME"
     Write-Host "ICU_INSTALL_DIR               : $env:ICU_INSTALL_DIR"
