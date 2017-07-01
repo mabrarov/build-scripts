@@ -10,7 +10,7 @@ rem
 call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
 if errorlevel 1 goto exit
 
-set PATH=%MSYS_HOME%\usr\bin;%PATH%
+set PATH=%PATH%;%MSYS_HOME%\usr\bin
 if errorlevel 1 goto exit
 
 if not "--%ICU_CONFIGURE_PATCH_MSYS_FILE%" == "--" (

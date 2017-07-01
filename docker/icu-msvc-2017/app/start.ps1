@@ -59,12 +59,12 @@ foreach ($address_model in $address_models) {
     "32" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars32.bat"
       $address_model_target_dir_suffix = "x86"
-      $env:ICU_BUILD_MACHINE = "i686-pc-msys"
+      $env:ICU_BUILD_MACHINE = "i686-w64-mingw32msvc"
     }
     "64" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
       $address_model_target_dir_suffix = "x64"
-      $env:ICU_BUILD_MACHINE = "x86_64-pc-msys"
+      $env:ICU_BUILD_MACHINE = "x86_64-w64-mingw32msvc"
     }
     default {
       throw "Unsupported address model: $env:ICU_ADDRESS_MODEL"
@@ -117,6 +117,7 @@ foreach ($address_model in $address_models) {
     Write-Host "ICU_INSTALL_DIR               : $env:ICU_INSTALL_DIR"
     Write-Host "ICU_STAGE_DIR                 : $env:ICU_STAGE_DIR"
     Write-Host "ICU_STAGE_MSYS_DIR            : $env:ICU_STAGE_MSYS_DIR"
+    Write-Host "ICU_BUILD_MACHINE             : $env:ICU_BUILD_MACHINE"
     Write-Host "ICU_ADDRESS_MODEL             : $env:ICU_ADDRESS_MODEL"
     Write-Host "ICU_LINKAGE                   : $env:ICU_LINKAGE"
     Write-Host "ICU_CONFIGURE_PATCH_FILE      : $env:ICU_CONFIGURE_PATCH_FILE"
