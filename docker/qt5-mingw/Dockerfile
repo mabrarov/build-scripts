@@ -16,15 +16,17 @@ ENV QT_VERSION=5.9.1 \
     SCRIPT_DIR=C:\\app \
     DOWNLOAD_DIR=C:\\download \
     BUILD_DIR=C:\\build \
-    TARGET_DIR=C:\\target
+    TARGET_DIR=C:\\target \
+    DEPEND_DIR=C:\\depend
 
 ADD ["app", "C:/app/"]
 
 RUN mkdir C:\download && \
     mkdir C:\build && \
-    mkdir C:\target
+    mkdir C:\target && \
+    mkdir C:\depend
 
-VOLUME ["C:/target"]
+VOLUME ["C:/target", "C:/depend"]
 
 ENTRYPOINT ["powershell"]
 
