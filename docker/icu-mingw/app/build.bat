@@ -15,9 +15,9 @@ if not "--%ICU_CONFIGURE_PATCH_MSYS_FILE%" == "--" (
 )
 
 if "%ICU_LINKAGE%" == "shared" (
-  bash -C ./runConfigureICU MinGW --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE%
+  bash -C ./runConfigureICU %ICU_BUILD_TYPE_OPTIONS% MinGW --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE%
 ) else (
-  bash -C ./runConfigureICU --static-runtime MinGW --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE% --enable-static --disable-shared
+  bash -C ./runConfigureICU %ICU_BUILD_TYPE_OPTIONS% --static-runtime MinGW --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE% --enable-static --disable-shared
 )
 if errorlevel 1 goto exit
 
