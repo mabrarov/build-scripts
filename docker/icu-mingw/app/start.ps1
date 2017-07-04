@@ -80,15 +80,44 @@ foreach ($address_model in $address_models) {
 
   foreach ($icu_linkage in $icu_linkages) {
     $env:ICU_LINKAGE = $icu_linkage
+    
+    $icu_configure_options_linkage = ""
+    $autotools_options_linkage = ""
+    switch ($env:ICU_LINKAGE) {
+      "static" {
+        $icu_configure_options_linkage = "$icu_configure_options_linkage --static-runtime"
+        $autotools_options_linkage = "$autotools_options_linkage --enable-static --disable-shared"
+      }
+      "shared" {
+        $icu_configure_options_linkage = "$icu_configure_options_linkage"
+        $autotools_options_linkage = "$autotools_options_linkage --enable-shared --disable-static"
+      }
+      default {
+        throw "Unsupported linkage: $env:ICU_LINKAGE"
+      }
+    }
 
     foreach ($icu_build_type in $icu_build_types) {
       $env:ICU_BUILD_TYPE = $icu_build_type
 
-      # Determine parameters dependent on build type
-      $env:ICU_BUILD_TYPE_OPTIONS = ""
-      if ($env:ICU_BUILD_TYPE -eq "debug") {
-        $env:ICU_BUILD_TYPE_OPTIONS = "--enable-debug --disable-release"
+      $icu_configure_options_build_type = ""
+      $autotools_options_build_type = ""      
+      switch ($env:ICU_BUILD_TYPE) {
+        "release" {
+          $icu_configure_options_build_type = "$icu_configure_options_build_type"
+          $autotools_options_build_type = "$autotools_options_build_type --enable-release --disable-debug"
+        }
+        "debug" {
+          $icu_configure_options_build_type = "$icu_configure_options_build_type --enable-debug --disable-release"
+          $autotools_options_build_type = "$autotools_options_build_type --enable-debug --disable-release"
+        }
+        default {
+          throw "Unsupported build type: $env:ICU_BUILD_TYPE"
+        }
       }
+      
+      $env:ICU_CONFIGURE_OPTIONS = "$icu_configure_options_linkage $icu_configure_options_build_type"
+      $env:AUTOTOOLS_OPTIONS = "$autotools_options_linkage $autotools_options_build_type"
 
       $env:ICU_BUILD_DIR = "$env:BUILD_DIR\icu-$env:ICU_VERSION\$address_model\$env:ICU_LINKAGE\$env:ICU_BUILD_TYPE"
       $env:ICU_HOME = "$env:ICU_BUILD_DIR\icu"
@@ -135,8 +164,9 @@ foreach ($address_model in $address_models) {
       Write-Host "ICU_INSTALL_DIR               : $env:ICU_INSTALL_DIR"
       Write-Host "ICU_STAGE_DIR                 : $env:ICU_STAGE_DIR"
       Write-Host "ICU_STAGE_MSYS_DIR            : $env:ICU_STAGE_MSYS_DIR"
-      Write-Host "ICU_BUILD_TYPE_OPTIONS        : $env:ICU_BUILD_TYPE_OPTIONS"
+      Write-Host "ICU_CONFIGURE_OPTIONS         : $env:ICU_CONFIGURE_OPTIONS"
       Write-Host "ICU_BUILD_MACHINE             : $env:ICU_BUILD_MACHINE"
+      Write-Host "AUTOTOOLS_OPTIONS             : $env:AUTOTOOLS_OPTIONS"
       Write-Host "ICU_ADDRESS_MODEL             : $env:ICU_ADDRESS_MODEL"
       Write-Host "ICU_LINKAGE                   : $env:ICU_LINKAGE"
       Write-Host "ICU_BUILD_TYPE                : $env:ICU_BUILD_TYPE"

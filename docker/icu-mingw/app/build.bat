@@ -14,11 +14,7 @@ if not "--%ICU_CONFIGURE_PATCH_MSYS_FILE%" == "--" (
   patch -uNf -i "%ICU_CONFIGURE_PATCH_MSYS_FILE%"
 )
 
-if "%ICU_LINKAGE%" == "shared" (
-  bash -C ./runConfigureICU %ICU_BUILD_TYPE_OPTIONS% MinGW --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE%
-) else (
-  bash -C ./runConfigureICU %ICU_BUILD_TYPE_OPTIONS% --static-runtime MinGW --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE% --enable-static --disable-shared
-)
+bash -C ./runConfigureICU %ICU_CONFIGURE_OPTIONS% MinGW --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE% %AUTOTOOLS_OPTIONS%
 if errorlevel 1 goto exit
 
 make
