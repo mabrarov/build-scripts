@@ -42,7 +42,7 @@ $env:ICU_CONFIGURE_PATCH_MSYS_FILE = "$env:ICU_CONFIGURE_PATCH_MSYS_FILE" -repla
 # Build ICU4C
 $address_models = @("64", "32")
 $icu_linkages = @("shared", "static")
-$icu_build_types = @("release", "debug")
+$icu_build_types = @("release")
 
 # Limit build configurations if user asked for that
 if (Test-Path env:ICU_ADDRESS_MODEL) {
@@ -56,7 +56,10 @@ if (Test-Path env:ICU_BUILD_TYPE) {
 }
 
 $mingw_version_suffix = "$env:MINGW_VERSION" -replace "\.", ''
+$compiler_target_dir_suffix = "mingw$mingw_version_suffix"
 $icu_downloaded = "False"
+
+$env:ICU_PLATFORM = "MinGW"
 
 foreach ($address_model in $address_models) {
   $env:ICU_ADDRESS_MODEL = $address_model
@@ -80,7 +83,7 @@ foreach ($address_model in $address_models) {
 
   foreach ($icu_linkage in $icu_linkages) {
     $env:ICU_LINKAGE = $icu_linkage
-    
+
     $icu_configure_options_linkage = ""
     $autotools_options_linkage = ""
     switch ($env:ICU_LINKAGE) {
@@ -115,7 +118,7 @@ foreach ($address_model in $address_models) {
           throw "Unsupported build type: $env:ICU_BUILD_TYPE"
         }
       }
-      
+
       $env:ICU_CONFIGURE_OPTIONS = "$icu_configure_options_linkage $icu_configure_options_build_type"
       $env:AUTOTOOLS_OPTIONS = "$autotools_options_linkage $autotools_options_build_type"
 
@@ -150,7 +153,7 @@ foreach ($address_model in $address_models) {
         Write-Host "Extracted source code archive"
       }
 
-      $env:ICU_INSTALL_DIR = "$env:TARGET_DIR\icu-$env:ICU_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:ICU_LINKAGE"
+      $env:ICU_INSTALL_DIR = "$env:TARGET_DIR\icu-$env:ICU_VERSION-$address_model_target_dir_suffix-$compiler_target_dir_suffix-$env:ICU_LINKAGE"
       $env:ICU_STAGE_DIR = "$env:ICU_HOME\dist"
       $env:ICU_STAGE_MSYS_DIR = "$env:ICU_STAGE_DIR" -replace "\\", "/"
       $env:ICU_STAGE_MSYS_DIR = "$env:ICU_STAGE_MSYS_DIR" -replace "^(C):", "/c"
@@ -165,6 +168,7 @@ foreach ($address_model in $address_models) {
       Write-Host "ICU_STAGE_DIR                 : $env:ICU_STAGE_DIR"
       Write-Host "ICU_STAGE_MSYS_DIR            : $env:ICU_STAGE_MSYS_DIR"
       Write-Host "ICU_CONFIGURE_OPTIONS         : $env:ICU_CONFIGURE_OPTIONS"
+      Write-Host "ICU_PLATFORM                  : $env:ICU_PLATFORM"
       Write-Host "ICU_BUILD_MACHINE             : $env:ICU_BUILD_MACHINE"
       Write-Host "AUTOTOOLS_OPTIONS             : $env:AUTOTOOLS_OPTIONS"
       Write-Host "ICU_ADDRESS_MODEL             : $env:ICU_ADDRESS_MODEL"
@@ -188,7 +192,7 @@ foreach ($address_model in $address_models) {
             $lib_files = Get-ChildItem "$env:ICU_STAGE_DIR\$icu_lib_dir\*.$lib_file_extension"
             foreach ($lib_file in $lib_files) {
               $lib_file_name = $lib_file | % {$_.Name}
-              Copy-Item -Force -Path "$lib_file" -Destination "$env:OPENSSL_INSTALL_DIR\$icu_lib_dir\$lib_file_name"
+              Copy-Item -Force -Path "$lib_file" -Destination "$env:ICU_INSTALL_DIR\$icu_lib_dir\$lib_file_name"
             }
           }
         }
