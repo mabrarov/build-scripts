@@ -81,19 +81,21 @@ foreach ($address_model in $address_models) {
     }
   }
 
+  $env:ICU_INSTALL_DIR = "$env:TARGET_DIR\icu-$env:ICU_VERSION-$address_model_target_dir_suffix-$compiler_target_dir_suffix"
+
   foreach ($icu_linkage in $icu_linkages) {
     $env:ICU_LINKAGE = $icu_linkage
 
     $icu_configure_options_linkage = ""
-    $autotools_options_linkage = ""
+    $icu_build_options_linkage = ""
     switch ($env:ICU_LINKAGE) {
       "static" {
         $icu_configure_options_linkage = "$icu_configure_options_linkage --static-runtime"
-        $autotools_options_linkage = "$autotools_options_linkage --enable-static --disable-shared"
+        $icu_build_options_linkage = "$icu_build_options_linkage --enable-static --disable-shared"
       }
       "shared" {
         $icu_configure_options_linkage = "$icu_configure_options_linkage"
-        $autotools_options_linkage = "$autotools_options_linkage --enable-shared --disable-static"
+        $icu_build_options_linkage = "$icu_build_options_linkage --enable-shared --disable-static"
       }
       default {
         throw "Unsupported linkage: $env:ICU_LINKAGE"
@@ -104,15 +106,15 @@ foreach ($address_model in $address_models) {
       $env:ICU_BUILD_TYPE = $icu_build_type
 
       $icu_configure_options_build_type = ""
-      $autotools_options_build_type = ""
+      $icu_build_options_build_type = ""
       switch ($env:ICU_BUILD_TYPE) {
         "release" {
           $icu_configure_options_build_type = "$icu_configure_options_build_type"
-          $autotools_options_build_type = "$autotools_options_build_type --enable-release --disable-debug"
+          $icu_build_options_build_type = "$icu_build_options_build_type --enable-release --disable-debug"
         }
         "debug" {
           $icu_configure_options_build_type = "$icu_configure_options_build_type --enable-debug --disable-release"
-          $autotools_options_build_type = "$autotools_options_build_type --enable-debug --disable-release"
+          $icu_build_options_build_type = "$icu_build_options_build_type --enable-debug --disable-release"
         }
         default {
           throw "Unsupported build type: $env:ICU_BUILD_TYPE"
@@ -120,7 +122,7 @@ foreach ($address_model in $address_models) {
       }
 
       $env:ICU_CONFIGURE_OPTIONS = "$icu_configure_options_linkage $icu_configure_options_build_type"
-      $env:AUTOTOOLS_OPTIONS = "$autotools_options_linkage $autotools_options_build_type"
+      $env:ICU_BUILD_OPTIONS = "$icu_build_options_linkage $icu_build_options_build_type"
 
       $env:ICU_BUILD_DIR = "$env:BUILD_DIR\icu-$env:ICU_VERSION\$address_model\$env:ICU_LINKAGE\$env:ICU_BUILD_TYPE"
       $env:ICU_HOME = "$env:ICU_BUILD_DIR\icu"
@@ -153,7 +155,6 @@ foreach ($address_model in $address_models) {
         Write-Host "Extracted source code archive"
       }
 
-      $env:ICU_INSTALL_DIR = "$env:TARGET_DIR\icu-$env:ICU_VERSION-$address_model_target_dir_suffix-$compiler_target_dir_suffix-$env:ICU_LINKAGE"
       $env:ICU_STAGE_DIR = "$env:ICU_HOME\dist"
       $env:ICU_STAGE_MSYS_DIR = "$env:ICU_STAGE_DIR" -replace "\\", "/"
       $env:ICU_STAGE_MSYS_DIR = "$env:ICU_STAGE_MSYS_DIR" -replace "^(C):", "/c"
@@ -171,7 +172,7 @@ foreach ($address_model in $address_models) {
       Write-Host "ICU_CONFIGURE_OPTIONS         : $env:ICU_CONFIGURE_OPTIONS"
       Write-Host "ICU_PLATFORM                  : $env:ICU_PLATFORM"
       Write-Host "ICU_BUILD_MACHINE             : $env:ICU_BUILD_MACHINE"
-      Write-Host "AUTOTOOLS_OPTIONS             : $env:AUTOTOOLS_OPTIONS"
+      Write-Host "ICU_BUILD_OPTIONS             : $env:ICU_BUILD_OPTIONS"
       Write-Host "ICU_ADDRESS_MODEL             : $env:ICU_ADDRESS_MODEL"
       Write-Host "ICU_LINKAGE                   : $env:ICU_LINKAGE"
       Write-Host "ICU_BUILD_TYPE                : $env:ICU_BUILD_TYPE"
@@ -183,13 +184,14 @@ foreach ($address_model in $address_models) {
         throw "Failed to build ICU with ICU_ADDRESS_MODEL = $env:ICU_ADDRESS_MODEL, ICU_LINKAGE = $env:ICU_LINKAGE, ICU_BUILD_TYPE = $env:ICU_BUILD_TYPE"
       }
 
-      Write-Host "Copying built ICU from $env:ICU_STAGE_DIR to $env:ICU_INSTALL_DIR"
-      if (($env:ICU_BUILD_TYPE -ne "debug") -or -not (Test-Path -Path "$env:ICU_INSTALL_DIR")) {
+      if (-not (Test-Path -Path "$env:ICU_INSTALL_DIR")) {
+        Write-Host "Copying built ICU from $env:ICU_STAGE_DIR to $env:ICU_INSTALL_DIR"
         Copy-Item -Force -Recurse -Path "$env:ICU_STAGE_DIR" -Destination "$env:ICU_INSTALL_DIR"
       } else {
-        # Copy just (static and shared) library files
+        Write-Host "Found existing $env:ICU_INSTALL_DIR, copying just built libraries"
         foreach ($icu_lib_dir in $icu_lib_dirs) {
           foreach ($lib_file_extension in $lib_file_extensions) {
+            Write-Host "Copying built ICU libraries ($lib_file_extension) from $env:ICU_STAGE_DIR\$icu_lib_dir to $env:ICU_INSTALL_DIR\$icu_lib_dir"
             $lib_files = Get-ChildItem "$env:ICU_STAGE_DIR\$icu_lib_dir\*.$lib_file_extension"
             foreach ($lib_file in $lib_files) {
               $lib_file_name = $lib_file | % {$_.Name}
