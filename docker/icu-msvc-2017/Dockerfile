@@ -8,7 +8,7 @@
 FROM abrarov/msvc-2017:1.0.1
 
 LABEL name="abrarov/icu-msvc-2017" \
-    version="1.0.0" \
+    version="1.0.1" \
     description="Builder of ICU with Microsoft Visual C++ 2017"
 
 ENV ICU_VERSION=57.1 \
