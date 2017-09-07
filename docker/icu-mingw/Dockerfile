@@ -8,7 +8,7 @@
 FROM abrarov/mingw:1.0.2
 
 LABEL name="abrarov/icu-mingw" \
-    version="1.0.1" \
+    version="1.0.2" \
     description="Builder of ICU with MinGW"
 
 ENV ICU_VERSION=57.1 \
