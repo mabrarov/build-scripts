@@ -29,6 +29,14 @@ $qt_version_short = "$env:QT_VERSION" -replace '(\d+)\.(\d+)\.(\d)', '$1.$2'
 $qt_archive_file = "$env:DOWNLOAD_DIR\qt-everywhere-opensource-src-$env:QT_VERSION.zip"
 $qt_download_url = "$env:QT_URL/$qt_version_short/$env:QT_VERSION/single/qt-everywhere-opensource-src-$env:QT_VERSION.zip"
 
+if (Test-Path env:ICU_DIR) {
+  $env:ICU_DIR = "$env:DEPEND_DIR\icu"
+}
+
+if (Test-Path env:OPENSSL_DIR) {
+  $env:OPENSSL_DIR = "$env:DEPEND_DIR\openssl"
+}
+
 # Build Qt
 $address_models = @("64", "32")
 $qt_linkages = @("shared", "static")
@@ -98,7 +106,9 @@ foreach ($address_model in $address_models) {
     $env:QT_INSTALL_DIR = "$env:TARGET_DIR\qt-$env:QT_VERSION-$address_model_target_dir_suffix-mingw$mingw_version_suffix-$env:QT_LINKAGE"
 
     # Prepare patch for Qt
-    if (-not (Test-Path env:QT_PATCH_FILE)) {
+    if (Test-Path env:QT_PATCH) {
+      $env:QT_PATCH_FILE = "$env:QT_PATCH"
+    } else {
       switch ($env:QT_LINKAGE) {
         "static" {
           $env:QT_PATCH_FILE = "$env:SCRIPT_DIR\qt-$env:QT_VERSION-patches\static.patch"
