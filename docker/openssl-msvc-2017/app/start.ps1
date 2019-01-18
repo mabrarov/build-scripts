@@ -150,7 +150,7 @@ foreach ($address_model in $address_models) {
       Write-Host "OPENSSL_TOOLSET       : $env:OPENSSL_TOOLSET"
       Write-Host "OPENSSL_ADDRESS_MODEL : $env:OPENSSL_ADDRESS_MODEL"
       Write-Host "OPENSSL_LINKAGE       : $env:OPENSSL_LINKAGE"
-      Write   -Host "OPENSSL_BUILD_TYPE    : $env:OPENSSL_BUILD_TYPE"
+      Write-Host "OPENSSL_BUILD_TYPE    : $env:OPENSSL_BUILD_TYPE"
       Write-Host "OPENSSL_BOOTSTRAP     : $env:OPENSSL_BOOTSTRAP"
       Write-Host "OPENSSL_MAKE_FILE     : $env:OPENSSL_MAKE_FILE"
 
