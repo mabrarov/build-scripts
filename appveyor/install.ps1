@@ -7,6 +7,7 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-Write-Host "Windows version: $(gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').BuildLabEx"
+$docker_host_win_version = $(gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').BuildLabEx
+Write-Host "Windows version ${docker_host_win_version}"
 
 docker version

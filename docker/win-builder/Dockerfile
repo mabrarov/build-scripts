@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM microsoft/windowsservercore:10.0.14393.2665
+FROM microsoft/windowsservercore:10.0.14393.1198
 
 ARG image_version=""
 
