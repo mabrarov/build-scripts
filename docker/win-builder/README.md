@@ -1,11 +1,10 @@
-# MinGW
+# win-builder
  
-Docker image with MinGW from MinGW-builds. 
+Base Docker image for Docker images building on Windows. 
 
 Contains:
 
-1. [MinGW](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/) targeting Win32
-1. MinGW targeting Win64
+1. [7-Zip](https://www.7-zip.org)
 
 ## Building
 
