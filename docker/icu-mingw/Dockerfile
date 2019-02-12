@@ -30,9 +30,8 @@ ADD ["app", "C:/app/"]
 RUN mkdir C:\download && \
     mkdir C:\build && \
     mkdir C:\target && \
-    powershell "(New-Object System.Net.WebClient).DownloadFile(\"${env:MSYS2_URL}%2F${env:MSYS2_VERSION}%2F${env:MSYS2_TARGET}%2Fmsys2-base-devel-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.7z\", \"${env:TMP}\msys2.7z\")" && \
-    "%ProgramFiles%\7-Zip\7z.exe" x "%TMP%\msys2.7z" -o"C:\" -aoa -y && \
-    powershell "Remove-Item \"${env:TMP}\*\" -Recurse -Force"
+    powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
+    powershell "Remove-Item -Path 'C:\app\install.ps1' -Force"
 
 VOLUME ["C:/target"]
 
