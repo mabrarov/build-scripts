@@ -5,10 +5,10 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-FROM abrarov/mingw:1.0.2
+FROM abrarov/mingw:1.0.3
 
 LABEL name="abrarov/icu-mingw" \
-    version="1.0.2" \
+    version="1.0.3" \
     description="Builder of ICU with MinGW"
 
 ENV ICU_VERSION=57.1 \

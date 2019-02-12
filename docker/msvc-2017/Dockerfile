@@ -1,23 +1,22 @@
 #
 # Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
 #
-# Distributed under the Boost Software License, Version 1.0. (See accompanying
-# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# Distributed under the MIT License (see accompanying LICENSE)
 #
 
 FROM microsoft/windowsservercore:10.0.14393.1198
 
+LABEL name="abrarov/msvc-2017" \
+    version="1.0.2" \
+    description="Microsoft Visual C++ as part of Microsoft Visual Studio 2017 Community"
+
 ENV MSVS_INSTALL_URL=https://aka.ms/vs/15/release/vs_community.exe \
     MSVS_INSTALL_EXECUTABLE=vs_community.exe \
     VSWHERE_RELEASE_URL=https://github.com/Microsoft/vswhere/releases/download \
-    VSWHERE_VERSION=1.0.62 \
+    VSWHERE_VERSION=2.6.7 \
     VSWHERE_EXECTUABLE=vswhere.exe
 
-LABEL name="abrarov/msvc-2017" \
-    version="1.0.1" \
-    description="Microsoft Visual C++ as part of Microsoft Visual Studio 2017 Community"
+ADD ["app", "C:/app/"]
 
-RUN powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:MSVS_INSTALL_URL\", \"$env:TMP\$env:MSVS_INSTALL_EXECUTABLE\")" && \
-    powershell "Start-Process -FilePath \"$env:TMP\$env:MSVS_INSTALL_EXECUTABLE\" -ArgumentList (\"--locale en-US\", \"--quiet\", \"--norestart\", \"--wait\", \"--nocache\", \"--add Microsoft.VisualStudio.Workload.NativeDesktop\", \"--add Microsoft.VisualStudio.Component.VC.ATLMFC\", \"--includeRecommended\") -Wait" && \
-    powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:VSWHERE_RELEASE_URL/$env:VSWHERE_VERSION/$env:VSWHERE_EXECTUABLE\", \"$env:SystemRoot\$env:VSWHERE_EXECTUABLE\")"  && \
-    powershell "Remove-Item -Path \"$env:TMP\*\" -Recurse -Force"
+RUN powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
+    powershell "Remove-Item -Path 'C:\app' -Recurse -Force"
