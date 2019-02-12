@@ -4,10 +4,14 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:1.0.2
+FROM abrarov/msvc-2017:2.0.0
+
+ARG image_version=""
+ARG image_revision=""
 
 LABEL name="abrarov/openssl-msvc-2017" \
-    version="1.0.1" \
+    version="${image_version}" \
+    revision="${image_revision}" \
     description="Builder of OpenSSL with Microsoft Visual C++ 2017"
 
 ENV OPENSSL_VERSION=1.0.2l \
@@ -16,18 +20,18 @@ ENV OPENSSL_VERSION=1.0.2l \
     DOWNLOAD_DIR=C:\\download \
     BUILD_DIR=C:\\build \
     TARGET_DIR=C:\\target \
-    ACTIVE_PERL_VERSION=5.24.1.2402 \
-    ACTIVE_PERL_BUILD=401627 \
-    ACTIVE_PERL_URL=http://downloads.activestate.com/ActivePerl/releases
+    MSYS2_URL=https://bintray.com/mabrarov/generic/download_file?file_path=msys2 \
+    MSYS2_TARGET=x86_64 \
+    MSYS2_VERSION=20161025
 
 ADD ["app", "C:/app/"]
 
 RUN mkdir C:\download && \
     mkdir C:\build && \
     mkdir C:\target && \
-    powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:ACTIVE_PERL_URL/$env:ACTIVE_PERL_VERSION/ActivePerl-$env:ACTIVE_PERL_VERSION-MSWin32-x64-$env:ACTIVE_PERL_BUILD.exe\", \"$env:TMP\ActivePerl.exe\")" && \
-    powershell "Start-Process -FilePath \"$env:TMP\ActivePerl.exe\" -ArgumentList (\"/exenoui\", \"/norestart\", \"/quiet\", \"/qn\") -Wait" && \
-    powershell "Remove-Item -Path \"$env:TMP\*\" -Recurse -Force"
+    powershell "(New-Object System.Net.WebClient).DownloadFile(\"${env:MSYS2_URL}%2F${env:MSYS2_VERSION}%2F${env:MSYS2_TARGET}%2Fmsys2-base-devel-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.7z\", \"${env:TMP}\msys2.7z\")" && \
+    "%ProgramFiles%\7-Zip\7z.exe" x "%TMP%\msys2.7z" -o"C:\" -aoa -y && \
+    powershell "Remove-Item -Path \"${env:TMP}\*\" -Recurse -Force"
 
 VOLUME ["C:/target"]
 

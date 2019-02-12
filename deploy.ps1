@@ -33,7 +33,11 @@ $dirs = @(
   "docker/mingw",
   "docker/msvc-2017",
   "docker/boost-mingw",
-  "docker/boost-msvc-2017"
+  "docker/boost-msvc-2017",
+  "docker/icu-mingw",
+  "docker/icu-msvc-2017",
+  "openssl-mingw",
+  "openssl-msvc-2017"
 )
 
 ${dirs}.GetEnumerator() | ForEach-Object {
