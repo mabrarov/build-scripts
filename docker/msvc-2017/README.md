@@ -7,7 +7,7 @@ Docker image with Microsoft Visual C++ 2017 installed as part of Microsoft Visua
 
 ## Building
 
-```bash
+```powershell
 docker build -t abrarov/msvc-2017 docker/msvc-2017
 ```
 
@@ -15,12 +15,12 @@ docker build -t abrarov/msvc-2017 docker/msvc-2017
 
 Run windows command prompt inside Docker container in interactive mode:
 
-```bash
+```powershell
 docker run --rm -it abrarov/msvc-2017 cmd
 ```
 
 Get folder where MS Visual Studio 2017 is installed:
 
-```bash
+```powershell
 docker run --rm abrarov/msvc-2017 vswhere -latest -products Microsoft.VisualStudio.Product.Community -version '[15.0,16.0)' -property installationPath
 ```

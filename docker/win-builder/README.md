@@ -8,7 +8,7 @@ Contains:
 
 ## Building
 
-```bash
+```powershell
 docker build -t abrarov/win-builder docker/win-builder
 ```
 
@@ -18,6 +18,6 @@ It's a base image with common tools, which is intended to be inherited by other 
 
 Test 7-Zip setup:
 
-```bash
+```powershell
 docker run --rm abrarov/win-builder "C:\Program Files\7-Zip\7z.exe"
 ```
