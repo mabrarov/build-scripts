@@ -5,7 +5,13 @@ Docker image with Microsoft Visual C++ 2017 installed as part of Microsoft Visua
 1. Microsoft Visual Studio 2017 Community with installed packages for desktop development with Visual C++
 1. [Visual Studio Locator](https://github.com/Microsoft/vswhere) (`vswhere` tool) for locating of folders where Visual Studio is installed
 
-## Examples of usage
+## Building
+
+```bash
+docker build -t abrarov/msvc-2017 docker/msvc-2017
+```
+
+## Usage
 
 Run windows command prompt inside Docker container in interactive mode:
 

@@ -1,11 +1,19 @@
 # MinGW
  
-Docker image with MinGW. Contains:
+Docker image with MinGW from MinGW-builds. 
 
-1. [MinGW](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/) targeting Win64
+Contains:
+
 1. [MinGW](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/) targeting Win32
+1. MinGW targeting Win64
 
-## Examples of usage
+## Building
+
+```bash
+docker build -t abrarov/mingw docker/mingw
+```
+
+## Usage
 
 Get version of MinGW x64 compiler:
 
