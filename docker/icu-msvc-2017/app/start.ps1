@@ -7,6 +7,9 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
+# Enable all versions of TLS
+[System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
+
 # Find location of Visual Studio
 $env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0) -requires Microsoft.VisualStudio.Workload.NativeDesktop -property installationPath
 $env:MSVC_AUXILARY_DIR = "${env:MSVS_INSTALL_DIR}\VC\Auxiliary"

@@ -7,6 +7,9 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
+# Enable all versions of TLS
+[System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
+
 # Location of MinGW
 $env:MINGW64_HOME = "C:\mingw64"
 $env:MINGW32_HOME = "C:\mingw32"
