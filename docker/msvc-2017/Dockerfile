@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM microsoft/windowsservercore:10.0.14393.1198
+FROM abrarov/win-builder:1.0.0
 
 LABEL name="abrarov/msvc-2017" \
     version="1.0.2" \
