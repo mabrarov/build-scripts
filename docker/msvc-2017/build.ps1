@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 $image_version = "2.0.0"
 
 Write-Host "Building abrarov/msvc-2017:${image_version} image"
-docker build -t abrarov/msvc-2017:${image_version} --build-arg image_version=${image_version} docker/msvc-2017
+docker build -t abrarov/msvc-2017:${image_version} --build-arg image_version=${image_version} .
 
 Write-Host "Tagging abrarov/msvc-2017:${image_version} image as latest"
 docker tag abrarov/msvc-2017:${image_version} abrarov/msvc-2017:latest

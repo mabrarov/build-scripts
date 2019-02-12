@@ -28,6 +28,10 @@ $auth64 = [Convert]::ToBase64String($auth)
 }
 "@ | Out-File -Encoding Ascii ~/.docker/config.json
 
-.\docker\win-builder\appveyor\deploy.ps1
-.\docker\mingw\appveyor\deploy.ps1
-.\docker\msvc-2017\appveyor\deploy.ps1
+${dirs}.GetEnumerator() | ForEach-Object {
+  ${dir} = $_
+  pushd ${dir}
+  Write-Host "Deploying in directory ${dir}"
+  .\deploy.ps1
+  popd
+}
