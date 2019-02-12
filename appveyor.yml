@@ -1,0 +1,20 @@
+image: Visual Studio 2017
+
+environment:
+  DOCKER_USER:
+    secure:
+  DOCKER_PASS:
+    secure:
+
+install:
+  - ps: Write-Host Server version $(gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').BuildLabEx
+  - docker version
+
+build_script:
+  - ps: .\appveyor\build.ps1
+
+test_script:
+  - ps: .\appveyor\test.ps1
+
+deploy_script:
+  - ps: .\appveyor\deploy.ps1
