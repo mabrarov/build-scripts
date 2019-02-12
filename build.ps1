@@ -10,7 +10,9 @@ $ErrorActionPreference = "Stop"
 $dirs = @(
   "docker/win-builder",
   "docker/mingw",
-  "docker/msvc-2017"
+  "docker/msvc-2017",
+  "docker/boost-mingw",
+  "docker/boost-msvc-2017"
 )
 
 ${dirs}.GetEnumerator() | ForEach-Object {

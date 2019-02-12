@@ -12,7 +12,7 @@ if (${env:APPVEYOR_PULL_REQUEST_NUMBER} -or -not ${env:APPVEYOR_REPO_BRANCH}.Equ
   Exit 0
 }
 
-Write-Host Starting deploy
+Write-Host "Starting deploy"
 
 # "$env:DOCKER_PASS" | docker login --username "$env:DOCKER_USER" --password-stdin
 # docker login with the old config.json style that is needed for manifest-tool
@@ -27,6 +27,14 @@ $auth64 = [Convert]::ToBase64String($auth)
   }
 }
 "@ | Out-File -Encoding Ascii ~/.docker/config.json
+
+$dirs = @(
+  "docker/win-builder",
+  "docker/mingw",
+  "docker/msvc-2017",
+  "docker/boost-mingw",
+  "docker/boost-msvc-2017"
+)
 
 ${dirs}.GetEnumerator() | ForEach-Object {
   ${dir} = $_

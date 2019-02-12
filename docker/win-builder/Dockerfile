@@ -7,9 +7,11 @@
 FROM microsoft/windowsservercore:10.0.14393.1198
 
 ARG image_version=""
+ARG image_revision=""
 
 LABEL name="abrarov/win-builder" \
     version="${image_version}" \
+    revision="${image_revision}" \
     description="Base image for builders on Windows"
 
 ENV SEVEN_ZIP_VERSION=1801 \

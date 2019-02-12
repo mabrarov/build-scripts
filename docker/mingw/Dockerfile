@@ -7,9 +7,11 @@
 FROM abrarov/win-builder:2.0.0
 
 ARG image_version=""
+ARG image_revision=""
 
 LABEL name="abrarov/mingw" \
     version="${image_version}" \
+    revision="${image_revision}" \
     description="MinGW-w64 from MinGW-builds"
 
 ENV MINGW_VERSION=8.1.0 \
