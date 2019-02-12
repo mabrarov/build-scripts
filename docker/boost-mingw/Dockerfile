@@ -16,16 +16,9 @@ LABEL name="abrarov/boost-mingw" \
 
 ENV BOOST_VERSION=1.69.0 \
     BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
-    SCRIPT_DIR=C:\\app \
-    DOWNLOAD_DIR=C:\\download \
-    BUILD_DIR=C:\\build \
-    TARGET_DIR=C:\\target
+    SCRIPT_DIR=C:\\app
 
 ADD ["app", "C:/app/"]
-
-RUN mkdir C:\download && \
-    mkdir C:\build && \
-    mkdir C:\target
 
 VOLUME ["C:/target"]
 

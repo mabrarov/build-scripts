@@ -17,21 +17,9 @@ LABEL name="abrarov/icu-mingw" \
 
 ENV ICU_VERSION=57.1 \
     ICU_URL=http://download.icu-project.org/files/icu4c \
-    SCRIPT_DIR=C:\\app \
-    DOWNLOAD_DIR=C:\\download \
-    BUILD_DIR=C:\\build \
-    TARGET_DIR=C:\\target \
-    MSYS2_URL=https://bintray.com/mabrarov/generic/download_file?file_path=msys2 \
-    MSYS2_TARGET=x86_64 \
-    MSYS2_VERSION=20161025
+    SCRIPT_DIR=C:\\app
 
 ADD ["app", "C:/app/"]
-
-RUN mkdir C:\download && \
-    mkdir C:\build && \
-    mkdir C:\target && \
-    powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
-    powershell "Remove-Item -Path 'C:\app\install.ps1' -Force"
 
 VOLUME ["C:/target"]
 

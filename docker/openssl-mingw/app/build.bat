@@ -8,7 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%
+set PATH=%MSYS_HOME%\usr\bin;%MINGW_HOME%\bin;%PATH%
 exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
