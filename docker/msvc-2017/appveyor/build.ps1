@@ -7,6 +7,8 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-.\docker\win-builder\appveyor\build.ps1
-.\docker\mingw\appveyor\build.ps1
-.\docker\msvc-2017\appveyor\build.ps1
+#TODO: find way to deal with tags / versions
+$image_tag = "1.0.2"
+
+Write-Host "Building abrarov/msvc-2017:${image_tag} image"
+docker build -t abrarov/msvc-2017:${image_tag} docker/msvc-2017
