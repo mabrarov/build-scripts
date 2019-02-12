@@ -10,19 +10,6 @@ $ErrorActionPreference = "Stop"
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
-# Download Z-Zip
-$app_dir = "C:\app"
-$seven_zip_dist_name = "7z${env:SEVEN_ZIP_VERSION}-x64.msi"
-$seven_zip_dist = "${app_dir}\${seven_zip_dist_name}"
-if (-not (Test-Path -Path "${seven_zip_dist}")) {
-  $seven_zip_url = "${env:SEVEN_ZIP_DOWNLOAD_URL}/${seven_zip_dist_name}"
-  Write-Host "Downloading Z-Zip from ${seven_zip_url} into ${seven_zip_dist_name}"
-  (New-Object System.Net.WebClient).DownloadFile("${seven_zip_url}", "${seven_zip_dist_name}")
-}
-# Install Z-Zip
-Write-Host "Installing Z-Zip from ${seven_zip_dist}"
-Start-Process -FilePath msiexec -ArgumentList ("/package", "${seven_zip_dist}", "/quiet", "/qn", "/norestart") -Wait
-
 # Download MinGW x64
 $mingw_url = "${env:MINGW_RELEASE_URL}/${env:MINGW_64_TOOLCHAIN_PATH}/${env:MINGW_VERSION}/threads-${env:MINGW_64_THREADS}/${env:MINGW_64_EXCEPTIONS}/${env:MINGW_64_TARGET}-${env:MINGW_VERSION}-release-${env:MINGW_64_THREADS}-${env:MINGW_64_EXCEPTIONS}-rt_v${env:MINGW_RT_FILE_SUFFIX}-rev${env:MINGW_REVISON}${env:MINGW_URL_POSTFIX}"
 Write-Host "Downloading MinGW x64 from ${mingw_url} into ${env:TMP}"
