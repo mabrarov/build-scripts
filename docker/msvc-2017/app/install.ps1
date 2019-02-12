@@ -1,14 +1,13 @@
 #
 # Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
 #
-# Distributed under the Boost Software License, Version 1.0. (See accompanying
-# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# Distributed under the MIT License (see accompanying LICENSE)
 #
 
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-# Enable TLSv3
+# Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
 # Download Visual Studio 2017 Community edition
@@ -20,7 +19,7 @@ Write-Host "Installing Visual C++ part of Visual Studio 2017 Community edition w
 Start-Process -FilePath "${env:TMP}\${env:MSVS_INSTALL_EXECUTABLE}" -ArgumentList ("--locale en-US", "--quiet", "--norestart", "--wait", "--nocache", "--add Microsoft.VisualStudio.Workload.NativeDesktop", "--add Microsoft.VisualStudio.Component.VC.ATLMFC", "--includeRecommended") -Wait
 
 # Download and install Visual Studio Locator
-$vswhere_ful_url="${env:VSWHERE_RELEASE_URL}/${env:VSWHERE_VERSION}/${env:VSWHERE_EXECTUABLE}"
+$vswhere_ful_url = "${env:VSWHERE_RELEASE_URL}/${env:VSWHERE_VERSION}/${env:VSWHERE_EXECTUABLE}"
 Write-Host "Downloading Visual Studio Locator from ${vswhere_ful_url} into ${env:SystemRoot}"
 (New-Object System.Net.WebClient).DownloadFile("${vswhere_ful_url}", "${env:SystemRoot}\${env:VSWHERE_EXECTUABLE}")
 
