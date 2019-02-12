@@ -4,10 +4,10 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:1.0.1
+FROM abrarov/msvc-2017:1.0.2
 
 LABEL name="abrarov/openssl-msvc-2017" \
-    version="1.0.0" \
+    version="1.0.1" \
     description="Builder of OpenSSL with Microsoft Visual C++ 2017"
 
 ENV OPENSSL_VERSION=1.0.2l \

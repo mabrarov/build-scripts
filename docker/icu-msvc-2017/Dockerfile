@@ -4,10 +4,10 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:1.0.1
+FROM abrarov/msvc-2017:1.0.2
 
 LABEL name="abrarov/icu-msvc-2017" \
-    version="1.0.1" \
+    version="1.0.2" \
     description="Builder of ICU with Microsoft Visual C++ 2017"
 
 ENV ICU_VERSION=57.1 \

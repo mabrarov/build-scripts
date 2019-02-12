@@ -4,10 +4,10 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:1.0.2
+FROM abrarov/mingw:1.0.3
 
 LABEL name="abrarov/openssl-mingw" \
-    version="1.0.3" \
+    version="1.0.4" \
     description="Builder of OpenSSL with MinGW"
 
 ENV OPENSSL_VERSION=1.0.2l \

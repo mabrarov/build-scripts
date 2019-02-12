@@ -4,10 +4,10 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:1.0.2
+FROM abrarov/mingw:1.0.3
 
 LABEL name="abrarov/boost-mingw" \
-    version="1.0.2" \
+    version="1.0.3" \
     description="Builder of Boost C++ Libraries with MinGW"
 
 ENV BOOST_VERSION=1.64.0 \
