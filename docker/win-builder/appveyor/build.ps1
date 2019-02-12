@@ -8,7 +8,10 @@
 $ErrorActionPreference = "Stop"
 
 #TODO: find way to deal with tags / versions
-$image_tag = "1.0.0"
+$image_version = "2.0.0"
 
-Write-Host "Building abrarov/win-builder:${image_tag} image"
-docker build -t abrarov/win-builder:${image_tag} docker/win-builder
+Write-Host "Building abrarov/win-builder:${image_version} image"
+docker build -t abrarov/win-builder:${image_version} --build-arg image_version=${image_version} docker/win-builder
+
+Write-Host "Tagging abrarov/win-builder:${image_version} image as latest"
+docker tag abrarov/win-builder:${image_version} abrarov/win-builder:latest

@@ -7,8 +7,7 @@ environment:
     secure:
 
 install:
-  - ps: Write-Host Server version $(gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').BuildLabEx
-  - docker version
+  - ps: .\appveyor\install.ps1
 
 build_script:
   - ps: .\appveyor\build.ps1

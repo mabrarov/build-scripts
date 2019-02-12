@@ -7,8 +7,10 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-#TODO: find way to deal with tags / versions
-$image_tag = "1.0.2"
+$image_version = $(docker inspect abrarov/msvc-2017:latest --format '{{ index .Config.Labels \"version\" }}')
 
-Write-Host "Pushing abrarov/msvc-2017:${image_tag} image"
-docker push abrarov/msvc-2017:${image_tag}
+Write-Host "Pushing abrarov/msvc-2017:${image_version} image"
+docker push abrarov/msvc-2017:${image_version}
+
+Write-Host "Pushing abrarov/msvc-2017:latest image"
+docker push abrarov/msvc-2017:latest

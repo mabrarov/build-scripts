@@ -7,8 +7,10 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-#TODO: find way to deal with tags / versions
-$image_tag = "1.0.0"
+$image_version = $(docker inspect abrarov/win-builder:latest --format '{{ index .Config.Labels \"version\" }}')
 
-Write-Host "Pushing abrarov/win-builder:${image_tag} image"
-docker push abrarov/win-builder:${image_tag}
+Write-Host "Pushing abrarov/win-builder:${image_version} image"
+docker push abrarov/win-builder:${image_version}
+
+Write-Host "Pushing abrarov/win-builder:latest image"
+docker push abrarov/win-builder:latest

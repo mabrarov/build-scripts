@@ -4,10 +4,12 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM microsoft/windowsservercore:10.0.14393.1198
+FROM microsoft/windowsservercore:10.0.14393.2665
+
+ARG image_version=""
 
 LABEL name="abrarov/win-builder" \
-    version="1.0.0" \
+    version="${image_version}" \
     description="Base image for builders on Windows"
 
 ENV SEVEN_ZIP_VERSION=1801 \
