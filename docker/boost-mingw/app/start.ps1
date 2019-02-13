@@ -10,6 +10,9 @@ $ErrorActionPreference = "Stop"
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
+# Location of 7-Zip
+$env:SEVEN_ZIP_HOME = "${env:ProgramFiles}\7-Zip"
+
 # Location of MinGW
 $env:MINGW64_HOME = "C:\mingw64"
 $env:MINGW32_HOME = "C:\mingw32"
