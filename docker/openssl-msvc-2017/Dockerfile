@@ -14,7 +14,7 @@ LABEL name="abrarov/openssl-msvc-2017" \
     revision="${image_revision}" \
     description="Builder of OpenSSL with Microsoft Visual C++ 2017"
 
-ENV OPENSSL_VERSION=1.0.2l \
+ENV OPENSSL_VERSION=1.0.2q \
     OPENSSL_URL=https://www.openssl.org/source \
     SCRIPT_DIR=C:\\app
 

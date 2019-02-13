@@ -14,7 +14,7 @@ LABEL name="abrarov/openssl-mingw" \
     revision="${image_revision}" \
     description="Builder of OpenSSL with MinGW"
 
-ENV OPENSSL_VERSION=1.0.2l \
+ENV OPENSSL_VERSION=1.0.2q \
     OPENSSL_URL=https://www.openssl.org/source \
     SCRIPT_DIR=C:\\app
 

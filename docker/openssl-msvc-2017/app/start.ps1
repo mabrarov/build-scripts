@@ -71,15 +71,13 @@ foreach ($address_model in ${address_models}) {
   switch (${env:OPENSSL_ADDRESS_MODEL}) {
     "32" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars32.bat"
-      $env:OPENSSL_TOOLSET = "VC-WIN32"
-      $env:OPENSSL_BOOTSTRAP = "do_ms.bat"
+      $env:OPENSSL_BASE_TOOLSET = "VC-WIN32"
       $env:OPENSSL_ARCH = "x86"
       $address_model_target_dir_suffix = "x86"
     }
     "64" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
-      $env:OPENSSL_TOOLSET = "VC-WIN64A"
-      $env:OPENSSL_BOOTSTRAP = "do_win64a.bat"
+      $env:OPENSSL_BASE_TOOLSET = "VC-WIN64A"
       $env:OPENSSL_ARCH = "x64"
       $address_model_target_dir_suffix = "x64"
     }
@@ -96,12 +94,12 @@ foreach ($address_model in ${address_models}) {
       "shared" {
         $env:OPENSSL_DLL_STR = "dll"
         $env:OPENSSL_LINK_STR = ""
-        $env:OPENSSL_RUNTIME_SUFFIX = "MD"
+        $openssl_runtime_suffix = "MD"
       }
       "static" {
         $env:OPENSSL_DLL_STR = ""
         $env:OPENSSL_LINK_STR = "static_lib"
-        $env:OPENSSL_RUNTIME_SUFFIX = "MT"
+        $openssl_runtime_suffix = "MT"
       }
       default {
         throw "Unsupported linkage: ${env:OPENSSL_LINKAGE}"
@@ -112,17 +110,18 @@ foreach ($address_model in ${address_models}) {
       $env:OPENSSL_BUILD_TYPE = ${openssl_build_type}
 
       if (${env:OPENSSL_BUILD_TYPE} -eq "debug") {
-        $env:OPENSSL_TOOLSET = "debug-${env:OPENSSL_TOOLSET}"
+        $env:OPENSSL_TOOLSET = "debug-${env:OPENSSL_BASE_TOOLSET}"
         $env:OPENSSL_BUILD_STR_PLAIN = "debug"
         $env:OPENSSL_BUILD_STR = "debug_lib"
-        $env:OPENSSL_LIBSUFFIX = "d"
+        $openssl_libsuffix = "d"
       } else {
+        $env:OPENSSL_TOOLSET = "${env:OPENSSL_BASE_TOOLSET}"
         $env:OPENSSL_BUILD_STR_PLAIN = ""
         $env:OPENSSL_BUILD_STR = ""
-        $env:OPENSSL_LIBSUFFIX = ""
+        $openssl_libsuffix = ""
       }
 
-      $env:OPENSSL_RUNTIME_FULL_SUFFIX = "${env:OPENSSL_RUNTIME_SUFFIX}${env:OPENSSL_LIBSUFFIX}"
+      $env:OPENSSL_RUNTIME_FULL_SUFFIX = "${openssl_runtime_suffix}${openssl_libsuffix}"
 
       $env:OPENSSL_BUILD_DIR = "${env:BUILD_DIR}\openssl-${env:OPENSSL_VERSION}\${address_model}\${env:OPENSSL_LINKAGE}\${env:OPENSSL_BUILD_TYPE}"
       $env:OPENSSL_HOME = "${env:OPENSSL_BUILD_DIR}\openssl-${env:OPENSSL_VERSION}"
@@ -164,19 +163,24 @@ foreach ($address_model in ${address_models}) {
       Set-Location -Path "${env:OPENSSL_HOME}"
 
       Write-Host "Building OpenSSL with theses parameters:"
-      Write-Host "ACTIVE_PERL_HOME        : ${env:ACTIVE_PERL_HOME}"
-      Write-Host "MSYS_HOME               : ${env:MSYS_HOME}"
-      Write-Host "OPENSSL_HOME            : ${env:OPENSSL_HOME}"
-      Write-Host "OPENSSL_INSTALL_DIR     : ${env:OPENSSL_INSTALL_DIR}"
-      Write-Host "OPENSSL_STAGE_DIR       : ${env:OPENSSL_STAGE_DIR}"
-      Write-Host "OPENSSL_TOOLSET         : ${env:OPENSSL_TOOLSET}"
-      Write-Host "OPENSSL_ADDRESS_MODEL   : ${env:OPENSSL_ADDRESS_MODEL}"
-      Write-Host "OPENSSL_LINKAGE         : ${env:OPENSSL_LINKAGE}"
-      Write-Host "OPENSSL_BUILD_TYPE      : ${env:OPENSSL_BUILD_TYPE}"
-      Write-Host "OPENSSL_BOOTSTRAP       : ${env:OPENSSL_BOOTSTRAP}"
-      Write-Host "OPENSSL_MAKE_FILE       : ${env:OPENSSL_MAKE_FILE}"
-      Write-Host "OPENSSL_PATCH_FILE      : ${env:ICU_PATCH_FILE}"
-      Write-Host "OPENSSL_PATCH_MSYS_FILE : ${env:ICU_PATCH_MSYS_FILE}"
+      Write-Host "ACTIVE_PERL_HOME            : ${env:ACTIVE_PERL_HOME}"
+      Write-Host "MSYS_HOME                   : ${env:MSYS_HOME}"
+      Write-Host "OPENSSL_HOME                : ${env:OPENSSL_HOME}"
+      Write-Host "OPENSSL_INSTALL_DIR         : ${env:OPENSSL_INSTALL_DIR}"
+      Write-Host "OPENSSL_STAGE_DIR           : ${env:OPENSSL_STAGE_DIR}"
+      Write-Host "OPENSSL_ADDRESS_MODEL       : ${env:OPENSSL_ADDRESS_MODEL}"
+      Write-Host "OPENSSL_LINKAGE             : ${env:OPENSSL_LINKAGE}"
+      Write-Host "OPENSSL_BUILD_TYPE          : ${env:OPENSSL_BUILD_TYPE}"
+      Write-Host "OPENSSL_BASE_TOOLSET        : ${env:OPENSSL_BASE_TOOLSET}"
+      Write-Host "OPENSSL_TOOLSET             : ${env:OPENSSL_TOOLSET}"
+      Write-Host "OPENSSL_BUILD_STR_PLAIN     : ${env:OPENSSL_BUILD_STR_PLAIN}"
+      Write-Host "OPENSSL_BUILD_STR           : ${env:OPENSSL_BUILD_STR}"
+      Write-Host "OPENSSL_LINK_STR            : ${env:OPENSSL_LINK_STR}"
+      Write-Host "OPENSSL_DLL_STR             : ${env:OPENSSL_DLL_STR}"
+      Write-Host "OPENSSL_ARCH                : ${env:OPENSSL_ARCH}"
+      Write-Host "OPENSSL_RUNTIME_FULL_SUFFIX : ${env:OPENSSL_RUNTIME_FULL_SUFFIX}"
+      Write-Host "OPENSSL_PATCH_FILE          : ${env:OPENSSL_PATCH_FILE}"
+      Write-Host "OPENSSL_PATCH_MSYS_FILE     : ${env:OPENSSL_PATCH_MSYS_FILE}"
 
       & "${env:SCRIPT_DIR}\build.bat"
       if (${LastExitCode} -ne 0) {
