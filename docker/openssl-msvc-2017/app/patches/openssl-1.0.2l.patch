@@ -1,5 +1,6 @@
---- util/mk1mf.pl
-+++ util/mk1mf.pl
+diff -Naur openssl-1.0.2l/util/mk1mf.pl openssl-1.0.2l-patched/util/mk1mf.pl
+--- openssl-1.0.2l/util/mk1mf.pl	2017-05-25 15:54:38.000000000 +0300
++++ openssl-1.0.2l-patched/util/mk1mf.pl	2017-05-27 16:32:21.475601600 +0300
 @@ -523,7 +523,7 @@
  # You should not need to touch anything below this point
  ######################################################
@@ -18,9 +19,9 @@
  		"no-sctp" => 0,
  		"no-srtp" => 0,
  		"no-gmp" => 0,
-
---- util/mkdef.pl
-+++ util/mkdef.pl
+diff -Naur openssl-1.0.2l/util/mkdef.pl openssl-1.0.2l-patched/util/mkdef.pl
+--- openssl-1.0.2l/util/mkdef.pl	2017-05-25 15:54:34.000000000 +0300
++++ openssl-1.0.2l-patched/util/mkdef.pl	2017-05-27 16:32:21.477601700 +0300
 @@ -55,6 +55,8 @@
  #
  
@@ -61,9 +62,9 @@
  	print OUT <<"EOF";
  ;
  ; Definition file for the DLL version of the $name library from OpenSSL
-
---- util/pl/VC-32.pl
-+++ util/pl/VC-32.pl
+diff -Naur openssl-1.0.2l/util/pl/VC-32.pl openssl-1.0.2l-patched/util/pl/VC-32.pl
+--- openssl-1.0.2l/util/pl/VC-32.pl	2017-05-25 15:54:34.000000000 +0300
++++ openssl-1.0.2l-patched/util/pl/VC-32.pl	2017-05-27 16:32:21.479601800 +0300
 @@ -15,6 +15,20 @@
  	{
  	$crypto="libeay32";
@@ -91,8 +92,8 @@
  # generate symbols.pdb unconditionally
 -$app_cflag.=" /Zi /Fd\$(TMP_D)/app";
 -$lib_cflag.=" /Zi /Fd\$(TMP_D)/lib";
-+$app_cflag.=" /Zi /Fd\$(TMP_D)/app".$libsuffix;
-+$lib_cflag.=" /Zi /Fd\$(TMP_D)/lib".$libsuffix;
++$app_cflag.=" /Zi";
++$lib_cflag.=" /Zi";
  $lflags.=" /debug";
  
  $obj='.obj';

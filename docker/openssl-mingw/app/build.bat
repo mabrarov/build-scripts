@@ -13,7 +13,7 @@ set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 if not "--%OPENSSL_PATCH_MSYS_FILE%" == "--" (
-  patch -uNf -i "%OPENSSL_PATCH_MSYS_FILE%"
+  patch --binary -uNf -p1 -i "%OPENSSL_PATCH_MSYS_FILE%"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 )
