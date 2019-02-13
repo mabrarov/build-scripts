@@ -83,8 +83,6 @@ foreach ($address_model in ${address_models}) {
     }
   }
 
-  $env:ICU_INSTALL_DIR = "${env:TARGET_DIR}\icu-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}"
-
   foreach ($icu_linkage in ${icu_linkages}) {
     $env:ICU_LINKAGE = ${icu_linkage}
 
@@ -157,6 +155,7 @@ foreach ($address_model in ${address_models}) {
         Write-Host "Extracted source code archive"
       }
 
+      $env:ICU_INSTALL_DIR = "${env:TARGET_DIR}\icu-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:ICU_LINKAGE}"
       $env:ICU_STAGE_DIR = "${env:ICU_HOME}\dist"
       $env:ICU_STAGE_MSYS_DIR = "${env:ICU_STAGE_DIR}" -replace "\\", "/"
       $env:ICU_STAGE_MSYS_DIR = "${env:ICU_STAGE_MSYS_DIR}" -replace "^(C):", "/c"
