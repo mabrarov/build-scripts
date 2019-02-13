@@ -25,6 +25,9 @@ Write-Host "MSVC_TOOLS_DIR: ${env:MSVC_TOOLS_DIR}"
 # Location of MSYS2
 $env:MSYS_HOME = "C:\msys64"
 
+# Required for unpacking with tar
+$env:PATH = "${env:PATH};${env:MSYS_HOME}\usr\bin"
+
 # Location of 7-Zip
 $env:SEVEN_ZIP_HOME = "${env:ProgramFiles}\7-Zip"
 
@@ -135,17 +138,13 @@ foreach ($address_model in ${address_models}) {
         }
 
         # Unpack OpenSSL
-        if (-not (Test-Path -Path "${openssl_tar_archive_file}")) {
-          Write-Host "Extracting source code archive from ${openssl_archive_file} to ${openssl_tar_archive_dir}"
-          & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${openssl_archive_file}" -o"${openssl_tar_archive_dir}" -aoa -y
-          if (${LastExitCode} -ne 0) {
-            throw "Failed to extract OpenSSL from ${openssl_archive_file} to ${openssl_tar_archive_dir}"
-          }
-        }
-        Write-Host "Extracting source code archive from ${openssl_tar_archive_file} to ${env:OPENSSL_BUILD_DIR}"
-        & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${openssl_tar_archive_file}" -o"${env:OPENSSL_BUILD_DIR}" -aoa -y
+        Write-Host "Extracting source code archive from ${openssl_archive_file} to ${env:OPENSSL_BUILD_DIR}"
+        Set-Location -Path "${env:OPENSSL_BUILD_DIR}"
+        $openssl_archive_msys_file = "${openssl_archive_file}" -replace "\\", "/"
+        $openssl_archive_msys_file = "${openssl_archive_msys_file}" -replace "^(C):", "/c"
+        & "tar.exe" xzf "${openssl_archive_msys_file}"
         if (${LastExitCode} -ne 0) {
-          throw "Failed to extract OpenSSL from ${openssl_tar_archive_file} to ${env:OPENSSL_BUILD_DIR}"
+          throw "Failed to extract OpenSSL from ${openssl_archive_file} to ${env:OPENSSL_BUILD_DIR}"
         }
         Write-Host "Extracted source code archive"
       }
