@@ -27,7 +27,7 @@ if "%OPENSSL_LINKAGE%" == "shared" (
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 ) else (
-  perl Configure --prefix=%OPENSSL_STAGE_DIR% %OPENSSL_TOOLSET% enable-static-engine no-asm no-shared
+  perl Configure --prefix=%OPENSSL_STAGE_DIR% %OPENSSL_TOOLSET% enable-static-engine no-asm
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 )
