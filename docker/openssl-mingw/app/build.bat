@@ -9,7 +9,7 @@ rem
 set exit_code=0
 
 set PATH=%MSYS_HOME%\usr\bin;%MINGW_HOME%\bin;%PATH%
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 if not "--%OPENSSL_PATCH_MSYS_FILE%" == "--" (
@@ -29,15 +29,15 @@ if "%OPENSSL_LINKAGE%" == "shared" (
 )
 
 make depend
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 make
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 make install
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 :exit

@@ -9,11 +9,11 @@ rem
 set exit_code=0
 
 set PATH=%PATH%;%MINGW_HOME%\bin
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 call "%BOOST_BOOTSTRAP%" gcc
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 :exit

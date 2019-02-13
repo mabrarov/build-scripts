@@ -9,11 +9,11 @@ rem
 set exit_code=0
 
 call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 set PATH=%PATH%;%MSYS_HOME%\usr\bin
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 if not "--%ICU_PATCH_MSYS_FILE%" == "--" (
@@ -23,15 +23,15 @@ if not "--%ICU_PATCH_MSYS_FILE%" == "--" (
 )
 
 bash -C ./runConfigureICU %ICU_CONFIGURE_OPTIONS% %ICU_PLATFORM% --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE% %ICU_BUILD_OPTIONS%
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 make
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 make install
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 :exit

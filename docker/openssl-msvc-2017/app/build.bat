@@ -9,11 +9,11 @@ rem
 set exit_code=0
 
 call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 set PATH=%PATH%;%MSYS_HOME%\usr\bin
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 if not "--%OPENSSL_PATCH_MSYS_FILE%" == "--" (
@@ -33,11 +33,11 @@ if "%OPENSSL_LINKAGE%" == "shared" (
 )
 
 call "%OPENSSL_HOME%\ms\%OPENSSL_BOOTSTRAP%"
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 nmake -f "%OPENSSL_HOME%\ms\%OPENSSL_MAKE_FILE%" install
-exit_code=%errorlevel%
+set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 :exit
