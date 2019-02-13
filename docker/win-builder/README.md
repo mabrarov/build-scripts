@@ -5,6 +5,7 @@ Base Docker image for Docker images building on Windows.
 Contains:
 
 1. [7-Zip](https://www.7-zip.org)
+1. [MSYS2](http://www.msys2.org/)
 
 ## Building
 

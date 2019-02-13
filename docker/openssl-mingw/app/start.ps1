@@ -23,6 +23,17 @@ $env:PATH = "${env:PATH};${env:MSYS_HOME}\usr\bin"
 $openssl_archive_file = "${env:DOWNLOAD_DIR}\openssl-${env:OPENSSL_VERSION}.tar.gz"
 $openssl_download_url = "${env:OPENSSL_URL}/openssl-${env:OPENSSL_VERSION}.tar.gz"
 
+# Prepare patch for OpenSSL
+if (-not (Test-Path env:OPENSSL_PATCH_FILE)) {
+  $env:OPENSSL_PATCH_FILE = "${env:SCRIPT_DIR}\patches\openssl-${env:OPENSSL_VERSION}.patch"
+}
+if (-not (Test-Path -Path "${env:OPENSSL_PATCH_FILE}")) {
+  Write-Warning "Patch for chosen version of OpenSSL (${env:OPENSSL_VERSION}) was not found at ${env:OPENSSL_PATCH_FILE}"
+  $env:OPENSSL_PATCH_FILE = ""
+}
+$env:OPENSSL_PATCH_MSYS_FILE = "${env:OPENSSL_PATCH_FILE}" -replace "\\", "/"
+$env:OPENSSL_PATCH_MSYS_FILE = "${env:OPENSSL_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
+
 # Build OpenSSL
 $address_models = @("64", "32")
 $openssl_linkages = @("shared", "static")
@@ -103,15 +114,17 @@ foreach ($address_model in ${address_models}) {
     Set-Location -Path "${env:OPENSSL_HOME}"
 
     Write-Host "Building OpenSSL with theses parameters:"
-    Write-Host "MINGW_HOME            : ${env:MINGW_HOME}"
-    Write-Host "MSYS_HOME             : ${env:MSYS_HOME}"
-    Write-Host "OPENSSL_HOME          : ${env:OPENSSL_HOME}"
-    Write-Host "OPENSSL_INSTALL_DIR   : ${env:OPENSSL_INSTALL_DIR}"
-    Write-Host "OPENSSL_STAGE_DIR     : ${env:OPENSSL_STAGE_DIR}"
-    Write-Host "OPENSSL_STAGE_MSYS_DIR: ${env:OPENSSL_STAGE_MSYS_DIR}"
-    Write-Host "OPENSSL_TOOLSET       : ${env:OPENSSL_TOOLSET}"
-    Write-Host "OPENSSL_ADDRESS_MODEL : ${env:OPENSSL_ADDRESS_MODEL}"
-    Write-Host "OPENSSL_LINKAGE       : ${env:OPENSSL_LINKAGE}"
+    Write-Host "MINGW_HOME              : ${env:MINGW_HOME}"
+    Write-Host "MSYS_HOME               : ${env:MSYS_HOME}"
+    Write-Host "OPENSSL_HOME            : ${env:OPENSSL_HOME}"
+    Write-Host "OPENSSL_INSTALL_DIR     : ${env:OPENSSL_INSTALL_DIR}"
+    Write-Host "OPENSSL_STAGE_DIR       : ${env:OPENSSL_STAGE_DIR}"
+    Write-Host "OPENSSL_STAGE_MSYS_DIR  : ${env:OPENSSL_STAGE_MSYS_DIR}"
+    Write-Host "OPENSSL_TOOLSET         : ${env:OPENSSL_TOOLSET}"
+    Write-Host "OPENSSL_ADDRESS_MODEL   : ${env:OPENSSL_ADDRESS_MODEL}"
+    Write-Host "OPENSSL_LINKAGE         : ${env:OPENSSL_LINKAGE}"
+    Write-Host "OPENSSL_PATCH_FILE      : ${env:OPENSSL_PATCH_FILE}"
+    Write-Host "OPENSSL_PATCH_MSYS_FILE : ${env:OPENSSL_PATCH_MSYS_FILE}"
 
     & "${env:SCRIPT_DIR}\build.bat"
     if (${LastExitCode} -ne 0) {
