@@ -22,14 +22,8 @@ $env:MSVC_TOOLS_VERSION = [IO.File]::ReadAllLines("${env:MSVC_BUILD_DIR}\Microso
 $env:MSVC_TOOLS_DIR = "${env:MSVS_INSTALL_DIR}\VC\Tools\MSVC\${env:MSVC_TOOLS_VERSION}"
 Write-Host "MSVC_TOOLS_DIR: ${env:MSVC_TOOLS_DIR}"
 
-# Location of MSYS2
-$env:MSYS_HOME = "C:\msys64"
-
 # Required for unpacking with tar
 $env:PATH = "${env:PATH};${env:MSYS_HOME}\usr\bin"
-
-# Location of 7-Zip
-$env:SEVEN_ZIP_HOME = "${env:ProgramFiles}\7-Zip"
 
 # Extension of static library files
 $lib_file_extensions = @("a", "lib", "so", "dll")
@@ -170,6 +164,8 @@ foreach ($address_model in ${address_models}) {
       Set-Location -Path "${env:OPENSSL_HOME}"
 
       Write-Host "Building OpenSSL with theses parameters:"
+      Write-Host "ACTIVE_PERL_HOME        : ${env:ACTIVE_PERL_HOME}"
+      Write-Host "MSYS_HOME               : ${env:MSYS_HOME}"
       Write-Host "OPENSSL_HOME            : ${env:OPENSSL_HOME}"
       Write-Host "OPENSSL_INSTALL_DIR     : ${env:OPENSSL_INSTALL_DIR}"
       Write-Host "OPENSSL_STAGE_DIR       : ${env:OPENSSL_STAGE_DIR}"

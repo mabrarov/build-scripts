@@ -33,6 +33,15 @@ Write-Host "Downloading MSYS2 x64 from ${msys_url} into ${env:TMP}"
 Write-Host "Installing MSYS2 x64 into C:\msys64"
 & "${env:ProgramFiles}\7-Zip\7z.exe" x "${env:TMP}\msys2.7z" -o"C:" -aoa -y
 
+# Download ActivePerl
+$active_perl_url = "${env:ACTIVE_PERL_URL}/${env:ACTIVE_PERL_VERSION}/ActivePerl-${env:ACTIVE_PERL_VERSION}-MSWin32-x64-${env:ACTIVE_PERL_BUILD}.exe"
+Write-Host "Downloading ActivePerl from ${active_perl_url} into ${env:TMP}"
+(New-Object System.Net.WebClient).DownloadFile("${active_perl_url}", "${env:TMP}\ActivePerl.exe")
+
+# Install ActivePerl
+Write-Host "Installing ActivePerl from ${env:TMP}\ActivePerl.exe into C:\Perl64"
+Start-Process -FilePath "${env:TMP}\ActivePerl.exe" -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn") -Wait
+
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
 Remove-Item -Path "${env:TMP}\*" -Recurse -Force

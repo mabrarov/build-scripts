@@ -14,12 +14,6 @@ $ErrorActionPreference = "Stop"
 $env:MINGW64_HOME = "C:\mingw64"
 $env:MINGW32_HOME = "C:\mingw32"
 
-# Location of MSYS2
-$env:MSYS_HOME = "C:\msys64"
-
-# Location of 7-Zip
-$env:SEVEN_ZIP_HOME = "${env:ProgramFiles}\7-Zip"
-
 # Extension of static library files
 $lib_file_extensions = @("a", "lib", "so", "dll")
 

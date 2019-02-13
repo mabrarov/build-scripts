@@ -12,7 +12,7 @@ call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-set PATH=%PATH%;%MSYS_HOME%\usr\bin
+set PATH=%PATH%;%ACTIVE_PERL_HOME%\bin;%MSYS_HOME%\usr\bin
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
