@@ -79,12 +79,14 @@ foreach ($address_model in ${address_models}) {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars32.bat"
       $env:OPENSSL_TOOLSET = "VC-WIN32"
       $env:OPENSSL_BOOTSTRAP = "do_ms.bat"
+      $env:OPENSSL_ARCH = "x86"
       $address_model_target_dir_suffix = "x86"
     }
     "64" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
       $env:OPENSSL_TOOLSET = "VC-WIN64A"
       $env:OPENSSL_BOOTSTRAP = "do_win64a.bat"
+      $env:OPENSSL_ARCH = "x64"
       $address_model_target_dir_suffix = "x64"
     }
     default {
@@ -98,10 +100,14 @@ foreach ($address_model in ${address_models}) {
     # Determine parameters dependent on linkage
     switch (${env:OPENSSL_LINKAGE}) {
       "shared" {
-        $env:OPENSSL_MAKE_FILE = "ntdll.mak"
+        $env:OPENSSL_DLL_STR = "dll"
+        $env:OPENSSL_LINK_STR = ""
+        $env:OPENSSL_RUNTIME_SUFFIX = "MD"
       }
       "static" {
-        $env:OPENSSL_MAKE_FILE = "nt.mak"
+        $env:OPENSSL_DLL_STR = ""
+        $env:OPENSSL_LINK_STR = "static_lib"
+        $env:OPENSSL_RUNTIME_SUFFIX = "MT"
       }
       default {
         throw "Unsupported linkage: ${env:OPENSSL_LINKAGE}"
@@ -113,7 +119,16 @@ foreach ($address_model in ${address_models}) {
 
       if (${env:OPENSSL_BUILD_TYPE} -eq "debug") {
         $env:OPENSSL_TOOLSET = "debug-${env:OPENSSL_TOOLSET}"
+        $env:OPENSSL_BUILD_STR_PLAIN = "debug"
+        $env:OPENSSL_BUILD_STR = "debug_lib"
+        $env:OPENSSL_LIBSUFFIX = "d"
+      } else {
+        $env:OPENSSL_BUILD_STR_PLAIN = ""
+        $env:OPENSSL_BUILD_STR = ""
+        $env:OPENSSL_LIBSUFFIX = ""
       }
+
+      $env:OPENSSL_RUNTIME_FULL_SUFFIX = "${env:OPENSSL_RUNTIME_SUFFIX}${env:OPENSSL_LIBSUFFIX}"
 
       $env:OPENSSL_BUILD_DIR = "${env:BUILD_DIR}\openssl-${env:OPENSSL_VERSION}\${address_model}\${env:OPENSSL_LINKAGE}\${env:OPENSSL_BUILD_TYPE}"
       $env:OPENSSL_HOME = "${env:OPENSSL_BUILD_DIR}\openssl-${env:OPENSSL_VERSION}"

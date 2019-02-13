@@ -1,3 +1,4 @@
+diff -Naur util/mk1mf.pl util/mk1mf.pl
 --- util/mk1mf.pl	2017-05-25 15:54:38.000000000 +0300
 +++ util/mk1mf.pl	2017-05-27 16:32:21.475601600 +0300
 @@ -523,7 +523,7 @@
@@ -18,7 +19,7 @@
  		"no-sctp" => 0,
  		"no-srtp" => 0,
  		"no-gmp" => 0,
-
+diff -Naur util/mkdef.pl util/mkdef.pl
 --- util/mkdef.pl	2017-05-25 15:54:34.000000000 +0300
 +++ util/mkdef.pl	2017-05-27 16:32:21.477601700 +0300
 @@ -55,6 +55,8 @@
@@ -61,7 +62,7 @@
  	print OUT <<"EOF";
  ;
  ; Definition file for the DLL version of the $name library from OpenSSL
-
+diff -Naur util/pl/VC-32.pl util/pl/VC-32.pl
 --- util/pl/VC-32.pl	2017-05-25 15:54:34.000000000 +0300
 +++ util/pl/VC-32.pl	2017-05-27 16:32:21.479601800 +0300
 @@ -15,6 +15,20 @@
@@ -91,8 +92,8 @@
  # generate symbols.pdb unconditionally
 -$app_cflag.=" /Zi /Fd\$(TMP_D)/app";
 -$lib_cflag.=" /Zi /Fd\$(TMP_D)/lib";
-+$app_cflag.=" /Zi;
-+$lib_cflag.=" /Zi;
++$app_cflag.=" /Zi /Fd\$(TMP_D)/app".$libsuffix;
++$lib_cflag.=" /Zi /Fd\$(TMP_D)/lib".$libsuffix;
  $lflags.=" /debug";
  
  $obj='.obj';
