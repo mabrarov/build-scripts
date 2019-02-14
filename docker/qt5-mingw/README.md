@@ -1,11 +1,17 @@
 # Builder of Qt 5.x with MinGW
 
-This docker image can be used for building of [Qt](https://www.qt.io) 5.x with help of MinGW.
+Docker image for building [Qt](https://www.qt.io) 5.x with help of MinGW.
 
-## Examples of usage
+## Building
+
+```powershell
+docker build -t abrarov/qt5-mingw docker/qt5-mingw
+```
+
+## Usage
 
 todo
 
-```bash
+```powershell
 todo
 ```

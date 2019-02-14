@@ -1,6 +1,6 @@
 # Builder of OpenSSL with Microsoft Visual C++ 2017
 
-This docker image can be used for building of [OpenSSL](https://www.openssl.org/) with help of Microsoft Visual C++ 2017.
+Docker image for building [OpenSSL](https://www.openssl.org/) with help of Microsoft Visual C++ 2017.
 
 ## Building
 

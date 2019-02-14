@@ -1,6 +1,6 @@
 # Builder of ICU4C with MinGW
 
-Docker image for building of [ICU4C](http://site.icu-project.org/) with help of MinGW.
+Docker image for building [ICU4C](http://site.icu-project.org/) with help of MinGW.
 
 ## Building
 

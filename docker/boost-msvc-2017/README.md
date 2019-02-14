@@ -1,6 +1,6 @@
 # Builder of Boost C++ Libraries with MS Visual C++ 2017
 
-Docker image for building of [Boost C++ Libraries](http://www.boost.org/) with help of Microsoft Visual C++ 2017.
+Docker image for building [Boost C++ Libraries](http://www.boost.org/) with help of Microsoft Visual C++ 2017.
 
 ## Building
 
