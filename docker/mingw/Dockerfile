@@ -27,8 +27,8 @@ ENV MINGW_VERSION=8.1.0 \
     MINGW_32_TARGET=i686 \
     MINGW_32_THREADS=posix \
     MINGW_32_EXCEPTIONS=dwarf \
-    MINGW64_HOME = "C:\mingw64" \
-    MINGW32_HOME = "C:\mingw32"
+    MINGW64_HOME="C:\mingw64" \
+    MINGW32_HOME="C:\mingw32"
 
 ADD ["app", "C:/app/"]
 
