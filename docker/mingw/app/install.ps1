@@ -15,7 +15,7 @@ $mingw_url = "${env:MINGW_RELEASE_URL}/${env:MINGW_64_TOOLCHAIN_PATH}/${env:MING
 Write-Host "Downloading MinGW x64 from ${mingw_url} into ${env:TMP}"
 (New-Object System.Net.WebClient).DownloadFile("${mingw_url}", "${env:TMP}\mingw.7z")
 # Extract MinGW x64 and install it into C:\mingw64
-Write-Host "Installing MinGW x64 into C:\mingw64"
+Write-Host "Installing MinGW x64 into ${env:MINGW64_HOME}"
 & "${env:ProgramFiles}\7-Zip\7z.exe" x "${env:TMP}\mingw.7z" -o"C:" -aoa -y
 
 # Download MinGW x86
@@ -23,7 +23,7 @@ $mingw_url = "${env:MINGW_RELEASE_URL}/${env:MINGW_32_TOOLCHAIN_PATH}/${env:MING
 Write-Host "Downloading MinGW x86 from ${mingw_url} into ${env:TMP}"
 (New-Object System.Net.WebClient).DownloadFile("${mingw_url}", "$env:TMP\mingw.7z")
 # Extract MinGW x64 and install it into C:\mingw32
-Write-Host "Installing MinGW x86 into C:\mingw32"
+Write-Host "Installing MinGW x86 into ${env:MINGW32_HOME}"
 & "${env:ProgramFiles}\7-Zip\7z.exe" x "${env:TMP}\mingw.7z" -o"C:" -aoa -y
 
 # Cleanup

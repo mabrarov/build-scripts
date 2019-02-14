@@ -38,7 +38,7 @@ Start-Process -FilePath "${env:TMP}\ActivePerl.exe" -ArgumentList ("/exenoui", "
 
 # Download and install Python 3.x
 $python_dist_url="${env:PYTHON_URL}/${env:PYTHON_VERSION}/python-${env:PYTHON_VERSION}-amd64.exe"
-Write-Host "Downloading Python from ${python_dist_ur} into ${env:TMP}"
+Write-Host "Downloading Python from ${python_dist_url} into ${env:TMP}"
 (New-Object System.Net.WebClient).DownloadFile("${python_dist_url}", "${env:TMP}\Python.exe")
 Write-Host "Installing Python from ${env:TMP}\Python.exe into ${env:PYTHON_HOME}"
 Start-Process -FilePath "${env:TMP}\Python.exe" -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "InstallAllUsers=1") -Wait

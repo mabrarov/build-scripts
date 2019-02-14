@@ -8,23 +8,6 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-# Location of MinGW
-$env:MINGW64_HOME = "C:\mingw64"
-$env:MINGW32_HOME = "C:\mingw32"
-
-# Location of 7-Zip
-$env:SEVEN_ZIP_HOME = "$env:ProgramFiles\7-Zip"
-
-# Location of Active Perl
-$env:PERL_HOME = "C:\Perl64"
-
-# Location of Python
-$python_version_short = $env:PYTHON_VERSION -replace '(\d+)\.(\d+)\.(\d)', '$1$2'
-$env:PYTHON_HOME = "$env:ProgramFiles\Python$python_version_short"
-
-# Location of MSYS2
-$env:MSYS_HOME = "C:\msys64"
-
 $qt_version_short = "$env:QT_VERSION" -replace '(\d+)\.(\d+)\.(\d)', '$1.$2'
 $qt_archive_file = "$env:DOWNLOAD_DIR\qt-everywhere-opensource-src-$env:QT_VERSION.zip"
 $qt_download_url = "$env:QT_URL/$qt_version_short/$env:QT_VERSION/single/qt-everywhere-opensource-src-$env:QT_VERSION.zip"

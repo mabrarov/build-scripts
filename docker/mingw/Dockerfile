@@ -26,7 +26,9 @@ ENV MINGW_VERSION=8.1.0 \
     MINGW_32_TOOLCHAIN_PATH=Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds \
     MINGW_32_TARGET=i686 \
     MINGW_32_THREADS=posix \
-    MINGW_32_EXCEPTIONS=dwarf
+    MINGW_32_EXCEPTIONS=dwarf \
+    MINGW64_HOME = "C:\mingw64" \
+    MINGW32_HOME = "C:\mingw32"
 
 ADD ["app", "C:/app/"]
 
