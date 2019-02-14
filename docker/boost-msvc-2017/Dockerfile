@@ -1,28 +1,24 @@
 #
 # Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
 #
-# Distributed under the Boost Software License, Version 1.0. (See accompanying
-# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:1.0.1
+FROM abrarov/msvc-2017:2.0.0
 
-LABEL name="abrarov/boost-msvc-2017" \
-    version="1.0.1" \
-    description="Builder of Boost C++ Libraries with Microsoft Visual C++ 2017"
+ARG image_version=""
+ARG image_revision=""
 
-ENV BOOST_VERSION=1.64.0 \
+LABEL name="abrarov/boost-mingw" \
+    version="${image_version}" \
+    revision="${image_revision}" \
+    description="Builder of Boost C++ Libraries with MS Visual C++ 2017"
+
+ENV BOOST_VERSION=1.69.0 \
     BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
-    SCRIPT_DIR=C:\\app \
-    DOWNLOAD_DIR=C:\\download \
-    BUILD_DIR=C:\\build \
-    TARGET_DIR=C:\\target
+    SCRIPT_DIR=C:\\app
 
 ADD ["app", "C:/app/"]
-
-RUN mkdir C:\download && \
-    mkdir C:\build && \
-    mkdir C:\target
 
 VOLUME ["C:/target"]
 

@@ -4,10 +4,14 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM microsoft/windowsservercore:10.0.14393.1198
+FROM abrarov/win-builder:2.0.0
+
+ARG image_version=""
+ARG image_revision=""
 
 LABEL name="abrarov/mingw" \
-    version="1.0.3" \
+    version="${image_version}" \
+    revision="${image_revision}" \
     description="MinGW-w64 from MinGW-builds"
 
 ENV MINGW_VERSION=8.1.0 \
@@ -22,9 +26,7 @@ ENV MINGW_VERSION=8.1.0 \
     MINGW_32_TOOLCHAIN_PATH=Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds \
     MINGW_32_TARGET=i686 \
     MINGW_32_THREADS=posix \
-    MINGW_32_EXCEPTIONS=dwarf \
-    SEVEN_ZIP_VERSION=1801 \
-    SEVEN_ZIP_DOWNLOAD_URL=http://www.7-zip.org/a
+    MINGW_32_EXCEPTIONS=dwarf
 
 ADD ["app", "C:/app/"]
 

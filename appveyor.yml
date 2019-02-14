@@ -1,0 +1,19 @@
+image: Visual Studio 2017
+
+environment:
+  DOCKER_USER:
+    secure: Njm3GGSLIDHB5/1d0I/MlQ==
+  DOCKER_PASS:
+    secure: f3DqVP4VKrZqL/5I+s2M7kmMFrG0nINb0qdcamN2GtU=
+
+install:
+  - ps: .\install.ps1
+
+build_script:
+  - ps: .\build.ps1
+
+test_script:
+  - ps: .\test.ps1
+
+deploy_script:
+  - ps: .\deploy.ps1

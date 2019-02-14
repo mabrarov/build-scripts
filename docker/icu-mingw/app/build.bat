@@ -3,23 +3,32 @@
 rem
 rem Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
 rem
-rem Distributed under the Boost Software License, Version 1.0. (See accompanying
-rem file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+rem Distributed under the MIT License (see accompanying LICENSE)
 rem
 
-set PATH=%MSYS_HOME%\usr\bin;%MINGW_HOME%\bin;%PATH%
-if errorlevel 1 goto exit
+set exit_code=0
 
-if not "--%ICU_CONFIGURE_PATCH_MSYS_FILE%" == "--" (
-  patch -uNf -i "%ICU_CONFIGURE_PATCH_MSYS_FILE%"
+set PATH=%MSYS_HOME%\usr\bin;%MINGW_HOME%\bin;%PATH%
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
+
+if not "--%ICU_PATCH_MSYS_FILE%" == "--" (
+  patch --binary -uNf -p0 -i "%ICU_PATCH_MSYS_FILE%"
+  set exit_code=%errorlevel%
+  if %exit_code% neq 0 goto exit
 )
 
 bash -C ./runConfigureICU %ICU_CONFIGURE_OPTIONS% %ICU_PLATFORM% --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE% %ICU_BUILD_OPTIONS%
-if errorlevel 1 goto exit
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 make
-if errorlevel 1 goto exit
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 make install
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 :exit
+exit /B %exit_code%

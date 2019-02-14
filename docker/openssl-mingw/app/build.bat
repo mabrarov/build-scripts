@@ -3,26 +3,36 @@
 rem
 rem Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
 rem
-rem Distributed under the Boost Software License, Version 1.0. (See accompanying
-rem file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+rem Distributed under the MIT License (see accompanying LICENSE)
 rem
 
-set PATH=%MINGW_HOME%\bin;%PATH%
-if errorlevel 1 goto exit
+set exit_code=0
 
-if "%OPENSSL_LINKAGE%" == "shared" (
-  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% shared
-) else (
-  perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% enable-static-engine no-shared
+set PATH=%MSYS_HOME%\usr\bin;%MINGW_HOME%\bin;%PATH%
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
+
+if not "--%OPENSSL_PATCH_MSYS_FILE%" == "--" (
+  patch --binary -uNf -p0 -i "%OPENSSL_PATCH_MSYS_FILE%"
+  set exit_code=%errorlevel%
+  if %exit_code% neq 0 goto exit
 )
-if errorlevel 1 goto exit
+
+perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% enable-static-engine %OPENSSL_CONFIGURE_LINKAGE%
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 make depend
-if errorlevel 1 goto exit
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 make
-if errorlevel 1 goto exit
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 make install
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 :exit
+exit /B %exit_code%

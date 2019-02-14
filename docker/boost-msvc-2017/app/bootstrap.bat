@@ -3,13 +3,18 @@
 rem
 rem Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
 rem
-rem Distributed under the Boost Software License, Version 1.0. (See accompanying
-rem file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+rem Distributed under the MIT License (see accompanying LICENSE)
 rem
 
+set exit_code=0
+
 call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
-if errorlevel 1 goto exit
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 call "%BOOST_BOOTSTRAP%"
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
 
 :exit
+exit /B %exit_code%
