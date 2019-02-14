@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 Write-Host "Get version of MinGW x64 in container created from abrarov/mingw:latest image"
-docker run --rm abrarov/mingw "`${env:MINGW64_HOME}\bin\g++" --version
+docker run --rm abrarov/mingw "%MINGW64_HOME%\bin\g++" --version
 
 Write-Host "Get version of MinGW x86 in container created from abrarov/mingw:latest image"
-docker run --rm abrarov/mingw "`${env:MINGW32_HOME}\bin\g++" --version
+docker run --rm abrarov/mingw "%MINGW32_HOME%\bin\g++" --version
