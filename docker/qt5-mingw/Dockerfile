@@ -7,8 +7,12 @@
 
 FROM abrarov/mingw:2.1.0
 
+ARG image_version=""
+ARG image_revision=""
+
 LABEL name="abrarov/qt5-mingw" \
-    version="1.0.0" \
+    version="${image_version}" \
+    revision="${image_revision}" \
     description="Builder of Qt 5.x with MinGW"
 
 ENV QT_VERSION=5.9.1 \
