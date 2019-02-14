@@ -5,7 +5,7 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-FROM abrarov/mingw:1.0.2
+FROM abrarov/mingw:2.1.0
 
 LABEL name="abrarov/qt5-mingw" \
     version="1.0.0" \
@@ -14,19 +14,11 @@ LABEL name="abrarov/qt5-mingw" \
 ENV QT_VERSION=5.9.1 \
     QT_URL=http://download.qt.io/official_releases/qt \
     SCRIPT_DIR=C:\\app \
-    DEPEND_DIR=C:\\depend \
-    PYTHON_VERSION=3.6.2 \
-    PYTHON_URL=https://www.python.org/ftp/python
+    DEPEND_DIR=C:\\depend
 
 ADD ["app", "C:/app/"]
 
-RUN mkdir C:\download && \
-    mkdir C:\build && \
-    mkdir C:\target && \
-    mkdir C:\depend  && \
-    powershell "(New-Object System.Net.WebClient).DownloadFile(\"$env:PYTHON_URL/$env:PYTHON_VERSION/python-$env:PYTHON_VERSION-amd64.exe\", \"$env:TMP\Python.exe\")" && \
-    powershell "Start-Process -FilePath \"$env:TMP\Python.exe\" -ArgumentList (\"/exenoui\", \"/norestart\", \"/quiet\", \"/qn\", \"InstallAllUsers=1\") -Wait" && \
-    powershell "Remove-Item \"$env:TMP\*\" -Recurse -Force"
+RUN mkdir C:\depend
 
 VOLUME ["C:/target", "C:/depend"]
 

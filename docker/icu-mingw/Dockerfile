@@ -5,7 +5,7 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-FROM abrarov/mingw:2.0.0
+FROM abrarov/mingw:2.1.0
 
 ARG image_version=""
 ARG image_revision=""

@@ -27,7 +27,10 @@ ENV DOWNLOAD_DIR=C:\\download \
     ACTIVE_PERL_VERSION=5.26.3.2603 \
     ACTIVE_PERL_BUILD=a95bce075 \
     ACTIVE_PERL_URL=http://downloads.activestate.com/ActivePerl/releases \
-    ACTIVE_PERL_HOME=C:\\Perl64
+    ACTIVE_PERL_HOME=C:\\Perl64 \
+    PYTHON_VERSION=3.7.2 \
+    PYTHON_URL=https://www.python.org/ftp/python \
+    PYTHON_HOME="C:\Program Files\Python37"
 
 ADD ["app", "C:/app/"]
 

@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/win-builder:2.0.0
+FROM abrarov/win-builder:2.1.0
 
 ARG image_version=""
 ARG image_revision=""

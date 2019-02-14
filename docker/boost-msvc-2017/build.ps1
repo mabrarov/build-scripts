@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 #TODO: find way to deal with tags and versions
-$image_version = "2.0.0"
+$image_version = "2.1.0"
 $image_revision = "$(git rev-parse --verify HEAD)"
 
 Write-Host "Building abrarov/boost-msvc-2017:${image_version} image with ${image_revision} revision"
