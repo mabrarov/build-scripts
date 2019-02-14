@@ -14,10 +14,6 @@ LABEL name="abrarov/msvc-2017" \
     revision="${image_revision}" \
     description="Microsoft Visual C++ as part of Microsoft Visual Studio 2017 Community"
 
-LABEL name="abrarov/msvc-2017" \
-    version="1.0.2" \
-    description="Microsoft Visual C++ as part of Microsoft Visual Studio 2017 Community"
-
 ENV MSVS_INSTALL_URL=https://aka.ms/vs/15/release/vs_community.exe \
     MSVS_INSTALL_EXECUTABLE=vs_community.exe \
     VSWHERE_RELEASE_URL=https://github.com/Microsoft/vswhere/releases/download \
