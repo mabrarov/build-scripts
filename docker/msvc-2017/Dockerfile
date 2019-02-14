@@ -4,10 +4,14 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/win-builder:1.0.0
+FROM abrarov/win-builder:2.0.0
+
+ARG image_version=""
+ARG image_revision=""
 
 LABEL name="abrarov/msvc-2017" \
-    version="1.0.2" \
+    version="${image_version}" \
+    revision="${image_revision}" \
     description="Microsoft Visual C++ as part of Microsoft Visual Studio 2017 Community"
 
 ENV MSVS_INSTALL_URL=https://aka.ms/vs/15/release/vs_community.exe \

@@ -1,5 +1,5 @@
---- runConfigureICU
-+++ runConfigureICU
+--- ./runConfigureICU	2019-02-13 21:00:00 +0300
++++ ./runConfigureICU	2019-02-13 21:10:00 +0300
 @@ -18,7 +18,7 @@
          uletter=u
      fi

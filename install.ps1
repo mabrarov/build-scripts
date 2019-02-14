@@ -7,6 +7,7 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-.\docker\win-builder\appveyor\build.ps1
-.\docker\mingw\appveyor\build.ps1
-.\docker\msvc-2017\appveyor\build.ps1
+$docker_host_win_version = $(gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').BuildLabEx
+Write-Host "Windows version ${docker_host_win_version}"
+
+docker version

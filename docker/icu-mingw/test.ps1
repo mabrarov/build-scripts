@@ -4,4 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
+# Stop immediately if any error happens
+$ErrorActionPreference = "Stop"
+
 #TODO

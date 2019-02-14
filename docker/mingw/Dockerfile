@@ -4,10 +4,14 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/win-builder:1.0.0
+FROM abrarov/win-builder:2.0.0
+
+ARG image_version=""
+ARG image_revision=""
 
 LABEL name="abrarov/mingw" \
-    version="1.0.3" \
+    version="${image_version}" \
+    revision="${image_revision}" \
     description="MinGW-w64 from MinGW-builds"
 
 ENV MINGW_VERSION=8.1.0 \

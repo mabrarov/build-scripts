@@ -9,7 +9,7 @@ Contains:
 
 ## Building
 
-```bash
+```powershell
 docker build -t abrarov/mingw docker/mingw
 ```
 
@@ -17,12 +17,12 @@ docker build -t abrarov/mingw docker/mingw
 
 Get version of MinGW x64 compiler:
 
-```bash
+```powershell
 docker run --rm abrarov/mingw "C:\mingw64\bin\g++" --version
 ```
 
 Get version of MinGW x86 compiler:
 
-```bash
+```powershell
 docker run --rm abrarov/mingw "C:\mingw32\bin\g++" --version
 ```
