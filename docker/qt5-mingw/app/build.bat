@@ -24,8 +24,8 @@ if not "--%QT_PATCH_MSYS_FILE%" == "--" (
   if %exit_code% neq 0 goto exit
 )
 
-call "configure.bat" -mp -platform win32-g++ -debug-and-release -opensource -confirm-license ^
--static -opengl desktop -qt-zlib -icu -qt-libpng -qt-libjpeg -qt-sql-sqlite ^
+call "configure.bat" -platform win32-g++ -debug-and-release -opensource -confirm-license ^
+-static -opengl desktop -qt-zlib -icu -qt-libpng -qt-libjpeg ^
 -nomake examples -nomake tests ^
 -I "%ICU_DIR%\include" -L "%ICU_DIR%\lib" ^
 -I "%OPENSSL_DIR%\include" -L "%OPENSSL_DIR%\lib" ^
