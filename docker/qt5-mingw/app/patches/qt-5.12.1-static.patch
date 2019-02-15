@@ -1,0 +1,9 @@
+--- ./qtbase/mkspecs/win32-g++/qmake.conf	2019-02-13 21:00:00 +0300
++++ ./qtbase/mkspecs/win32-g++/qmake.conf	2019-02-13 21:10:00 +0300
+@@ -22,4 +22,6 @@
+ QMAKE_LINK              = $${CROSS_COMPILE}g++
+ QMAKE_LINK_C            = $${CROSS_COMPILE}gcc
+ 
++QMAKE_LFLAGS            = -static -static-libgcc -static-libstdc++
++
+ load(qt_config)

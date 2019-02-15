@@ -13,5 +13,5 @@ docker build -t abrarov/qt5-mingw docker/qt5-mingw
 todo
 
 ```powershell
-todo
+docker run --rm -v C:/Users/Public/build-scripts/qt5/target:C:/target -v C:/Users/Public/build-scripts/qt5/download:C:/download -v C:/Users/Public/build-scripts/qt5/depend:C:/depend:ro abrarov/qt5-mingw
 ```
