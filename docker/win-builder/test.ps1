@@ -17,4 +17,4 @@ Write-Host "Running ActivePerl in container created from abrarov/win-builder:lat
 docker run --rm abrarov/win-builder:latest "C:\Perl64\bin\perl.exe" --version
 
 Write-Host "Running Python in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\Program Files\Python37\bin\python.exe" --version
+docker run --rm abrarov/win-builder:latest "C:\Program Files\Python37\python.exe" --version
