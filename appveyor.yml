@@ -1,8 +1,7 @@
 image: Visual Studio 2017
 
 environment:
-  DOCKER_USER:
-    secure: Njm3GGSLIDHB5/1d0I/MlQ==
+  DOCKER_USER: abrarov
   DOCKER_PASS:
     secure: f3DqVP4VKrZqL/5I+s2M7kmMFrG0nINb0qdcamN2GtU=
 
