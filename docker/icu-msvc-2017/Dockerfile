@@ -15,7 +15,7 @@ LABEL name="abrarov/icu-msvc-2017" \
     revision="${image_revision}" \
     description="Builder of ICU with Microsoft Visual C++ 2017"
 
-ENV ICU_VERSION=57.1 \
+ENV ICU_VERSION=58.2 \
     ICU_URL=http://download.icu-project.org/files/icu4c \
     SCRIPT_DIR=C:\\app
 
