@@ -211,3 +211,26 @@
              TEST_ASSERT_EQ(result1 & restrictionLevel, restrictionLevel);
 
              // UTF8 endpoint
+
+--- ./config/mh-mingw	2019-02-13 21:00:00 +0300
++++ ./config/mh-mingw	2019-02-13 21:10:00 +0300
+@@ -72,7 +72,7 @@
+ A = a
+
+ ## An import library is needed for z/OS and MSVC
+-IMPORT_LIB_EXT = .dll.a
++IMPORT_LIB_EXT = .a
+
+ LIBPREFIX=lib
+
+--- ./config/mh-mingw64	2019-02-13 21:00:00 +0300
++++ ./config/mh-mingw64	2019-02-13 21:10:00 +0300
+@@ -72,7 +72,7 @@
+ A = a
+
+ ## An import library is needed for z/OS and MSVC
+-IMPORT_LIB_EXT = .dll.a
++IMPORT_LIB_EXT = .a
+
+ LIBPREFIX=
+
