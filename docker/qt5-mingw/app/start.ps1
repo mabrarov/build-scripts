@@ -13,11 +13,6 @@ $qt_dist_base_name = "qt-everywhere-src-"
 $qt_archive_file = "${env:DOWNLOAD_DIR}\${qt_dist_base_name}${env:QT_VERSION}.zip"
 $qt_download_url = "${env:QT_URL}/${qt_version_short}/${env:QT_VERSION}/single/${qt_dist_base_name}${env:QT_VERSION}.zip"
 
-$icu_base_dir = "${env:DEPEND_DIR}"
-if (Test-Path env:ICU_DIR) {
-  $icu_base_dir = "${env:ICU_DIR}"
-}
-
 $openssl_base_dir = "${env:DEPEND_DIR}"
 if (Test-Path env:OPENSSL_DIR) {
   $openssl_base_dir = "${env:OPENSSL_DIR}"
@@ -119,10 +114,6 @@ foreach ($address_model in ${address_models}) {
     $env:QT_PATCH_MSYS_FILE = "${env:QT_PATCH_FILE}" -replace "\\", "/"
     $env:QT_PATCH_MSYS_FILE = "${env:QT_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
-    $env:ICU_DIR = "${icu_base_dir}\icu4c-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
-    if (-not (Test-Path -Path "${env:ICU_DIR}")) {
-      Write-Error "ICU not found at ${env:ICU_DIR}"
-    }
     $env:OPENSSL_DIR = "${openssl_base_dir}\openssl-${env:OPENSSL_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
     if (-not (Test-Path -Path "${env:OPENSSL_DIR}")) {
       Write-Error "OpenSSL not found at ${env:OPENSSL_DIR}"
@@ -132,7 +123,6 @@ foreach ($address_model in ${address_models}) {
 
     Write-Host "Building Qt with theses parameters:"
     Write-Host "MINGW_HOME                   : ${env:MINGW_HOME}"
-    Write-Host "ICU_DIR                      : ${env:ICU_DIR}"
     Write-Host "OPENSSL_DIR                  : ${env:OPENSSL_DIR}"
     Write-Host "QT_HOME                      : ${env:QT_HOME}"
     Write-Host "QT_INSTALL_DIR               : ${env:QT_INSTALL_DIR}"

@@ -15,8 +15,7 @@ LABEL name="abrarov/qt5-mingw" \
     revision="${image_revision}" \
     description="Builder of Qt 5.x with MinGW"
 
-ENV ICU_VERSION=58.2 \
-    OPENSSL_VERSION=1.0.2q \
+ENV OPENSSL_VERSION=1.0.2q \
     QT_VERSION=5.12.1 \
     QT_URL=http://download.qt.io/official_releases/qt \
     SCRIPT_DIR=C:\\app \
