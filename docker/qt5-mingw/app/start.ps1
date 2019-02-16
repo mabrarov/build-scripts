@@ -63,6 +63,19 @@ foreach ($address_model in ${address_models}) {
     $env:QT_HOME = "${env:QT_BUILD_DIR}\${qt_dist_base_name}${env:QT_VERSION}"
     Write-Host "Assuming root folder for sources is: ${env:QT_HOME}"
 
+    $env:QT_CONFIGURE_OPTIONS_LINKAGE = ""
+    switch (${env:QT_LINKAGE}) {
+      "static" {
+        $env:QT_CONFIGURE_OPTIONS_LINKAGE = "-static"
+      }
+      "shared" {
+        $env:QT_CONFIGURE_OPTIONS_LINKAGE = ""
+      }
+      default {
+        throw "Unsupported linkage: $env:QT_LINKAGE"
+      }
+    }
+
     if (Test-Path -Path "${env:QT_HOME}") {
       Write-Host "Found existing folder ${env:QT_HOME}, assuming that sources are in place and skipping downloading and unpacking of sources"
     } else {
@@ -118,15 +131,16 @@ foreach ($address_model in ${address_models}) {
     Set-Location -Path "${env:QT_HOME}"
 
     Write-Host "Building Qt with theses parameters:"
-    Write-Host "MINGW_HOME         : ${env:MINGW_HOME}"
-    Write-Host "ICU_DIR            : ${env:ICU_DIR}"
-    Write-Host "OPENSSL_DIR        : ${env:OPENSSL_DIR}"
-    Write-Host "QT_HOME            : ${env:QT_HOME}"
-    Write-Host "QT_INSTALL_DIR     : ${env:QT_INSTALL_DIR}"
-    Write-Host "QT_ADDRESS_MODEL   : ${env:QT_ADDRESS_MODEL}"
-    Write-Host "QT_LINKAGE         : ${env:QT_LINKAGE}"
-    Write-Host "QT_PATCH_FILE      : ${env:QT_PATCH_FILE}"
-    Write-Host "QT_PATCH_MSYS_FILE : ${env:QT_PATCH_MSYS_FILE}"
+    Write-Host "MINGW_HOME                   : ${env:MINGW_HOME}"
+    Write-Host "ICU_DIR                      : ${env:ICU_DIR}"
+    Write-Host "OPENSSL_DIR                  : ${env:OPENSSL_DIR}"
+    Write-Host "QT_HOME                      : ${env:QT_HOME}"
+    Write-Host "QT_INSTALL_DIR               : ${env:QT_INSTALL_DIR}"
+    Write-Host "QT_ADDRESS_MODEL             : ${env:QT_ADDRESS_MODEL}"
+    Write-Host "QT_LINKAGE                   : ${env:QT_LINKAGE}"
+    Write-Host "QT_CONFIGURE_OPTIONS_LINKAGE : ${env:QT_CONFIGURE_OPTIONS_LINKAGE}"
+    Write-Host "QT_PATCH_FILE                : ${env:QT_PATCH_FILE}"
+    Write-Host "QT_PATCH_MSYS_FILE           : ${env:QT_PATCH_MSYS_FILE}"
 
     & "${env:SCRIPT_DIR}\build.bat"
     if (${LastExitCode} -ne 0) {
