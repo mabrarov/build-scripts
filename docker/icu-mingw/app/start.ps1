@@ -152,14 +152,14 @@ foreach ($address_model in ${address_models}) {
         Write-Host "Extracted source code archive"
       }
 
-      $env:ICU_INSTALL_DIR = "${env:TARGET_DIR}\icu-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:ICU_LINKAGE}"
+      $env:ICU_INSTALL_DIR = "${env:TARGET_DIR}\icu4c-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:ICU_LINKAGE}"
       $env:ICU_STAGE_DIR = "${env:ICU_HOME}\dist"
       $env:ICU_STAGE_MSYS_DIR = "${env:ICU_STAGE_DIR}" -replace "\\", "/"
       $env:ICU_STAGE_MSYS_DIR = "${env:ICU_STAGE_MSYS_DIR}" -replace "^(C):", "/c"
 
       Set-Location -Path "${env:ICU_HOME}\source"
 
-      Write-Host "Building ICU with theses parameters:"
+      Write-Host "Building ICU with these parameters:"
       Write-Host "MINGW_HOME            : ${env:MINGW_HOME}"
       Write-Host "MSYS_HOME             : ${env:MSYS_HOME}"
       Write-Host "ICU_HOME              : ${env:ICU_HOME}"
