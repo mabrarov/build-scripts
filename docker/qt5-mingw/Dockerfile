@@ -7,16 +7,8 @@
 
 FROM abrarov/mingw:2.1.0
 
-ARG image_version=""
-ARG image_revision=""
-
-LABEL name="abrarov/qt5-mingw" \
-    version="${image_version}" \
-    revision="${image_revision}" \
-    description="Builder of Qt 5.x with MinGW"
-
 ENV OPENSSL_VERSION=1.0.2q \
-    QT_VERSION=5.12.1 \
+    QT_VERSION=5.13.0 \
     QT_URL=http://download.qt.io/official_releases/qt \
     SCRIPT_DIR=C:\\app \
     DEPEND_DIR=C:\\depend
@@ -30,3 +22,11 @@ VOLUME ["C:/target", "C:/depend"]
 ENTRYPOINT ["powershell"]
 
 CMD ["C:/app/start.ps1"]
+
+ARG image_version=""
+ARG image_revision=""
+
+LABEL name="abrarov/qt5-mingw" \
+    version="${image_version}" \
+    revision="${image_revision}" \
+    description="Builder of Qt 5.x with MinGW"

@@ -6,14 +6,6 @@
 
 FROM microsoft/windowsservercore:10.0.14393.1198
 
-ARG image_version=""
-ARG image_revision=""
-
-LABEL name="abrarov/win-builder" \
-    version="${image_version}" \
-    revision="${image_revision}" \
-    description="Base image for builders on Windows"
-
 ENV DOWNLOAD_DIR=C:\\download \
     BUILD_DIR=C:\\build \
     TARGET_DIR=C:\\target \
@@ -39,3 +31,11 @@ RUN mkdir C:\download && \
     mkdir C:\target && \
     powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
     powershell "Remove-Item -Path 'C:\app' -Recurse -Force"
+
+ARG image_version=""
+ARG image_revision=""
+
+LABEL name="abrarov/win-builder" \
+    version="${image_version}" \
+    revision="${image_revision}" \
+    description="Base image for builders on Windows"

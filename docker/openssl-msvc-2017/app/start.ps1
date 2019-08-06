@@ -162,7 +162,7 @@ foreach ($address_model in ${address_models}) {
 
       Set-Location -Path "${env:OPENSSL_HOME}"
 
-      Write-Host "Building OpenSSL with theses parameters:"
+      Write-Host "Building OpenSSL with these parameters:"
       Write-Host "ACTIVE_PERL_HOME            : ${env:ACTIVE_PERL_HOME}"
       Write-Host "MSYS_HOME                   : ${env:MSYS_HOME}"
       Write-Host "OPENSSL_HOME                : ${env:OPENSSL_HOME}"

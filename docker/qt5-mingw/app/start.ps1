@@ -121,7 +121,7 @@ foreach ($address_model in ${address_models}) {
 
     Set-Location -Path "${env:QT_HOME}"
 
-    Write-Host "Building Qt with theses parameters:"
+    Write-Host "Building Qt with these parameters:"
     Write-Host "MINGW_HOME                   : ${env:MINGW_HOME}"
     Write-Host "OPENSSL_DIR                  : ${env:OPENSSL_DIR}"
     Write-Host "QT_HOME                      : ${env:QT_HOME}"

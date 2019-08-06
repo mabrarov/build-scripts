@@ -155,7 +155,7 @@ foreach ($address_model in ${address_models}) {
 
       Set-Location -Path "${env:ICU_HOME}\source"
 
-      Write-Host "Building ICU with theses parameters:"
+      Write-Host "Building ICU with these parameters:"
       Write-Host "MINGW_HOME            : ${env:MINGW_HOME}"
       Write-Host "MSYS_HOME             : ${env:MSYS_HOME}"
       Write-Host "ICU_HOME              : ${env:ICU_HOME}"

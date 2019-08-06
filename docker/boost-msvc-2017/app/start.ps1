@@ -105,7 +105,7 @@ foreach ($address_model in ${address_models}) {
       }
       $env:BOOST_RUNTIME_LINKAGE = ${runtime_linkage}
       Set-Location -Path "${env:BOOST_ROOT_DIR}"
-      Write-Host "Building Boost C++ Libraries with theses parameters:"
+      Write-Host "Building Boost C++ Libraries with these parameters:"
       Write-Host "MSVC_CMD_BOOTSTRAP   : ${env:MSVC_CMD_BOOTSTRAP}"
       Write-Host "B2_BIN               : ${env:B2_BIN}"
       Write-Host "B2_TOOLSET           : ${env:B2_TOOLSET}"
