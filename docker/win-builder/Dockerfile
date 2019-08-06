@@ -9,7 +9,7 @@ FROM microsoft/windowsservercore:10.0.14393.1198
 ENV DOWNLOAD_DIR=C:\\download \
     BUILD_DIR=C:\\build \
     TARGET_DIR=C:\\target \
-    SEVEN_ZIP_VERSION=1900 \
+    SEVEN_ZIP_VERSION=1801 \
     SEVEN_ZIP_DOWNLOAD_URL=http://www.7-zip.org/a \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
     MSYS2_URL=https://bintray.com/mabrarov/generic/download_file?file_path=msys2 \
