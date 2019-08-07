@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/win-builder:2.0.0
+FROM abrarov/win-builder:2.1.0
 
 ENV MSVS_INSTALL_URL=https://aka.ms/vs/15/release/vs_community.exe \
     MSVS_INSTALL_EXECUTABLE=vs_community.exe \
