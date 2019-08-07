@@ -1,6 +1,6 @@
 # Builder of ICU4C with Microsoft Visual C++ 2017
 
-Docker image for building [ICU4C](http://site.icu-project.org/) with help of Microsoft Visual C++ 2017.
+Docker image for building [ICU4C](http://site.icu-project.org/) with Microsoft Visual C++ 2017.
 
 ## Building
 
