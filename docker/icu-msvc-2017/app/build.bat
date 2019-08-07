@@ -17,7 +17,7 @@ set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 if not "--%ICU_PATCH_MSYS_FILE%" == "--" (
-  patch --binary -uNf -p0 -i "%ICU_PATCH_MSYS_FILE%"
+  patch -uNf -p0 -i "%ICU_PATCH_MSYS_FILE%"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 )
