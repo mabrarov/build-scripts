@@ -10,10 +10,6 @@ $ErrorActionPreference = "Stop"
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
-# Location of MinGW
-$env:MINGW64_HOME = "C:\mingw64"
-$env:MINGW32_HOME = "C:\mingw32"
-
 $boost_version_underscore = "${env:BOOST_VERSION}" -replace "\.", '_'
 $env:BOOST_ROOT_DIR = "${env:BUILD_DIR}\boost_${boost_version_underscore}"
 Write-Host "Assuming root folder for sources is: ${env:BOOST_ROOT_DIR}"
@@ -104,7 +100,7 @@ foreach ($address_model in ${address_models}) {
       }
       $env:BOOST_RUNTIME_LINKAGE = ${runtime_linkage}
       Set-Location -Path "${env:BOOST_ROOT_DIR}"
-      Write-Host "Building Boost C++ Libraries with theses parameters:"
+      Write-Host "Building Boost C++ Libraries with these parameters:"
       Write-Host "MINGW_HOME              : ${env:MINGW_HOME}"
       Write-Host "B2_BIN                  : ${env:B2_BIN}"
       Write-Host "B2_TOOLSET              : ${env:B2_TOOLSET}"

@@ -4,15 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/win-builder:2.0.0
-
-ARG image_version=""
-ARG image_revision=""
-
-LABEL name="abrarov/mingw" \
-    version="${image_version}" \
-    revision="${image_revision}" \
-    description="MinGW-w64 from MinGW-builds"
+FROM abrarov/win-builder:2.1.0
 
 ENV MINGW_VERSION=8.1.0 \
     MINGW_RT_FILE_SUFFIX=6 \
@@ -26,9 +18,19 @@ ENV MINGW_VERSION=8.1.0 \
     MINGW_32_TOOLCHAIN_PATH=Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds \
     MINGW_32_TARGET=i686 \
     MINGW_32_THREADS=posix \
-    MINGW_32_EXCEPTIONS=dwarf
+    MINGW_32_EXCEPTIONS=dwarf \
+    MINGW64_HOME="C:\mingw64" \
+    MINGW32_HOME="C:\mingw32"
 
 ADD ["app", "C:/app/"]
 
 RUN powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
     powershell "Remove-Item -Path 'C:\app' -Recurse -Force"
+
+ARG image_version=""
+ARG image_revision=""
+
+LABEL name="abrarov/mingw" \
+    version="${image_version}" \
+    revision="${image_revision}" \
+    description="MinGW-w64 from MinGW-builds"
