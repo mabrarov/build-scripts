@@ -25,7 +25,7 @@ if not "--%QT_PATCH_MSYS_FILE%" == "--" (
 )
 
 call "configure.bat" -platform win32-g++ -debug-and-release -opensource -confirm-license ^
-%QT_CONFIGURE_OPTIONS_LINKAGE% -opengl dynamic -qt-zlib -qt-libpng -qt-libjpeg ^
+%QT_CONFIGURE_OPTIONS_LINKAGE% -opengl desktop -qt-zlib -qt-libpng -qt-libjpeg ^
 -nomake examples -nomake tests ^
 -I "%OPENSSL_DIR%\include" -L "%OPENSSL_DIR%\lib" ^
 -prefix "%QT_INSTALL_DIR%"
