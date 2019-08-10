@@ -41,7 +41,7 @@ call "configure.bat" ^
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-mingw32-make
+mingw32-make%MINGW32_MAKE_OPTIONS%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 

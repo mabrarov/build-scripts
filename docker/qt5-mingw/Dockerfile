@@ -11,7 +11,8 @@ ENV OPENSSL_VERSION=1.0.2q \
     QT_VERSION=5.13.0 \
     QT_URL=http://download.qt.io/official_releases/qt \
     SCRIPT_DIR=C:\\app \
-    DEPEND_DIR=C:\\depend
+    DEPEND_DIR=C:\\depend \
+    MAKE_OPTIONS=""
 
 ADD ["app", "C:/app/"]
 

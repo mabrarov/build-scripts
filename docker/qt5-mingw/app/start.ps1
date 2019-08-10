@@ -30,6 +30,12 @@ if (Test-Path env:QT_LINKAGE) {
   $qt_linkages = @("${env:QT_LINKAGE}")
 }
 
+# Extra build options for mingw32-make
+$env:MINGW32_MAKE_OPTIONS = ""
+if (Test-Path env:MAKE_OPTIONS) {
+  $env:MINGW32_MAKE_OPTIONS = " ${env:MAKE_OPTIONS}"
+}
+
 $mingw_version_suffix = "${env:MINGW_VERSION}" -replace "\.", ''
 $compiler_target_dir_suffix = "mingw${mingw_version_suffix}"
 $qt_downloaded = $false
