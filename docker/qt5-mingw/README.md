@@ -14,6 +14,7 @@ todo
 
 ```bash
 docker run --rm \
+--storage-opt "size=50GB" \
 -v C:/Users/Public/build-scripts/qt5/target:C:/target \
 -v C:/Users/Public/build-scripts/qt5/download:C:/download \
 -v C:/Users/Public/build-scripts/qt5/depend:C:/depend:ro \
@@ -25,6 +26,7 @@ to build in 4 threads:
 
 ```bash
 docker run --rm \
+--storage-opt "size=50GB" \
 -e MAKE_OPTIONS="-j4" \
 -v C:/Users/Public/build-scripts/qt5/target:C:/target \
 -v C:/Users/Public/build-scripts/qt5/download:C:/download \
