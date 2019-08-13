@@ -104,7 +104,9 @@ foreach ($address_model in ${address_models}) {
       Write-Host "Extracted source code archive"
     }
 
-    $env:QT_INSTALL_DIR = "${env:TARGET_DIR}\qt-${env:QT_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
+    $qt_install_dir_name = "qt-${env:QT_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
+    $env:QT_INSTALL_DIR = "${env:BUILD_DIR}\${qt_install_dir_name}"
+    $env:QT_DEPLOY_DIR = "${env:TARGET_DIR}\${qt_install_dir_name}"
 
     # Prepare patch for Qt
     $env:QT_PATCH_FILE = ""
@@ -137,11 +139,14 @@ foreach ($address_model in ${address_models}) {
     Write-Host "QT_CONFIGURE_OPTIONS_LINKAGE : ${env:QT_CONFIGURE_OPTIONS_LINKAGE}"
     Write-Host "QT_PATCH_FILE                : ${env:QT_PATCH_FILE}"
     Write-Host "QT_PATCH_MSYS_FILE           : ${env:QT_PATCH_MSYS_FILE}"
+    Write-Host "QT_DEPLOY_DIR                : ${env:QT_DEPLOY_DIR}"
 
     & "${env:SCRIPT_DIR}\build.bat"
     if (${LastExitCode} -ne 0) {
       throw "Failed to build Qt with QT_ADDRESS_MODEL = ${env:QT_ADDRESS_MODEL}, QT_LINKAGE = ${env:QT_LINKAGE}"
     }
+    Write-Host "Copying built Qt from ${env:QT_INSTALL_DIR} to ${env:QT_DEPLOY_DIR}"
+    Copy-Item -Force -Recurse -Path "${env:QT_INSTALL_DIR}" -Destination "${env:QT_DEPLOY_DIR}"
   }
 }
 
