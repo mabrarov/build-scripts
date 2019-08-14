@@ -3,7 +3,7 @@
 rem
 rem Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
 rem
-rem Distributed under the MIT License (see accompanying LICENSE)rem
+rem Distributed under the MIT License (see accompanying LICENSE)
 rem
 
 set exit_code=0
