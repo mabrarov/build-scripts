@@ -29,13 +29,9 @@ call "configure.bat" ^
 -debug-and-release ^
 -opensource -confirm-license ^
 %QT_CONFIGURE_OPTIONS_LINKAGE% ^
--opengl desktop ^
--qt-zlib ^
--qt-libpng ^
--qt-libjpeg ^
 -nomake examples ^
 -nomake tests ^
--no-feature-accessibility ^
+%QT_CONFIGURE_OPTIONS% ^
 -I "%OPENSSL_DIR%\include" -L "%OPENSSL_DIR%\lib" ^
 -prefix "%QT_INSTALL_DIR%"
 set exit_code=%errorlevel%

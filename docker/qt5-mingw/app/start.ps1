@@ -30,6 +30,18 @@ if (Test-Path env:QT_LINKAGE) {
   $qt_linkages = @("${env:QT_LINKAGE}")
 }
 
+if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
+  $env:QT_CONFIGURE_OPTIONS = "-opengl desktop"
+  switch (${env:QT_VERSION}) {
+    "5.13.0" {
+      $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -no-feature-accessibility"
+    }
+    default {
+      Write-Warning "Predfined supported QT_CONFIGURE_OPTIONS are missing because of unknown version of Qt: ${env:QT_VERSION}"
+    }
+  }
+}
+
 # Extra build options for mingw32-make
 $env:MINGW32_MAKE_OPTIONS = ""
 if (Test-Path env:MAKE_OPTIONS) {
@@ -137,6 +149,7 @@ foreach ($address_model in ${address_models}) {
     Write-Host "QT_ADDRESS_MODEL             : ${env:QT_ADDRESS_MODEL}"
     Write-Host "QT_LINKAGE                   : ${env:QT_LINKAGE}"
     Write-Host "QT_CONFIGURE_OPTIONS_LINKAGE : ${env:QT_CONFIGURE_OPTIONS_LINKAGE}"
+    Write-Host "QT_CONFIGURE_OPTIONS         : ${env:QT_CONFIGURE_OPTIONS}"
     Write-Host "QT_PATCH_FILE                : ${env:QT_PATCH_FILE}"
     Write-Host "QT_PATCH_MSYS_FILE           : ${env:QT_PATCH_MSYS_FILE}"
     Write-Host "QT_DEPLOY_DIR                : ${env:QT_DEPLOY_DIR}"
