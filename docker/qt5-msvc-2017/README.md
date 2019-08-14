@@ -1,4 +1,4 @@
-# Builder of Qt 5.x with MinGW
+# Builder of Qt 5.x with MS Visual C++ 2017
 
 Docker image for building [Qt](https://www.qt.io) 5.x with with Microsoft Visual C++ 2017.
 
