@@ -37,7 +37,7 @@ if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
       $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -no-feature-accessibility"
     }
     default {
-      Write-Warning "Predfined supported QT_CONFIGURE_OPTIONS are missing because of unknown version of Qt: ${env:QT_VERSION}"
+      Write-Warning "Predfined QT_CONFIGURE_OPTIONS are missing because of unknown Qt version: ${env:QT_VERSION}"
     }
   }
 }
