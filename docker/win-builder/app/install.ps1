@@ -41,7 +41,8 @@ Write-Host "Installing Python from ${env:TMP}\Python.exe into ${env:PYTHON_HOME}
 Start-Process -FilePath "${env:TMP}\Python.exe" -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "InstallAllUsers=1") -Wait
 
 # Install MSYS2 from Chocolatey package
-& choco install msys2 --version "${env:MSYS2_VERSION}" --params="'/InstallDir:${env:MSYS_HOME}'"
+Write-Host "Installing MSYS2 into ${env:MSYS_HOME}"
+& choco install msys2 -y --no-progress --version "${env:MSYS2_VERSION}" --params="'/InstallDir:${env:MSYS_HOME}'"
 & "${app_dir}\msys2.bat"
 
 # Cleanup
