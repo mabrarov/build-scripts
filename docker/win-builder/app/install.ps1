@@ -32,7 +32,7 @@ Write-Host "Downloading MSYS2 x64 from ${msys_url} into ${msys_dist}"
 Write-Host "Installing MSYS2 x64 into ${env:MSYS_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${msys_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${env:TMP}\${msys_tar_filename}" -o"C:" -aoa -y -bd | out-null
-& "C:\app\msys2.bat"
+#& "C:\app\msys2.bat"
 
 # Download and install ActivePerl
 $active_perl_url = "${env:ACTIVE_PERL_URL}/${env:ACTIVE_PERL_VERSION}/ActivePerl-${env:ACTIVE_PERL_VERSION}-MSWin32-x64-${env:ACTIVE_PERL_BUILD}.exe"
