@@ -9,7 +9,7 @@ Contains:
 
 ## Building
 
-```powershell
+```bash
 docker build -t abrarov/msvc-2017 docker/msvc-2017
 ```
 
@@ -17,12 +17,17 @@ docker build -t abrarov/msvc-2017 docker/msvc-2017
 
 Run windows command prompt inside Docker container in interactive mode:
 
-```powershell
+```bash
 docker run --rm -it abrarov/msvc-2017 cmd
 ```
 
 Get folder where MS Visual Studio 2017 is installed:
 
-```powershell
-docker run --rm abrarov/msvc-2017 vswhere -latest -products Microsoft.VisualStudio.Product.Community -version '[15.0,16.0)' -property installationPath
+```bash
+docker run --rm \
+abrarov/msvc-2017 \
+vswhere -latest \
+-products Microsoft.VisualStudio.Product.Community \
+-version '[15.0,16.0)' \
+-property installationPath
 ```
