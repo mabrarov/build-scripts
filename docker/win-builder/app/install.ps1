@@ -52,7 +52,7 @@ Write-Host "Installing MSYS2 x64 into ${env:MSYS_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${env:TMP}\${msys_tar_filename}" -o"C:" -aoa -y -bd | out-null
 Write-Host "Starting initialization via msys2_shell.cmd"
 Start-Process "${env:MSYS_HOME}\msys2_shell.cmd" -ArgumentList ("-c", "exit") -Wait
-#& "${env:MSYS_HOME}\usr\bin\bash.exe" -lc 'pacman -S --needed --noconfirm base-devel'
+& "${env:MSYS_HOME}\usr\bin\bash.exe" -lc 'pacman -S --needed --noconfirm base-devel'
 
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
