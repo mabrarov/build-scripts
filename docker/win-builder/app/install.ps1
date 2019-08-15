@@ -40,9 +40,16 @@ Write-Host "Downloading Python from ${python_dist_url} into ${env:TMP}"
 Write-Host "Installing Python from ${env:TMP}\Python.exe into ${env:PYTHON_HOME}"
 Start-Process -FilePath "${env:TMP}\Python.exe" -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "InstallAllUsers=1") -Wait
 
-# Install MSYS2 from Chocolatey package
-Write-Host "Installing MSYS2 into ${env:MSYS_HOME}"
-& choco install msys2 -y --no-progress --version "${env:MSYS2_VERSION}" --params="'/InstallDir:${env:MSYS_HOME}'"
+# Download and install MSYS2
+$msys_tar_filename = "msys2-base-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.tar"
+$msys_dist_filename = "${msys_tar_filename}.xz"
+$msys_url = "${env:MSYS2_URL}/${env:MSYS2_TARGET}/${msys_dist_filename}"
+$msys_dist = "${env:TMP}\${msys_dist_filename}"
+Write-Host "Downloading MSYS2 x64 from ${msys_url} into ${msys_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${msys_url}", "${msys_dist}")
+Write-Host "Installing MSYS2 x64 into ${env:MSYS_HOME}"
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${msys_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${env:TMP}\${msys_tar_filename}" -o"C:" -aoa -y -bd | out-null
 & "${app_dir}\msys2.bat"
 
 # Cleanup
