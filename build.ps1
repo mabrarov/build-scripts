@@ -24,6 +24,7 @@ ${dirs}.GetEnumerator() | ForEach-Object {
   pushd ${dir}
   Write-Host "Building in directory ${dir}"
   .\build.ps1
+  .\test.ps1
   popd
 }
 
