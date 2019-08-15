@@ -30,7 +30,8 @@ RUN mkdir C:\download && \
     mkdir C:\build && \
     mkdir C:\target && \
     powershell -ExecutionPolicy Bypass -File "C:\app\install1.ps1"
-RUN powershell -ExecutionPolicy Bypass -File "C:\app\install2.ps1" && \
+RUN powershell -ExecutionPolicy Bypass -File "C:\app\install2.ps1"
+RUN powershell -ExecutionPolicy Bypass -File "C:\app\install3.ps1" && \
     powershell "Remove-Item -Path 'C:\app' -Recurse -Force"
 
 ARG image_version=""

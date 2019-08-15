@@ -11,7 +11,7 @@ set PATH=%MSYS_HOME%\usr\bin;%PATH%
 set exit_code=0
 
 echo Initializing MSYS2
-echo exit | "%MSYS_HOME%\msys2_shell.cmd" -no-start -defterm
+echo exit | call "%MSYS_HOME%\msys2_shell.cmd" -no-start -defterm
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
