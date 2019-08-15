@@ -29,7 +29,7 @@ if (Test-Path -Path "${env:BOOST_ROOT_DIR}") {
   }
   # Unpack Boost C++ Libraries
   Write-Host "Extracting source code archive to: ${env:BUILD_DIR}"
-  & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${boost_archive_file}" -o"${env:BUILD_DIR}" -aoa -y
+  & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${boost_archive_file}" -o"${env:BUILD_DIR}" -aoa -y -bd | out-null
   if (${LastExitCode} -ne 0) {
     throw "Failed to extract Boost from ${boost_archive_file} to ${env:BUILD_DIR}"
   }
