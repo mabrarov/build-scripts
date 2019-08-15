@@ -10,6 +10,11 @@ $ErrorActionPreference = "Stop"
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
+# Install Chocolatey package manager
+Write-Host "Installing Chocolatey package manager"
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Write-Host "Chocolatey package manager installed"
+
 # Download and install 7-Zip
 $app_dir = "C:\app"
 $seven_zip_version_suffix = "${env:SEVEN_ZIP_VERSION}" -replace "\.", ""
