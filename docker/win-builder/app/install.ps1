@@ -38,7 +38,7 @@ $msys_dist = "${env:TMP}\${msys_dist_name}"
 Write-Host "Downloading MSYS2 from ${msys_url} into ${msys_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${msys_url}", "${msys_dist}")
 Write-Host "Extracting MSYS2 from ${msys_dist} into ${env:MSYS_HOME}"
-& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${env:TMP}\msys2.7z" -o"C:" -aoa -y
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${msys_dist}" -o"C:" -aoa -y -bd | out-null
 Write-Host "MSYS2 ${env:MSYS2_VERSION} installed"
 
 # Download and install ActivePerl
