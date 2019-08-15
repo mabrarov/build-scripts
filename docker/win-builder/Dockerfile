@@ -12,9 +12,7 @@ ENV DOWNLOAD_DIR=C:\\download \
     SEVEN_ZIP_VERSION=1801 \
     SEVEN_ZIP_DOWNLOAD_URL=http://www.7-zip.org/a \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
-    MSYS2_URL=http://repo.msys2.org/distrib \
-    MSYS2_TARGET=x86_64 \
-    MSYS2_VERSION=20190524 \
+    MSYS2_VERSION=20180531.0.0 \
     MSYS_HOME=C:\\msys64 \
     ACTIVE_PERL_VERSION=5.26.3.2603 \
     ACTIVE_PERL_BUILD=a95bce075 \
@@ -29,9 +27,7 @@ ADD ["app", "C:/app/"]
 RUN mkdir C:\download && \
     mkdir C:\build && \
     mkdir C:\target && \
-    powershell -ExecutionPolicy Bypass -File "C:\app\install1.ps1"
-RUN powershell -ExecutionPolicy Bypass -File "C:\app\install2.ps1"
-RUN powershell -ExecutionPolicy Bypass -File "C:\app\install3.ps1" && \
+    powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
     powershell "Remove-Item -Path 'C:\app' -Recurse -Force"
 
 ARG image_version=""
