@@ -30,8 +30,8 @@ $msys_dist = "${env:TMP}\${msys_dist_filename}"
 Write-Host "Downloading MSYS2 x64 from ${msys_url} into ${msys_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${msys_url}", "${msys_dist}")
 Write-Host "Installing MSYS2 x64 into ${env:MSYS_HOME}"
-& "${env:ProgramFiles}\7-Zip\7z.exe" x "${msys_dist}" -o"${env:TMP}" -aoa -y
-& "${env:ProgramFiles}\7-Zip\7z.exe" x "${env:TMP}\${msys_tar_filename}" -o"C:" -aoa -y
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${msys_dist}" -o"${env:TMP}" -aoa -y
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${env:TMP}\${msys_tar_filename}" -o"C:" -aoa -y
 & "${env:MSYS_HOME}\msys2_shell" -no-start -defterm
 & "${env:MSYS_HOME}\usr\bin\pacman.exe" -S --needed --noconfirm base-devel
 
