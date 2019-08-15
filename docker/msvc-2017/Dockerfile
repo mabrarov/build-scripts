@@ -6,11 +6,12 @@
 
 FROM abrarov/win-builder:2.1.0
 
-ENV MSVS_INSTALL_URL=https://aka.ms/vs/15/release/vs_community.exe \
-    MSVS_INSTALL_EXECUTABLE=vs_community.exe \
-    VSWHERE_RELEASE_URL=https://github.com/Microsoft/vswhere/releases/download \
+ENV MSVS_VERSION=15 \
+    MSVS_URL=https://aka.ms/vs \
+    MSVS_DIST_NAME=vs_community.exe \
+    VSWHERE_URL=https://github.com/Microsoft/vswhere/releases/download \
     VSWHERE_VERSION=2.6.7 \
-    VSWHERE_EXECTUABLE=vswhere.exe
+    VSWHERE_DIST_NAME=vswhere.exe
 
 ADD ["app", "C:/app/"]
 

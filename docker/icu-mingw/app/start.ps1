@@ -141,7 +141,7 @@ foreach ($address_model in ${address_models}) {
 
         # Unpack ICU
         Write-Host "Extracting source code archive from ${icu_archive_file} to ${env:ICU_BUILD_DIR}"
-        & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${icu_archive_file}" -o"${env:ICU_BUILD_DIR}" -aoa -y
+        "${env:SEVEN_ZIP_HOME}\7z.exe" x "${icu_archive_file}" -o"${env:ICU_BUILD_DIR}" -aoa -y -bd | out-null
         if (${LastExitCode} -ne 0) {
           throw "Failed to extract ICU from ${icu_archive_file} to ${env:ICU_BUILD_DIR}"
         }
