@@ -23,11 +23,17 @@ Write-Host "Installing Z-Zip from ${seven_zip_dist} into ${env:SEVEN_ZIP_HOME}"
 Start-Process -FilePath msiexec -ArgumentList ("/package", "${seven_zip_dist}", "/quiet", "/qn", "/norestart") -Wait
 
 # Download and install MSYS2
-$msys_url = "${env:MSYS2_URL}%2F${env:MSYS2_VERSION}%2F${env:MSYS2_TARGET}%2Fmsys2-base-devel-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.7z"
-Write-Host "Downloading MSYS2 x64 from ${msys_url} into ${env:TMP}"
-(New-Object System.Net.WebClient).DownloadFile("${msys_url}", "${env:TMP}\msys2.7z")
+$msys_tar_filename = "msys2-base-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.tar"
+$msys_dist_filename = "${msys_tar_filename}.xz"
+$msys_url = "${env:MSYS2_URL}/${env:MSYS2_TARGET}/${msys_dist_filename}"
+$msys_dist = "${env:TMP}\${msys_dist_filename}"
+Write-Host "Downloading MSYS2 x64 from ${msys_url} into ${msys_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${msys_url}", "${msys_dist}")
 Write-Host "Installing MSYS2 x64 into ${env:MSYS_HOME}"
-& "${env:ProgramFiles}\7-Zip\7z.exe" x "${env:TMP}\msys2.7z" -o"C:" -aoa -y
+& "${env:ProgramFiles}\7-Zip\7z.exe" x "${msys_dist}" -o"${env:TMP}" -aoa -y
+& "${env:ProgramFiles}\7-Zip\7z.exe" x "${env:TMP}\${msys_tar_filename}" -o"C:" -aoa -y
+& "${env:MSYS_HOME}\msys2_shell" -no-start -defterm
+& "${env:MSYS_HOME}\usr\bin\pacman.exe" -S --needed --noconfirm base-devel
 
 # Download and install ActivePerl
 $active_perl_url = "${env:ACTIVE_PERL_URL}/${env:ACTIVE_PERL_VERSION}/ActivePerl-${env:ACTIVE_PERL_VERSION}-MSWin32-x64-${env:ACTIVE_PERL_BUILD}.exe"
