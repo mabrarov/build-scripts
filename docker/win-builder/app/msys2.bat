@@ -16,7 +16,7 @@ set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 echo Installing pacman base-devel package group (MSYS2 development tools)
-rem pacman -S --needed --noconfirm base-devel
+pacman -S --needed --noconfirm base-devel
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
