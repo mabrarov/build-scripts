@@ -7,4 +7,5 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-#TODO
+Write-Host "Running jom in container created from abrarov/qt5-msvc-2017:latest image"
+docker run --rm abrarov/qt5-msvc-2017:latest "C:\jom\jom" -version
