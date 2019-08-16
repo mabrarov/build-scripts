@@ -27,7 +27,7 @@ $mingw32_url = "${env:MINGW_URL}/${env:MINGW_32_TOOLCHAIN_PATH}/${env:MINGW_VERS
 $mingw32_dist = "${env:TMP}\${mingw32_dist_name}"
 Write-Host "Downloading MinGW x86 from ${mingw32_url} into ${mingw32_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${mingw32_url}", "${mingw32_dist}")
-# Extract MinGW x64 and install it into C:\mingw32
+# Extract MinGW x86 and install it into C:\mingw32
 Write-Host "Extracting MinGW x86 from ${mingw32_dist} into ${env:MINGW32_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${mingw32_dist}" -o"C:" -aoa -y -bd | out-null
 Write-Host "MinGW x86 ${env:MINGW_VERSION} installed"
