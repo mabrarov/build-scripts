@@ -9,8 +9,8 @@ FROM abrarov/win-builder:2.1.0
 ENV MINGW_VERSION=8.1.0 \
     MINGW_RT_FILE_SUFFIX=6 \
     MINGW_REVISON=0 \
-    MINGW_RELEASE_URL=https://sourceforge.net/projects/mingw-w64/files \
-    MINGW_URL_POSTFIX=.7z/download \
+    MINGW_URL=https://sourceforge.net/projects/mingw-w64/files \
+    MINGW_URL_POSTFIX=/download \
     MINGW_64_TOOLCHAIN_PATH=Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds \
     MINGW_64_TARGET=x86_64 \
     MINGW_64_THREADS=posix \
