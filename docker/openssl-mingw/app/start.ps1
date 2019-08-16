@@ -61,7 +61,7 @@ foreach ($address_model in ${address_models}) {
     }
   }
 
-  $mingw_version_suffix = "${env:MINGW_VERSION}" -replace "\.", ''
+  $mingw_version_suffix = "${env:MINGW_VERSION}" -replace "([0-9]+)\.([0-9]+)\.([0-9]+)", '$1$2'
 
   foreach ($openssl_linkage in ${openssl_linkages}) {
     $env:OPENSSL_LINKAGE = ${openssl_linkage}
@@ -106,7 +106,7 @@ foreach ($address_model in ${address_models}) {
       Set-Location -Path "${env:OPENSSL_BUILD_DIR}"
       $openssl_archive_msys_file = "${openssl_archive_file}" -replace "\\", "/"
       $openssl_archive_msys_file = "${openssl_archive_msys_file}" -replace "^(C):", "/c"
-      & "tar.exe" xzf "${openssl_archive_msys_file}"
+      & tar.exe xzf "${openssl_archive_msys_file}"
       if (${LastExitCode} -ne 0) {
         throw "Failed to extract OpenSSL from ${openssl_archive_file} to ${env:OPENSSL_BUILD_DIR}"
       }

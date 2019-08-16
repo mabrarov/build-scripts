@@ -12,7 +12,11 @@ $image_version = "2.1.0"
 $image_revision = "$(git rev-parse --verify HEAD)"
 
 Write-Host "Building abrarov/icu-msvc-2017:${image_version} image with ${image_revision} revision"
-docker build -t abrarov/icu-msvc-2017:${image_version} --build-arg image_version=${image_version} --build-arg image_revision=${image_revision} .
+docker build `
+  -t abrarov/icu-msvc-2017:${image_version} `
+  --build-arg image_version=${image_version} `
+  --build-arg image_revision=${image_revision} `
+  "${PSScriptRoot}"
 
 Write-Host "Tagging abrarov/icu-msvc-2017:${image_version} image as latest"
 docker tag abrarov/icu-msvc-2017:${image_version} abrarov/icu-msvc-2017:latest

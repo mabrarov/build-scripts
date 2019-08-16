@@ -41,9 +41,5 @@ $dirs = @(
 )
 
 ${dirs}.GetEnumerator() | ForEach-Object {
-  ${dir} = $_
-  pushd ${dir}
-  Write-Host "Deploying in directory ${dir}"
-  .\deploy.ps1
-  popd
+  & "${PSScriptRoot}\$_\deploy.ps1"
 }

@@ -150,7 +150,7 @@ foreach ($address_model in ${address_models}) {
         Set-Location -Path "${env:OPENSSL_BUILD_DIR}"
         $openssl_archive_msys_file = "${openssl_archive_file}" -replace "\\", "/"
         $openssl_archive_msys_file = "${openssl_archive_msys_file}" -replace "^(C):", "/c"
-        & "tar.exe" xzf "${openssl_archive_msys_file}"
+        & tar.exe xzf "${openssl_archive_msys_file}"
         if (${LastExitCode} -ne 0) {
           throw "Failed to extract OpenSSL from ${openssl_archive_file} to ${env:OPENSSL_BUILD_DIR}"
         }
@@ -198,7 +198,8 @@ foreach ($address_model in ${address_models}) {
             $lib_files = Get-ChildItem "${env:OPENSSL_STAGE_DIR}\${openssl_lib_dir}\*.${lib_file_extension}"
             foreach ($lib_file in ${lib_files}) {
               $lib_file_name = ${lib_file} | % {$_.Name}
-              Copy-Item -Force -Path "${lib_file}" -Destination "${env:OPENSSL_INSTALL_DIR}\${openssl_lib_dir}\${lib_file_name}"
+              Copy-Item -Force -Path "${lib_file}" `
+                -Destination "${env:OPENSSL_INSTALL_DIR}\${openssl_lib_dir}\${lib_file_name}"
             }
           }
         }
