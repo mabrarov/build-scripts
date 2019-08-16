@@ -23,5 +23,8 @@ docker run --rm abrarov/win-builder:latest "C:\msys64\usr\bin\patch" --version
 Write-Host "Running ActivePerl in container created from abrarov/win-builder:latest image"
 docker run --rm abrarov/win-builder:latest "C:\Perl64\bin\perl.exe" --version
 
-Write-Host "Running Python in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\Program Files\Python37\python.exe" --version
+Write-Host "Running Python 2 in container created from abrarov/win-builder:latest image"
+docker run --rm abrarov/win-builder:latest "C:\Python27\python.exe" --version
+
+Write-Host "Running Python 3 in container created from abrarov/win-builder:latest image"
+docker run --rm abrarov/win-builder:latest "C:\Python37\python.exe" --version

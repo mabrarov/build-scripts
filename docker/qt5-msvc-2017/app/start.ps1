@@ -64,7 +64,7 @@ foreach ($address_model in ${address_models}) {
   switch (${env:QT_ADDRESS_MODEL}) {
     "32" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars32.bat"
-      $address_model_target_dir_suffix = "x86"
+      $address_model_target_dir_suffix = "amd64_x86"
     }
     "64" {
       $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"

@@ -48,20 +48,34 @@ $active_perl_dist = "${env:TMP}\${active_perl_dist_name}"
 Write-Host "Downloading ActivePerl from ${active_perl_url} into ${active_perl_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${active_perl_url}", "${active_perl_dist}")
 Write-Host "Installing ActivePerl from ${active_perl_dist} into ${env:ACTIVE_PERL_HOME}"
-Start-Process -FilePath "${active_perl_dist}" -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn") -Wait
+Start-Process -FilePath "${active_perl_dist}" `
+  -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "TargetDir=""${env:ACTIVE_PERL_HOME}""") `
+  -Wait
 Write-Host "ActivePerl ${env:ACTIVE_PERL_VERSION} installed"
 
-# Download and install Python 3.x
-$python_dist_name = "python-${env:PYTHON_VERSION}-amd64.exe"
-$python_dist_url = "${env:PYTHON_URL}/${env:PYTHON_VERSION}/${python_dist_name}"
+# Download and install Python 2.x
+$python_dist_name = "python-${env:PYTHON2_VERSION}.amd64.msi"
+$python_dist_url = "${env:PYTHON_URL}/${env:PYTHON2_VERSION}/${python_dist_name}"
 $python_dist = "${env:TMP}\${python_dist_name}"
-Write-Host "Downloading Python from ${python_dist_url} into ${python_dist}"
+Write-Host "Downloading Python ${env:PYTHON2_VERSION} from ${python_dist_url} into ${python_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${python_dist_url}", "${python_dist}")
-Write-Host "Installing Python from ${python_dist} into ${env:PYTHON_HOME}"
+Write-Host "Installing Python ${env:PYTHON2_VERSION} from ${python_dist} into ${env:PYTHON2_HOME}"
 Start-Process -FilePath "${python_dist}" `
-  -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "InstallAllUsers=1") `
+  -ArgumentList ("/norestart", "/quiet", "/qn", "ALLUSERS=1", "TargetDir=""${env:PYTHON2_HOME}""") `
   -Wait
-Write-Host "Python ${env:PYTHON_VERSION} installed"
+Write-Host "Python ${env:PYTHON2_VERSION} installed"
+
+# Download and install Python 3.x
+$python_dist_name = "python-${env:PYTHON3_VERSION}-amd64.exe"
+$python_dist_url = "${env:PYTHON_URL}/${env:PYTHON3_VERSION}/${python_dist_name}"
+$python_dist = "${env:TMP}\${python_dist_name}"
+Write-Host "Downloading Python ${env:PYTHON3_VERSION} from ${python_dist_url} into ${python_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${python_dist_url}", "${python_dist}")
+Write-Host "Installing Python ${env:PYTHON3_VERSION} from ${python_dist} into ${env:PYTHON3_HOME}"
+Start-Process -FilePath "${python_dist}" `
+  -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "InstallAllUsers=1", "TargetDir=""${env:PYTHON3_HOME}""") `
+  -Wait
+Write-Host "Python ${env:PYTHON3_VERSION} installed"
 
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
