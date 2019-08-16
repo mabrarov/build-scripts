@@ -18,7 +18,7 @@ $jom_dist = "${env:TMP}\${jom_dist_filename}"
 Write-Host "Downloading jom from ${jom_url} into ${jom_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${jom_url}", "${jom_dist}")
 Write-Host "Installing jom into ${env:JOM_HOME}"
-& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${jom_dist}" -o"${env:JOM_HOME}" -aoa -y
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${jom_dist}" -o"${env:JOM_HOME}" -aoa -y -bd | out-null
 
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
