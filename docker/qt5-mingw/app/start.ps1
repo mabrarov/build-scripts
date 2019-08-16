@@ -108,7 +108,7 @@ foreach ($address_model in ${address_models}) {
 
       # Unpack Qt
       Write-Host "Extracting source code archive from ${qt_archive_file} to ${env:QT_BUILD_DIR}"
-      & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${qt_archive_file}" -o"${env:QT_BUILD_DIR}" -aoa -y
+      & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${qt_archive_file}" -o"${env:QT_BUILD_DIR}" -aoa -y -bd | out-null
       if (${LastExitCode} -ne 0) {
         throw "Failed to extract Qt from ${qt_archive_file} to ${env:QT_BUILD_DIR}"
       }
