@@ -21,9 +21,5 @@ $dirs = @(
 )
 
 ${dirs}.GetEnumerator() | ForEach-Object {
-  ${dir} = $_
-  pushd ${dir}
-  Write-Host "Running tests in directory ${dir}"
-  .\test.ps1
-  popd
+  & "${PSScriptRoot}\$_\test.ps1"
 }

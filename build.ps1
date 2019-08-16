@@ -21,11 +21,7 @@ $dirs = @(
 )
 
 ${dirs}.GetEnumerator() | ForEach-Object {
-  ${dir} = $_
-  pushd ${dir}
-  Write-Host "Building in directory ${dir}"
-  .\build.ps1
-  popd
+  & "${PSScriptRoot}\$_\build.ps1"
 }
 
 docker images
