@@ -28,7 +28,7 @@ if not "--%QT_PATCH_MSYS_FILE%" == "--" (
 )
 
 call "configure.bat" ^
--platform msvc-2017 ^
+-platform win32-msvc ^
 -debug-and-release ^
 -opensource -confirm-license ^
 %QT_CONFIGURE_OPTIONS_LINKAGE% ^
