@@ -31,7 +31,7 @@ Start-Process -FilePath "${msvs_dist}" -ArgumentList `
 Write-Host "Visual C++ part of Visual Studio 2017 (${env:MSVS_VERSION}) installed"
 
 # Download and install Visual Studio Locator
-$vswhere_url = "${env:VSWHERE_URL}/${env:VSWHERE_VERSION}/${env:VSWHERE_EXECTUABLE}"
+$vswhere_url = "${env:VSWHERE_URL}/${env:VSWHERE_VERSION}/${env:VSWHERE_DIST_NAME}"
 $vswhere_dist = "${env:SystemRoot}\${env:VSWHERE_DIST_NAME}"
 Write-Host "Downloading Visual Studio Locator from ${vswhere_url} into ${vswhere_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${vswhere_url}", "${vswhere_dist}")

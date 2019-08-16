@@ -83,7 +83,7 @@ foreach ($address_model in ${address_models}) {
     }
   }
 
-  $mingw_version_suffix = "${env:MINGW_VERSION}" -replace "\.", ''
+  $mingw_version_suffix = "${env:MINGW_VERSION}" -replace "([0-9]+)\.([0-9]+)\.([0-9]+)", '$1$2'
   $env:BOOST_INSTALL_DIR = "${env:TARGET_DIR}\boost-${env:BOOST_VERSION}-${target_dir_suffix}-mingw${mingw_version_suffix}"
   foreach ($boost_linkage in ${boost_linkages}) {
     $env:BOOST_LINKAGE = ${boost_linkage}
