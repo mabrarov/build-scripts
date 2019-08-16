@@ -50,7 +50,7 @@ if (Test-Path env:ICU_BUILD_TYPE) {
   $icu_build_types = @("${env:ICU_BUILD_TYPE}")
 }
 
-$mingw_version_suffix = "${env:MINGW_VERSION}" -replace "\.", ''
+$mingw_version_suffix = "${env:MINGW_VERSION}" -replace "([0-9]+)\.([0-9]+)\.([0-9]+)", '$1$2'
 $compiler_target_dir_suffix = "mingw${mingw_version_suffix}"
 $icu_downloaded = $false
 
