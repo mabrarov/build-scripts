@@ -47,7 +47,7 @@ if (Test-Path env:MAKE_OPTIONS) {
   $env:MINGW32_MAKE_OPTIONS = " ${env:MAKE_OPTIONS}"
 }
 
-$mingw_version_suffix = "${env:MINGW_VERSION}" -replace "\.", ''
+$mingw_version_suffix = "${env:MINGW_VERSION}" -replace "([0-9]+)\.([0-9]+)\.([0-9]+)", '$1$2'
 $compiler_target_dir_suffix = "mingw${mingw_version_suffix}"
 $qt_downloaded = $false
 
