@@ -6,7 +6,7 @@
 
 FROM abrarov/mingw:2.2.0
 
-ENV ICU_VERSION=57.1 \
+ENV ICU_VERSION=58.2 \
     ICU_URL=http://download.icu-project.org/files/icu4c \
     SCRIPT_DIR=C:\\app
 

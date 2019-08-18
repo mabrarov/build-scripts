@@ -25,7 +25,7 @@ folder of Docker Host:
 ```bash
 docker run --rm \
 -e OPENSSL_ADDRESS_MODEL=64 \
--e OPENSSL_LINKAGE=shared \ 
+-e OPENSSL_LINKAGE=shared \
 -v C:/Users/Public/openssl-mingw/target:C:/target \
 abrarov/openssl-mingw
 ```
