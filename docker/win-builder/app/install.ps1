@@ -22,14 +22,14 @@ $seven_zip_dist_name = "7z${seven_zip_version_suffix}-x64.msi"
 $seven_zip_dist = "${app_dir}\${seven_zip_dist_name}"
 if (-not (Test-Path -Path "${seven_zip_dist}")) {
   $seven_zip_url = "${env:SEVEN_ZIP_DOWNLOAD_URL}/${seven_zip_dist_name}"
-  Write-Host "Downloading Z-Zip from ${seven_zip_url} into ${seven_zip_dist_name}"
+  Write-Host "Downloading 7-Zip from ${seven_zip_url} into ${seven_zip_dist_name}"
   (New-Object System.Net.WebClient).DownloadFile("${seven_zip_url}", "${seven_zip_dist_name}")
 }
-Write-Host "Installing Z-Zip from ${seven_zip_dist} into ${env:SEVEN_ZIP_HOME}"
+Write-Host "Installing 7-Zip from ${seven_zip_dist} into ${env:SEVEN_ZIP_HOME}"
 Start-Process -FilePath msiexec `
   -ArgumentList ("/package", "${seven_zip_dist}", "/quiet", "/qn", "/norestart") `
   -Wait
-Write-Host "Z-Zip ${env:SEVEN_ZIP_VERSION} installed"
+Write-Host "7-Zip ${env:SEVEN_ZIP_VERSION} installed"
 
 # Download and install MSYS2
 $msys_dist_name = "msys2-base-devel-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.7z"
