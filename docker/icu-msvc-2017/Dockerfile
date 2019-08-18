@@ -5,7 +5,7 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-FROM abrarov/msvc-2017:2.1.0
+FROM abrarov/msvc-2017:2.2.0
 
 ENV ICU_VERSION=58.2 \
     ICU_URL=http://download.icu-project.org/files/icu4c \
