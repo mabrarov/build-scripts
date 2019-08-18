@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/win-builder:2.2.0
+FROM abrarov/win-builder:2.3.0
 
 ENV MSVS_VERSION=15 \
     MSVS_URL=https://aka.ms/vs \
