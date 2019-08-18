@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.1.0
+FROM abrarov/msvc-2017:2.2.0
 
 ENV JOM_HOME=C:\\jom \
     OPENSSL_VERSION=1.0.2q \

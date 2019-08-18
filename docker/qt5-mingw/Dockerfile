@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.1.0
+FROM abrarov/mingw:2.2.0
 
 ENV OPENSSL_VERSION=1.0.2q \
     QT_VERSION=5.13.0 \
