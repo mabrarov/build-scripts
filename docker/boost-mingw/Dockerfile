@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.1.0
+FROM abrarov/mingw:2.2.0
 
 ENV BOOST_VERSION=1.69.0 \
     BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
