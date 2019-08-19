@@ -7,6 +7,7 @@
 FROM abrarov/mingw:2.2.0
 
 ENV OPENSSL_VERSION=1.0.2q \
+    ICU_VERSION=58.2 \
     QT_VERSION=5.13.0 \
     QT_URL=http://download.qt.io/official_releases/qt \
     SCRIPT_DIR=C:\\app \
