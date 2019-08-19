@@ -37,7 +37,7 @@ if (Test-Path env:QT_LINKAGE) {
 }
 
 if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
-  $env:QT_CONFIGURE_OPTIONS = "-opengl desktop"
+  $env:QT_CONFIGURE_OPTIONS = "-opengl desktop -icu"
   switch (${env:QT_VERSION}) {
     "5.13.0" {
       # todo
@@ -144,12 +144,18 @@ foreach ($address_model in ${address_models}) {
       Write-Error "OpenSSL not found at ${env:OPENSSL_DIR}"
     }
 
+    $env:ICU_DIR = "${openssl_base_dir}\icu4c-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
+    if (-not (Test-Path -Path "${env:ICU_DIR}")) {
+      Write-Error "ICU not found at ${env:ICU_DIR}"
+    }
+
     Set-Location -Path "${env:QT_HOME}"
 
     Write-Host "Building Qt with these parameters:"
     Write-Host "MSVC_BUILD_DIR               : ${env:MSVC_BUILD_DIR}"
     Write-Host "MSVC_CMD_BOOTSTRAP           : ${env:MSVC_CMD_BOOTSTRAP}"
     Write-Host "OPENSSL_DIR                  : ${env:OPENSSL_DIR}"
+    Write-Host "ICU_DIR                      : ${env:ICU_DIR}"
     Write-Host "QT_HOME                      : ${env:QT_HOME}"
     Write-Host "QT_INSTALL_DIR               : ${env:QT_INSTALL_DIR}"
     Write-Host "QT_ADDRESS_MODEL             : ${env:QT_ADDRESS_MODEL}"

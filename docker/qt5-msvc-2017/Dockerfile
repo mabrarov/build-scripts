@@ -8,6 +8,7 @@ FROM abrarov/msvc-2017:2.3.0
 
 ENV JOM_HOME=C:\\jom \
     OPENSSL_VERSION=1.0.2q \
+    ICU_VERSION=58.2 \
     QT_VERSION=5.13.0 \
     QT_URL=http://download.qt.io/official_releases/qt \
     JOM_URL=http://master.qt.io/official_releases/jom \

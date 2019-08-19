@@ -8,7 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%JOM_HOME%;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%MSYS_HOME%\usr\bin;%PATH%
+set PATH=%JOM_HOME%;%ICU_DIR%\bin;%ICU_DIR%\lib;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%MSYS_HOME%\usr\bin;%PATH%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
@@ -35,7 +35,10 @@ call "configure.bat" ^
 -nomake examples ^
 -nomake tests ^
 %QT_CONFIGURE_OPTIONS% ^
--I "%OPENSSL_DIR%\include" -L "%OPENSSL_DIR%\lib" ^
+-I "%OPENSSL_DIR%\include" ^
+-L "%OPENSSL_DIR%\lib" ^
+-I "%ICU_DIR%\include" ^
+-L "%ICU_DIR%\lib" ^
 -prefix "%QT_INSTALL_DIR%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
