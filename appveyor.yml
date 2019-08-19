@@ -5,14 +5,14 @@ environment:
   DOCKER_PASS:
     secure: f3DqVP4VKrZqL/5I+s2M7kmMFrG0nINb0qdcamN2GtU=
 
-install:
-  - ps: .\install.ps1
+install: off
+  #- ps: .\install.ps1
 
-build_script:
-  - ps: .\build.ps1
+build_script: off
+  #- ps: .\build.ps1
 
-test_script:
-  - ps: .\test.ps1
+test_script: off
+  #- ps: .\test.ps1
 
-deploy_script:
-  - ps: .\deploy.ps1
+deploy_script: off
+  # - ps: .\deploy.ps1
