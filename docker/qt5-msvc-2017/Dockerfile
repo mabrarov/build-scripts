@@ -13,6 +13,7 @@ ENV JOM_HOME=C:\\jom \
     QT_URL=http://download.qt.io/official_releases/qt \
     JOM_URL=http://master.qt.io/official_releases/jom \
     JOM_VERSION=1.1.3 \
+    NINJA_SYNTAX_VERSION=1.7.2 \
     SCRIPT_DIR=C:\\app \
     DEPEND_DIR=C:\\depend \
     JOM_OPTIONS=""

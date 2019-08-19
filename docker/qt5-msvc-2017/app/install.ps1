@@ -21,6 +21,11 @@ Write-Host "Installing jom into ${env:JOM_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${jom_dist}" -o"${env:JOM_HOME}" -aoa -y -bd | out-null
 Write-Host "Jom ${env:JOM_VERSION} installed"
 
+Write-Host "Installing pip packages required for building Qt WebKit"
+& "${env:PYTHON2_HOME}\Scripts\pip" install --disable-pip-version-check ninja_syntax=="${env:NINJA_SYNTAX_VERSION}"
+Write-Host "Pip packages required for building Qt WebKit installed"
+& "${env:PYTHON2_HOME}\Scripts\pip" list --disable-pip-version-check
+
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
 Remove-Item -Path "${env:TMP}\*" -Recurse -Force
