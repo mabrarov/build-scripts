@@ -25,7 +25,7 @@ $p = Start-Process -FilePath "${msvs_dist}" -ArgumentList `
    "/NoCacheOnlyMode", `
    "/AdminFile", `
    "${PSScriptRoot}\deploy.xml") `
-  -Wait
+  -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install Visual Studio 2015 Community edition"
 }
