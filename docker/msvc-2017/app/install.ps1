@@ -28,8 +28,8 @@ $p = Start-Process -FilePath "${msvs_dist}" -ArgumentList `
    "--add Microsoft.VisualStudio.Component.VC.ATLMFC", `
    "--includeRecommended") `
   -Wait -PassThru
-if (${p.ExitCode} -ne 0) {
-  throw "Failed to install Visual Studio 2017 Community edition with exit code ${p.ExitCode}"
+if (${p}.ExitCode -ne 0) {
+  throw "Failed to install Visual Studio 2017 Community edition"
 }
 Write-Host "Visual C++ part of Visual Studio 2017 (${env:MSVS_VERSION}) installed"
 
