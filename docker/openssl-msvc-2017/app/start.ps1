@@ -17,11 +17,6 @@ Write-Host "MSVS_INSTALL_DIR: ${env:MSVS_INSTALL_DIR}"
 $env:MSVC_AUXILARY_DIR = "${env:MSVS_INSTALL_DIR}\VC\Auxiliary"
 $env:MSVC_BUILD_DIR = "${env:MSVC_AUXILARY_DIR}\Build"
 
-# Find location of VC Tools
-$env:MSVC_TOOLS_VERSION = [IO.File]::ReadAllLines("${env:MSVC_BUILD_DIR}\Microsoft.VCToolsVersion.default.txt")[0].trimend()
-$env:MSVC_TOOLS_DIR = "${env:MSVS_INSTALL_DIR}\VC\Tools\MSVC\${env:MSVC_TOOLS_VERSION}"
-Write-Host "MSVC_TOOLS_DIR: ${env:MSVC_TOOLS_DIR}"
-
 # Required for unpacking with tar
 $env:PATH = "${env:PATH};${env:MSYS_HOME}\usr\bin"
 

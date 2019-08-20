@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 #TODO: find way to deal with tags and versions
-$image_version = "2.2.0"
+$image_version = "2.3.0"
 $image_revision = "$(git rev-parse --verify HEAD)"
 
 Write-Host "Building abrarov/openssl-mingw:${image_version} image with ${image_revision} revision"
