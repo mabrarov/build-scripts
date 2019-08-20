@@ -6,8 +6,8 @@
 
 FROM abrarov/win-builder:2.3.0
 
-ENV MSVS_VERSION=15 \
-    MSVS_URL=https://aka.ms/vs \
+ENV MSVS_VERSION=14 \
+    MSVS_URL="https://go.microsoft.com/fwlink/?LinkId=532606&clcid=0x409" \
     MSVS_DIST_NAME=vs_community.exe \
     VSWHERE_URL=https://github.com/Microsoft/vswhere/releases/download \
     VSWHERE_VERSION=2.6.7 \

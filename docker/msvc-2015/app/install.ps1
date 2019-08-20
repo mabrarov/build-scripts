@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
 # Download Visual Studio 2015 Community edition
-$msvs_url = "${env:MSVS_URL}/${env:MSVS_VERSION}/release/${env:MSVS_DIST_NAME}"
+$msvs_url = "${env:MSVS_URL}"
 $msvs_dist = "${env:TMP}\${env:MSVS_DIST_NAME}"
 Write-Host "Downloading Visual Studio 2015 Community edition from ${msvs_url} into ${msvs_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${msvs_url}", "${msvs_dist}")
