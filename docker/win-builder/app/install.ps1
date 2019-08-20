@@ -27,7 +27,7 @@ if (-not (Test-Path -Path "${seven_zip_dist}")) {
 Write-Host "Installing 7-Zip from ${seven_zip_dist} into ${env:SEVEN_ZIP_HOME}"
 $p = Start-Process -FilePath msiexec `
   -ArgumentList ("/package", "${seven_zip_dist}", "/quiet", "/qn", "/norestart") `
-  -Wait
+  -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install 7-Zip"
 }
@@ -52,7 +52,7 @@ Write-Host "Downloading ActivePerl from ${active_perl_url} into ${active_perl_di
 Write-Host "Installing ActivePerl from ${active_perl_dist} into ${env:ACTIVE_PERL_HOME}"
 $p = Start-Process -FilePath "${active_perl_dist}" `
   -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "TargetDir=""${env:ACTIVE_PERL_HOME}""") `
-  -Wait
+  -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install ActivePerl"
 }
@@ -67,7 +67,7 @@ Write-Host "Downloading Python ${env:PYTHON2_VERSION} from ${python_dist_url} in
 Write-Host "Installing Python ${env:PYTHON2_VERSION} from ${python_dist} into ${env:PYTHON2_HOME}"
 $p = Start-Process -FilePath "${python_dist}" `
   -ArgumentList ("/norestart", "/quiet", "/qn", "ALLUSERS=1", "TargetDir=""${env:PYTHON2_HOME}""") `
-  -Wait
+  -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install Python ${env:PYTHON2_VERSION}"
 }
@@ -82,7 +82,7 @@ Write-Host "Downloading Python ${env:PYTHON3_VERSION} from ${python_dist_url} in
 Write-Host "Installing Python ${env:PYTHON3_VERSION} from ${python_dist} into ${env:PYTHON3_HOME}"
 $p = Start-Process -FilePath "${python_dist}" `
   -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "InstallAllUsers=1", "TargetDir=""${env:PYTHON3_HOME}""") `
-  -Wait
+  -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install Python ${env:PYTHON3_VERSION}"
 }
