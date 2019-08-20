@@ -26,8 +26,8 @@ $p = Start-Process -FilePath "${msvs_dist}" -ArgumentList `
    "/AdminFile", `
    "${PSScriptRoot}\deploy.xml") `
   -Wait
-if (${p.ExitCode} -ne 0) {
-  throw "Failed to install Visual Studio 2015 Community edition with exit code ${p.ExitCode}"
+if (${p}.ExitCode -ne 0) {
+  throw "Failed to install Visual Studio 2015 Community edition"
 }
 Write-Host "Visual C++ part of Visual Studio 2015 (${env:MSVS_VERSION}) installed"
 
