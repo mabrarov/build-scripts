@@ -5,14 +5,17 @@ environment:
   DOCKER_PASS:
     secure: f3DqVP4VKrZqL/5I+s2M7kmMFrG0nINb0qdcamN2GtU=
 
-install: off
-  #- ps: .\install.ps1
+install:
+  - ps: .\install.ps1
 
-build_script: off
+build_script:
+  - ps: Write-Host "Skipping due to exhausted quotas"
   #- ps: .\build.ps1
 
-test_script: off
+test_script:
+  - ps: Write-Host "Skipping due build is disabled"
   #- ps: .\test.ps1
 
-deploy_script: off
+deploy_script:
+  - ps: Write-Host "Skipping due build is disabled"
   # - ps: .\deploy.ps1
