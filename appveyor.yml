@@ -5,8 +5,8 @@ environment:
   DOCKER_PASS:
     secure: f3DqVP4VKrZqL/5I+s2M7kmMFrG0nINb0qdcamN2GtU=
 
-install: off
-  #- ps: .\install.ps1
+install:
+  - ps: .\install.ps1
 
 build_script:
   - ps: Write-Warning "Skipping due to exhausted quotas"
