@@ -17,11 +17,6 @@ Write-Host "MSVS_INSTALL_DIR: ${env:MSVS_INSTALL_DIR}"
 $env:MSVC_AUXILARY_DIR = "${env:MSVS_INSTALL_DIR}\VC\Auxiliary"
 $env:MSVC_BUILD_DIR = "${env:MSVC_AUXILARY_DIR}\Build"
 
-# Find location of VC Tools
-$env:MSVC_TOOLS_VERSION = [IO.File]::ReadAllLines("${env:MSVC_BUILD_DIR}\Microsoft.VCToolsVersion.default.txt")[0].trimend()
-$env:MSVC_TOOLS_DIR = "${env:MSVS_INSTALL_DIR}\VC\Tools\MSVC\${env:MSVC_TOOLS_VERSION}"
-Write-Host "MSVC_TOOLS_DIR: ${env:MSVC_TOOLS_DIR}"
-
 $boost_version_underscore = "${env:BOOST_VERSION}" -replace "\.", '_'
 $env:BOOST_ROOT_DIR = "${env:BUILD_DIR}\boost_${boost_version_underscore}"
 Write-Host "Assuming root folder for sources is: ${env:BOOST_ROOT_DIR}"
@@ -77,6 +72,10 @@ if (Test-Path env:BOOST_RUNTIME_LINKAGE) {
   $runtime_linkages = @("${env:BOOST_RUNTIME_LINKAGE}")
 }
 
+if (!(Test-Path env:B2_OPTIONS)) {
+  $env:B2_OPTIONS = ""
+}
+
 foreach ($address_model in ${address_models}) {
   $env:BOOST_ADDRESS_MODEL = ${address_model}
 
@@ -106,6 +105,7 @@ foreach ($address_model in ${address_models}) {
       $env:BOOST_RUNTIME_LINKAGE = ${runtime_linkage}
       Set-Location -Path "${env:BOOST_ROOT_DIR}"
       Write-Host "Building Boost C++ Libraries with these parameters:"
+      Write-Host "MSVC_BUILD_DIR       : ${env:MSVC_BUILD_DIR}"
       Write-Host "MSVC_CMD_BOOTSTRAP   : ${env:MSVC_CMD_BOOTSTRAP}"
       Write-Host "B2_BIN               : ${env:B2_BIN}"
       Write-Host "B2_TOOLSET           : ${env:B2_TOOLSET}"
@@ -113,6 +113,7 @@ foreach ($address_model in ${address_models}) {
       Write-Host "BOOST_ADDRESS_MODEL  : ${env:BOOST_ADDRESS_MODEL}"
       Write-Host "BOOST_LINKAGE        : ${env:BOOST_LINKAGE}"
       Write-Host "BOOST_RUNTIME_LINKAGE: ${env:BOOST_RUNTIME_LINKAGE}"
+      Write-Host "B2_OPTIONS           : ${env:B2_OPTIONS}"
       & "${env:SCRIPT_DIR}\build.bat"
       if (${LastExitCode} -ne 0) {
           throw "Failed to build Boost with BOOST_ADDRESS_MODEL = ${env:BOOST_ADDRESS_MODEL}, BOOST_LINKAGE = ${env:BOOST_LINKAGE}, BOOST_RUNTIME_LINKAGE = ${env:BOOST_RUNTIME_LINKAGE}"
