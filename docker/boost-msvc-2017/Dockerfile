@@ -6,7 +6,7 @@
 
 FROM abrarov/msvc-2017:2.3.0
 
-ENV BOOST_VERSION=1.69.0 \
+ENV BOOST_VERSION=1.71.0 \
     BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
     SCRIPT_DIR=C:\\app
 
