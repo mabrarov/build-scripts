@@ -16,10 +16,9 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 Write-Host "Chocolatey package manager installed"
 
 # Download and install 7-Zip
-$app_dir = "C:\app"
 $seven_zip_version_suffix = "${env:SEVEN_ZIP_VERSION}" -replace "\.", ""
 $seven_zip_dist_name = "7z${seven_zip_version_suffix}-x64.msi"
-$seven_zip_dist = "${app_dir}\${seven_zip_dist_name}"
+$seven_zip_dist = "${PSScriptRoot}\${seven_zip_dist_name}"
 if (-not (Test-Path -Path "${seven_zip_dist}")) {
   $seven_zip_url = "${env:SEVEN_ZIP_DOWNLOAD_URL}/${seven_zip_dist_name}"
   Write-Host "Downloading 7-Zip from ${seven_zip_url} into ${seven_zip_dist_name}"
