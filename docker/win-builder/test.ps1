@@ -16,7 +16,7 @@ if (${LastExitCode} -ne 0) {
 }
 
 Write-Host "Running 7-Zip in container created from ${image_repository}:latest image"
-docker run --rm "${image_repository}:latest" "C:\Program Files\7-Zip\7z.exe"
+docker run --rm "${image_repository}:latest" "C:\Program Files\7-Zip\7z.exe" i
 if (${LastExitCode} -ne 0) {
   throw "Failed to get help from 7-Zip command line utility"
 }
