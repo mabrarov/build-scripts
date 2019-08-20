@@ -18,7 +18,7 @@ Write-Host "Downloading Visual Studio 2015 Community edition from ${msvs_url} in
 
 # Install Visual C++ part of Visual Studio 2015 Community edition
 Write-Host "Installing Visual C++ part of Visual Studio 2015 Community edition with support of Desktop applications and MFC"
-Start-Process -FilePath "${msvs_dist}" -ArgumentList `
+$p = Start-Process -FilePath "${msvs_dist}" -ArgumentList `
   ("/quiet", `
    "/norestart", `
    "/SuppressRefreshPrompt", `
@@ -26,6 +26,9 @@ Start-Process -FilePath "${msvs_dist}" -ArgumentList `
    "/AdminFile", `
    "${PSScriptRoot}\deploy.xml") `
   -Wait
+if (${p.ExitCode} -ne 0) {
+  throw "Failed to install Visual Studio 2015 Community edition with exit code ${p.ExitCode}"
+}
 Write-Host "Visual C++ part of Visual Studio 2015 (${env:MSVS_VERSION}) installed"
 
 # Download and install Visual Studio Locator
