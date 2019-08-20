@@ -9,10 +9,13 @@ install:
   - ps: .\install.ps1
 
 build_script:
-  - ps: .\build.ps1
+  - ps: Write-Warning "Skipping due to exhausted quotas"
+  #- ps: .\build.ps1
 
 test_script:
-  - ps: .\test.ps1
+  - ps: Write-Host "Skipping due build is disabled"
+  #- ps: .\test.ps1
 
 deploy_script:
-  - ps: .\deploy.ps1
+  - ps: Write-Host "Skipping due build is disabled"
+  # - ps: .\deploy.ps1

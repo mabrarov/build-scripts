@@ -18,7 +18,7 @@ Write-Host "Downloading Visual Studio 2017 Community edition from ${msvs_url} in
 
 # Install Visual C++ part of Visual Studio 2017 Community edition
 Write-Host "Installing Visual C++ part of Visual Studio 2017 Community edition with support of Desktop applications and MFC"
-Start-Process -FilePath "${msvs_dist}" -ArgumentList `
+$p = Start-Process -FilePath "${msvs_dist}" -ArgumentList `
   ("--locale en-US", `
    "--quiet", `
    "--norestart", `
@@ -27,7 +27,10 @@ Start-Process -FilePath "${msvs_dist}" -ArgumentList `
    "--add Microsoft.VisualStudio.Workload.NativeDesktop", `
    "--add Microsoft.VisualStudio.Component.VC.ATLMFC", `
    "--includeRecommended") `
-  -Wait
+  -Wait -PassThru
+if (${p}.ExitCode -ne 0) {
+  throw "Failed to install Visual Studio 2017 Community edition"
+}
 Write-Host "Visual C++ part of Visual Studio 2017 (${env:MSVS_VERSION}) installed"
 
 # Download and install Visual Studio Locator
