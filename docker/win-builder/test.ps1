@@ -7,24 +7,52 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-Write-Host "Running Chocolatey package manager in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest choco --version
+$image_repository = "abrarov/$(Split-Path "${PSScriptRoot}" -Leaf)"
 
-Write-Host "Running 7-Zip in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\Program Files\7-Zip\7z.exe"
+Write-Host "Running Chocolatey package manager in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" choco --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of Chocolatey package manager"
+}
 
-Write-Host "Running MSYS2 GNU make in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\msys64\usr\bin\make" --version
-Write-Host "Running MSYS2 GNU tar in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\msys64\usr\bin\tar" --version
-Write-Host "Running MSYS2 GNU patch in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\msys64\usr\bin\patch" --version
+Write-Host "Running 7-Zip in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\Program Files\7-Zip\7z.exe"
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get help from 7-Zip command line utility"
+}
 
-Write-Host "Running ActivePerl in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\Perl64\bin\perl.exe" --version
+Write-Host "Running MSYS2 GNU Make in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\msys64\usr\bin\make" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of MSYS2 GNU Make"
+}
 
-Write-Host "Running Python 2 in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\Python27\python.exe" --version
+Write-Host "Running MSYS2 GNU tar in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\msys64\usr\bin\tar" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of MSYS2 GNU tar"
+}
 
-Write-Host "Running Python 3 in container created from abrarov/win-builder:latest image"
-docker run --rm abrarov/win-builder:latest "C:\Python37\python.exe" --version
+Write-Host "Running MSYS2 GNU patch in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\msys64\usr\bin\patch" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of MSYS2 GNU patch"
+}
+
+Write-Host "Running ActivePerl in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\Perl64\bin\perl.exe" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of ActivePerl"
+}
+
+Write-Host "Running Python 2 in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\Python27\python.exe" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of Python 2"
+}
+
+Write-Host "Running Python 3 in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\Python37\python.exe" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of Python 3"
+}
