@@ -8,7 +8,8 @@ FROM abrarov/mingw:2.3.0
 
 ENV BOOST_VERSION=1.71.0 \
     BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
-    SCRIPT_DIR=C:\\app
+    SCRIPT_DIR=C:\\app \
+    B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
 
 ADD ["app", "C:/app/"]
 

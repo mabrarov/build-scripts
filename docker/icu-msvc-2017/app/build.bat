@@ -22,7 +22,12 @@ if not "--%ICU_PATCH_MSYS_FILE%" == "--" (
   if %exit_code% neq 0 goto exit
 )
 
-bash -C ./runConfigureICU %ICU_CONFIGURE_OPTIONS% %ICU_PLATFORM% --prefix=%ICU_STAGE_MSYS_DIR% --build=%ICU_BUILD_MACHINE% %ICU_BUILD_OPTIONS%
+bash -C ./runConfigureICU ^
+  %ICU_CONFIGURE_OPTIONS% ^
+  %ICU_PLATFORM% ^
+  --prefix="%ICU_STAGE_MSYS_DIR%" ^
+  --build="%ICU_BUILD_MACHINE%" ^
+  %ICU_BUILD_OPTIONS%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
