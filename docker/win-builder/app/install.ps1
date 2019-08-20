@@ -25,9 +25,12 @@ if (-not (Test-Path -Path "${seven_zip_dist}")) {
   (New-Object System.Net.WebClient).DownloadFile("${seven_zip_url}", "${seven_zip_dist_name}")
 }
 Write-Host "Installing 7-Zip from ${seven_zip_dist} into ${env:SEVEN_ZIP_HOME}"
-Start-Process -FilePath msiexec `
+$p = Start-Process -FilePath msiexec `
   -ArgumentList ("/package", "${seven_zip_dist}", "/quiet", "/qn", "/norestart") `
   -Wait
+if (${p.ExitCode} -ne 0) {
+  throw "Failed to install 7-Zip with exit code ${p.ExitCode}"
+}
 Write-Host "7-Zip ${env:SEVEN_ZIP_VERSION} installed"
 
 # Download and install MSYS2
@@ -47,9 +50,12 @@ $active_perl_dist = "${env:TMP}\${active_perl_dist_name}"
 Write-Host "Downloading ActivePerl from ${active_perl_url} into ${active_perl_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${active_perl_url}", "${active_perl_dist}")
 Write-Host "Installing ActivePerl from ${active_perl_dist} into ${env:ACTIVE_PERL_HOME}"
-Start-Process -FilePath "${active_perl_dist}" `
+$p = Start-Process -FilePath "${active_perl_dist}" `
   -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "TargetDir=""${env:ACTIVE_PERL_HOME}""") `
   -Wait
+if (${p.ExitCode} -ne 0) {
+  throw "Failed to install ActivePerl with exit code ${p.ExitCode}"
+}
 Write-Host "ActivePerl ${env:ACTIVE_PERL_VERSION} installed"
 
 # Download and install Python 2.x
@@ -59,9 +65,12 @@ $python_dist = "${env:TMP}\${python_dist_name}"
 Write-Host "Downloading Python ${env:PYTHON2_VERSION} from ${python_dist_url} into ${python_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${python_dist_url}", "${python_dist}")
 Write-Host "Installing Python ${env:PYTHON2_VERSION} from ${python_dist} into ${env:PYTHON2_HOME}"
-Start-Process -FilePath "${python_dist}" `
+$p = Start-Process -FilePath "${python_dist}" `
   -ArgumentList ("/norestart", "/quiet", "/qn", "ALLUSERS=1", "TargetDir=""${env:PYTHON2_HOME}""") `
   -Wait
+if (${p.ExitCode} -ne 0) {
+  throw "Failed to install Python ${env:PYTHON2_VERSION} with exit code ${p.ExitCode}"
+}
 Write-Host "Python ${env:PYTHON2_VERSION} installed"
 
 # Download and install Python 3.x
@@ -71,9 +80,12 @@ $python_dist = "${env:TMP}\${python_dist_name}"
 Write-Host "Downloading Python ${env:PYTHON3_VERSION} from ${python_dist_url} into ${python_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${python_dist_url}", "${python_dist}")
 Write-Host "Installing Python ${env:PYTHON3_VERSION} from ${python_dist} into ${env:PYTHON3_HOME}"
-Start-Process -FilePath "${python_dist}" `
+$p = Start-Process -FilePath "${python_dist}" `
   -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "InstallAllUsers=1", "TargetDir=""${env:PYTHON3_HOME}""") `
   -Wait
+if (${p.ExitCode} -ne 0) {
+  throw "Failed to install Python ${env:PYTHON3_VERSION} with exit code ${p.ExitCode}"
+}
 Write-Host "Python ${env:PYTHON3_VERSION} installed"
 
 # Cleanup
