@@ -72,6 +72,10 @@ if (Test-Path env:BOOST_RUNTIME_LINKAGE) {
   $runtime_linkages = @("${env:BOOST_RUNTIME_LINKAGE}")
 }
 
+if (!(Test-Path env:B2_OPTIONS)) {
+  $env:B2_OPTIONS = ""
+}
+
 foreach ($address_model in ${address_models}) {
   $env:BOOST_ADDRESS_MODEL = ${address_model}
 
@@ -109,6 +113,7 @@ foreach ($address_model in ${address_models}) {
       Write-Host "BOOST_ADDRESS_MODEL  : ${env:BOOST_ADDRESS_MODEL}"
       Write-Host "BOOST_LINKAGE        : ${env:BOOST_LINKAGE}"
       Write-Host "BOOST_RUNTIME_LINKAGE: ${env:BOOST_RUNTIME_LINKAGE}"
+      Write-Host "B2_OPTIONS           : ${env:B2_OPTIONS}"
       & "${env:SCRIPT_DIR}\build.bat"
       if (${LastExitCode} -ne 0) {
           throw "Failed to build Boost with BOOST_ADDRESS_MODEL = ${env:BOOST_ADDRESS_MODEL}, BOOST_LINKAGE = ${env:BOOST_LINKAGE}, BOOST_RUNTIME_LINKAGE = ${env:BOOST_RUNTIME_LINKAGE}"
