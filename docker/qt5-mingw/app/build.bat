@@ -8,7 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%MINGW_HOME%\bin;%ICU_DIR%\bin;%ICU_DIR%\lib;%ACTIVE_PERL_HOME%\bin;%PYTHON_HOME%;%MSYS_HOME%\usr\bin;%PATH%
+set PATH=%MINGW_HOME%\bin;%ICU_DIR%\bin;%ICU_DIR%\lib;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%MSYS_HOME%\usr\bin;%PATH%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
