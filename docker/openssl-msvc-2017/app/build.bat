@@ -12,12 +12,12 @@ call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-set PATH=%PATH%;%ACTIVE_PERL_HOME%\bin;%MSYS_HOME%\usr\bin
+set PATH=%PATH%;%ACTIVE_PERL_HOME%\bin
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 if not "--%OPENSSL_PATCH_MSYS_FILE%" == "--" (
-  patch -uNf -p0 -i "%OPENSSL_PATCH_MSYS_FILE%"
+  "%MSYS_HOME%\usr\bin\patch.exe" -uNf -p0 -i "%OPENSSL_PATCH_MSYS_FILE%"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 )
