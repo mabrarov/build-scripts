@@ -8,7 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%JOM_HOME%;%OPENSSL_DIR%\bin;%ICU_DIR%\bin;%ICU_DIR%\lib;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%MSYS_HOME%\usr\bin;%PATH%
+set PATH=%JOM_HOME%;%OPENSSL_DIR%\bin;%ICU_DIR%\bin;%ICU_DIR%\lib;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%PATH%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
@@ -22,7 +22,7 @@ if %exit_code% neq 0 goto exit
 
 if not "--%QT_PATCH_MSYS_FILE%" == "--" (
   echo Patching Qt with %QT_PATCH_MSYS_FILE%
-  patch.exe -uNf -p0 -i "%QT_PATCH_MSYS_FILE%"
+  "%MSYS_HOME%\usr\bin\patch.exe" -uNf -p0 -i "%QT_PATCH_MSYS_FILE%"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 )
