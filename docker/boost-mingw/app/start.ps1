@@ -39,16 +39,6 @@ if (Test-Path -Path "${env:BOOST_ROOT_DIR}") {
 $env:B2_BIN = "${env:BOOST_ROOT_DIR}\b2.exe"
 $env:B2_TOOLSET = "gcc"
 
-# Build Boost.Build
-$env:MINGW_HOME = "${env:MINGW64_HOME}"
-$env:BOOST_BOOTSTRAP = "${env:BOOST_ROOT_DIR}\bootstrap.bat"
-Set-Location -Path "${env:BOOST_ROOT_DIR}"
-Write-Host "Building Boost.Build engine"
-& "${env:SCRIPT_DIR}\bootstrap.bat"
-if (${LastExitCode} -ne 0) {
-  throw "Failed to build Boost.Build"
-}
-
 # Build Boost C++ Libraries
 $address_models = @("64", "32")
 $boost_linkages = @("shared", "static")
@@ -89,6 +79,16 @@ foreach ($address_model in ${address_models}) {
 
   $mingw_version_suffix = "${env:MINGW_VERSION}" -replace "([0-9]+)\.([0-9]+)\.([0-9]+)", '$1$2'
   $env:BOOST_INSTALL_DIR = "${env:TARGET_DIR}\boost-${env:BOOST_VERSION}-${target_dir_suffix}-mingw${mingw_version_suffix}"
+
+  # Build Boost.Build
+  $env:BOOST_BOOTSTRAP = "${env:BOOST_ROOT_DIR}\bootstrap.bat"
+  Set-Location -Path "${env:BOOST_ROOT_DIR}"
+  Write-Host "Building Boost.Build engine"
+  & "${env:SCRIPT_DIR}\bootstrap.bat"
+  if (${LastExitCode} -ne 0) {
+    throw "Failed to build Boost.Build"
+  }
+
   foreach ($boost_linkage in ${boost_linkages}) {
     $env:BOOST_LINKAGE = ${boost_linkage}
     foreach ($runtime_linkage in ${runtime_linkages}) {

@@ -43,7 +43,7 @@ Write-Host "Downloading MSYS2 from ${msys_url} into ${msys_dist}"
 Write-Host "Extracting MSYS2 from ${msys_dist} into ${env:MSYS_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${msys_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${env:TMP}\${msys_tar_name}" -o"C:" -aoa -y -bd | out-null
-& "${app_dir}\msys2.bat"
+& "${PSScriptRoot}\msys2.bat"
 Write-Host "MSYS2 ${env:MSYS2_VERSION} installed"
 
 # Download and install ActivePerl
