@@ -26,8 +26,7 @@ Get folder where MS Visual Studio 2015 is installed:
 ```bash
 docker run --rm \
 abrarov/msvc-2015 \
-vswhere -latest \
--products Microsoft.VisualStudio.Product.Community \
+vswhere -legacy -latest \
 -version '[14.0,15.0)' \
 -property installationPath
 ```
