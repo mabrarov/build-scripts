@@ -12,8 +12,6 @@ $ErrorActionPreference = "Stop"
 
 # Find location of Visual Studio
 $env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0) -requires Microsoft.VisualStudio.Workload.NativeDesktop -property installationPath
-Write-Host "MSVS_INSTALL_DIR: ${env:MSVS_INSTALL_DIR}"
-
 $env:MSVC_AUXILARY_DIR = "${env:MSVS_INSTALL_DIR}\VC\Auxiliary"
 $env:MSVC_BUILD_DIR = "${env:MSVC_AUXILARY_DIR}\Build"
 
@@ -105,6 +103,7 @@ foreach ($address_model in ${address_models}) {
       $env:BOOST_RUNTIME_LINKAGE = ${runtime_linkage}
       Set-Location -Path "${env:BOOST_ROOT_DIR}"
       Write-Host "Building Boost C++ Libraries with these parameters:"
+      Write-Host "MSVS_INSTALL_DIR     : ${env:MSVS_INSTALL_DIR}"
       Write-Host "MSVC_BUILD_DIR       : ${env:MSVC_BUILD_DIR}"
       Write-Host "MSVC_CMD_BOOTSTRAP   : ${env:MSVC_CMD_BOOTSTRAP}"
       Write-Host "B2_BIN               : ${env:B2_BIN}"
