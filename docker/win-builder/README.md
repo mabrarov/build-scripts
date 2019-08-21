@@ -4,7 +4,7 @@ Base Docker image for Docker images building on Windows.
 
 Contains:
 
-    1. [Chocolatey](https://chocolatey.org)
+1. [Chocolatey](https://chocolatey.org)
 1. [7-Zip](https://www.7-zip.org)
 1. [MSYS2](http://www.msys2.org) with base-devel Pacman package group
 1. [ActivePerl](https://www.activestate.com/products/activeperl)
