@@ -11,8 +11,8 @@ $ErrorActionPreference = "Stop"
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
 # Find location of Visual Studio
-$env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.Community -version [14.0,15.0) -requires NativeLanguageSupport_VCV1 -property installationPath
-$env:MSVC_BUILD_DIR = "${env:MSVS_INSTALL_DIR}\VC"
+$env:MSVS_INSTALL_DIR = &vswhere --% -legacy -latest -version [14.0,15.0) -property installationPath
+$env:MSVC_BUILD_DIR = "${env:MSVS_INSTALL_DIR}VC"
 $env:MSVC_CMD_BOOTSTRAP = "vcvarsall.bat"
 
 # Extension of static library files
