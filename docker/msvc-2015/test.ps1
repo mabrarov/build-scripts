@@ -10,8 +10,7 @@ $ErrorActionPreference = "Stop"
 $image_repository = "abrarov/$(Split-Path "${PSScriptRoot}" -Leaf)"
 
 Write-Host "Get folder where MS Visual Studio 2015 is installed in container created from ${image_repository}:latest image"
-docker run --rm "${image_repository}:latest" ^
-vswhere -latest -products Microsoft.VisualStudio.Product.Community -version '[14.0,15.0)' -property installationPath
+docker run --rm "${image_repository}:latest" vswhere -legacy -latest -version '[14.0,15.0)' -property installationPath
 if (${LastExitCode} -ne 0) {
   throw "Failed to get folder where MS Visual Studio 2015 is installed"
 }

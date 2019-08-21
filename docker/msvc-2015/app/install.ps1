@@ -40,4 +40,4 @@ Write-Host "Visual Studio Locator ${env:VSWHERE_VERSION} installed"
 
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
-Remove-Item -Path "${env:TMP}\*" -Recurse -Force
+Remove-Item -Path "${env:TMP}\*" -Recurse -Force -ErrorAction SilentlyContinue
