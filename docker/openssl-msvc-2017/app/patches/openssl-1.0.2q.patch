@@ -1,0 +1,89 @@
+--- ./util/mk1mf.pl	2019-02-13 21:00:00 +0300
++++ ./util/mk1mf.pl	2019-02-13 21:10:00 +0300
+@@ -1236,6 +1236,8 @@
+ 		"shlib" => \$shlib,
+ 		"dll" => \$shlib,
+ 		"shared" => 0,
+++		"debug_lib" => \$debug_lib,
+++		"static_lib" => \$static_lib,
+ 		"no-sctp" => 0,
+ 		"no-srtp" => 0,
+ 		"no-gmp" => 0,
+
+--- ./util/mkdef.pl	2019-02-13 21:00:00 +0300
++++ ./util/mkdef.pl	2019-02-13 21:10:00 +0300
+@@ -55,6 +55,8 @@
+ #
+
+ my $debug=0;
++my $debug_lib=0;
++my $static_lib=0;
+
+ my $crypto_num= "util/libeay.num";
+ my $ssl_num=    "util/ssleay.num";
+@@ -157,6 +159,8 @@
+ foreach (@ARGV, split(/ /, $options))
+ 	{
+ 	$debug=1 if $_ eq "debug";
++	$debug_lib=1 if $_ eq "debug_lib";
++	$static_lib=1 if $_ eq "static_lib";
+ 	$W32=1 if $_ eq "32";
+ 	$W16=1 if $_ eq "16";
+ 	if($_ eq "NT") {
+@@ -1323,6 +1327,19 @@
+ 		  $description = "\@#$http_vendor:$version#\@$what; DLL for library $name.  Build for EMX -Zmtd";
+ 		}
+
++	$libsuffix="";
++	if ($static_lib) {
++		$libsuffix="MT";
++	} else {
++		$libsuffix="MD";
++	}
++
++	if ($debug_lib) {
++		$libsuffix=$libsuffix."d";
++	}
++
++	$libname=$libname.$libsuffix;
++
+ 	print OUT <<"EOF";
+ ;
+ ; Definition file for the DLL version of the $name library from OpenSSL
+
+--- ./util/pl/VC-32.pl	2019-02-13 21:00:00 +0300
++++ ./util/pl/VC-32.pl	2019-02-13 21:10:00 +0300
+@@ -16,6 +16,20 @@
+ 	$crypto="libeay32";
+ 	}
+
++$libsuffix="";
++if ($static_lib) {
++	$libsuffix="MT";
++} else {
++	$libsuffix="MD";
++}
++
++if ($debug_lib) {
++	$libsuffix=$libsuffix."d";
++}
++
++$ssl=$ssl.$libsuffix;
++$crypto=$crypto.$libsuffix;
++
+ $o='\\';
+ $cp='$(PERL) util/copy.pl';
+ $mkdir='$(PERL) util/mkdir-p.pl';
+@@ -154,9 +168,9 @@
+ 	$cflags=$opt_cflags.$base_cflags;
+ 	}
+
+-# generate symbols.pdb unconditionally
+-$app_cflag.=" /Zi /Fd\$(TMP_D)/app";
+-$lib_cflag.=" /Zi /Fd\$(TMP_D)/lib";
++# Do not generate symbols.pdb because it depends on path used for building and that path is incorporated into PDB
++$app_cflag.=" /Zi";
++$lib_cflag.=" /Zi";
+ $lflags.=" /debug";
+
+ $obj='.obj';
