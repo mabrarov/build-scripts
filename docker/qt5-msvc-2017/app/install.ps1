@@ -10,6 +10,18 @@ $ErrorActionPreference = "Stop"
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
+# Download and install LLVM for building Qt documentation
+$llvm_url = "${env:LLVM_URL}/llvmorg-${env:LLVM_VERSION}/${env:LLVM_DIST_NAME}"
+$llvm_dist = "${env:TMP}\${env:LLVM_DIST_NAME}"
+Write-Host "Downloading LLVM from ${llvm_url} into ${llvm_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${llvm_url}", "${llvm_dist}")
+Write-Host "Installing LLVM into ${env:LLVM_INSTALL_DIR}"
+$p = Start-Process -FilePath "${llvm_dist}" -ArgumentList ("/S") -Wait -PassThru
+if (${p}.ExitCode -ne 0) {
+  throw "Failed to install LLVM"
+}
+Write-Host "LLVM ${env:LLVM_VERSION} installed"
+
 # Download and install jom
 $jom_url_version_suffix = "${env:JOM_VERSION}" -replace "\.", "_"
 $jom_dist_filename = "jom_${jom_url_version_suffix}.zip"
