@@ -18,11 +18,7 @@ if not "--%OPENSSL_PATCH_MSYS_FILE%" == "--" (
   if %exit_code% neq 0 goto exit
 )
 
-perl Configure ^
-  --prefix="%OPENSSL_STAGE_MSYS_DIR%" ^
-  "%OPENSSL_TOOLSET%" ^
-  enable-static-engine ^
-  "%OPENSSL_CONFIGURE_LINKAGE%"
+perl Configure --prefix="%OPENSSL_STAGE_MSYS_DIR%" "%OPENSSL_TOOLSET%" enable-static-engine "%OPENSSL_CONFIGURE_LINKAGE%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
