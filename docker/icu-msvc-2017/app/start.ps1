@@ -159,6 +159,7 @@ foreach ($address_model in ${address_models}) {
       Write-Host "Building ICU with these parameters:"
       Write-Host "MSVS_INSTALL_DIR      : ${env:MSVS_INSTALL_DIR}"
       Write-Host "MSVC_BUILD_DIR        : ${env:MSVC_BUILD_DIR}"
+      Write-Host "MSVC_CMD_BOOTSTRAP    : ${env:MSVC_CMD_BOOTSTRAP}"
       Write-Host "MSYS_HOME             : ${env:MSYS_HOME}"
       Write-Host "ICU_HOME              : ${env:ICU_HOME}"
       Write-Host "ICU_INSTALL_DIR       : ${env:ICU_INSTALL_DIR}"
