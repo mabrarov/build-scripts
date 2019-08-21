@@ -8,7 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%MINGW_HOME%\bin;%ICU_DIR%\bin;%ICU_DIR%\lib;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%MSYS_HOME%\usr\bin;%PATH%
+set PATH=%MINGW_HOME%\bin;%OPENSSL_DIR%\bin;%ICU_DIR%\bin;%ICU_DIR%\lib;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%MSYS_HOME%\usr\bin;%PATH%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
@@ -24,18 +24,18 @@ if not "--%QT_PATCH_MSYS_FILE%" == "--" (
 )
 
 call "configure.bat" ^
--platform win32-g++ ^
--debug-and-release ^
--opensource -confirm-license ^
-%QT_CONFIGURE_OPTIONS_LINKAGE% ^
--nomake examples ^
--nomake tests ^
-%QT_CONFIGURE_OPTIONS% ^
--I "%OPENSSL_DIR%\include" ^
--L "%OPENSSL_DIR%\lib" ^
--I "%ICU_DIR%\include" ^
--L "%ICU_DIR%\lib" ^
--prefix "%QT_INSTALL_DIR%"
+  -platform win32-g++ ^
+  -debug-and-release ^
+  -opensource -confirm-license ^
+  "%QT_CONFIGURE_OPTIONS_LINKAGE%" ^
+  -nomake examples ^
+  -nomake tests ^
+  %QT_CONFIGURE_OPTIONS% ^
+  -I "%OPENSSL_DIR%\include" ^
+  -L "%OPENSSL_DIR%\lib" ^
+  -I "%ICU_DIR%\include" ^
+  -L "%ICU_DIR%\lib" ^
+  -prefix "%QT_INSTALL_DIR%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
