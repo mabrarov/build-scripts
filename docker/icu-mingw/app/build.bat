@@ -31,6 +31,12 @@ make
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
+if not "--%ICU_TEST%" == "--" (
+  make check
+  set exit_code=%errorlevel%
+  if %exit_code% neq 0 goto exit
+)
+
 make install
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
