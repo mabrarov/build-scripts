@@ -6,8 +6,9 @@
 
 FROM abrarov/msvc-2015:2.3.0
 
-ENV ICU_VERSION=58.2 \
+ENV ICU_VERSION=64.2 \
     ICU_URL=http://download.icu-project.org/files/icu4c \
+    ICU_TEST="" \
     SCRIPT_DIR=C:\\app
 
 ADD ["app", "C:/app/"]

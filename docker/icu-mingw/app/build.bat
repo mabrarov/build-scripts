@@ -27,9 +27,18 @@ bash -C ./runConfigureICU ^
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
+rem Workaround for https://unicode-org.atlassian.net/browse/ICU-20531
+mkdir "data\out\tmp"
+
 make
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
+
+if not "--%ICU_TEST%" == "--" (
+  make check
+  set exit_code=%errorlevel%
+  if %exit_code% neq 0 goto exit
+)
 
 make install
 set exit_code=%errorlevel%
