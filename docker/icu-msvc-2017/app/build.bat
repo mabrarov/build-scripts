@@ -1,4 +1,5 @@
 @echo off
+setlocal enableextensions
 
 rem
 rem Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
@@ -31,6 +32,9 @@ bash -C ./runConfigureICU ^
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
+rem Workaround for https://unicode-org.atlassian.net/browse/ICU-20531
+mkdir "data\out\tmp"
+
 make
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
@@ -46,4 +50,5 @@ set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 :exit
+endlocal
 exit /B %exit_code%
