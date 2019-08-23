@@ -1,10 +1,10 @@
 #
-# Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.3.0
+FROM abrarov/msvc-2015:2.3.0
 
 ENV BOOST_VERSION=1.71.0 \
     BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
@@ -23,4 +23,4 @@ ARG image_revision=""
 LABEL name="abrarov/boost-mingw" \
     version="${image_version}" \
     revision="${image_revision}" \
-    description="Builder of Boost C++ Libraries with MinGW"
+    description="Builder of Boost C++ Libraries with MS Visual C++ 2015"

@@ -7,7 +7,7 @@
 FROM abrarov/mingw:2.3.0
 
 ENV OPENSSL_VERSION=1.0.2q \
-    ICU_VERSION=58.2 \
+    ICU_VERSION=64.2 \
     QT_VERSION=5.13.0 \
     QT_URL=http://download.qt.io/official_releases/qt \
     SCRIPT_DIR=C:\\app \
@@ -20,9 +20,7 @@ RUN mkdir C:\depend
 
 VOLUME ["C:/target", "C:/depend"]
 
-ENTRYPOINT ["powershell"]
-
-CMD ["C:/app/start.ps1"]
+CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 
 ARG image_version=""
 ARG image_revision=""

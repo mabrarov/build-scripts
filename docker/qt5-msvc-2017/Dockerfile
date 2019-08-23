@@ -12,7 +12,7 @@ ENV LLVM_VERSION=8.0.1 \
     LLVM_INSTALL_DIR="C:\Program Files\LLVM" \
     JOM_HOME=C:\\jom \
     OPENSSL_VERSION=1.0.2q \
-    ICU_VERSION=58.2 \
+    ICU_VERSION=64.2 \
     QT_VERSION=5.13.0 \
     QT_URL=http://download.qt.io/official_releases/qt \
     JOM_URL=http://master.qt.io/official_releases/jom \
@@ -30,9 +30,7 @@ RUN mkdir C:\depend && \
 
 VOLUME ["C:/target", "C:/depend"]
 
-ENTRYPOINT ["powershell"]
-
-CMD ["C:/app/start.ps1"]
+CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 
 ARG image_version=""
 ARG image_revision=""
