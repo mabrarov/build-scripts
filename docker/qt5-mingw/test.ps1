@@ -7,4 +7,6 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-#TODO
+$image_repository = "abrarov/$(Split-Path "${PSScriptRoot}" -Leaf)"
+
+#TODO: add some tests
