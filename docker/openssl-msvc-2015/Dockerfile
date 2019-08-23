@@ -8,6 +8,7 @@ FROM abrarov/msvc-2015:2.3.0
 
 ENV OPENSSL_VERSION=1.0.2q \
     OPENSSL_URL=https://www.openssl.org/source \
+    OPENSSL_TEST="" \
     SCRIPT_DIR=C:\\app
 
 ADD ["app", "C:/app/"]

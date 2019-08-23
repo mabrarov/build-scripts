@@ -56,7 +56,19 @@ perl util\mkdef.pl %OPENSSL_BUILD_STR% %OPENSSL_LINK_STR% 32 ssleay > ms\ssleay3
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-nmake -f "%OPENSSL_HOME%\ms\nt%OPENSSL_DLL_STR%-%OPENSSL_ARCH%.mak" install
+set "make_file=%OPENSSL_HOME%\ms\nt%OPENSSL_DLL_STR%-%OPENSSL_ARCH%.mak"
+
+nmake -f "%make_file%"
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
+
+if not "--%OPENSSL_TEST%" == "--" (
+  nmake -f "%make_file%" test
+  set exit_code=%errorlevel%
+  if %exit_code% neq 0 goto exit
+)
+
+nmake -f "%make_file%" install
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
