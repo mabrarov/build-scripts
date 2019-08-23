@@ -15,9 +15,7 @@ ADD ["app", "C:/app/"]
 
 VOLUME ["C:/target"]
 
-ENTRYPOINT ["powershell"]
-
-CMD ["C:/app/start.ps1"]
+CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 
 ARG image_version=""
 ARG image_revision=""
