@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #
@@ -9,6 +9,11 @@ $ErrorActionPreference = "Stop"
 
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
+
+# Find location of Visual Studio
+$env:MSVS_INSTALL_DIR = &vswhere --% -legacy -latest -version [14.0,15.0) -property installationPath
+$env:MSVC_BUILD_DIR = "${env:MSVS_INSTALL_DIR}VC"
+$env:MSVC_CMD_BOOTSTRAP = "vcvarsall.bat"
 
 $boost_version_underscore = "${env:BOOST_VERSION}" -replace "\.", '_'
 $env:BOOST_ROOT_DIR = "${env:BUILD_DIR}\boost_${boost_version_underscore}"
@@ -37,7 +42,17 @@ if (Test-Path -Path "${env:BOOST_ROOT_DIR}") {
 }
 
 $env:B2_BIN = "${env:BOOST_ROOT_DIR}\b2.exe"
-$env:B2_TOOLSET = "gcc"
+$env:B2_TOOLSET = "msvc-14.0"
+
+# Build Boost.Build
+$env:MSVC_CMD_BOOTSTRAP_OPTIONS = "amd64"
+$env:BOOST_BOOTSTRAP = "${env:BOOST_ROOT_DIR}\bootstrap.bat"
+Set-Location -Path "${env:BOOST_ROOT_DIR}"
+Write-Host "Building Boost.Build engine"
+& "${env:SCRIPT_DIR}\bootstrap.bat"
+if (${LastExitCode} -ne 0) {
+  throw "Failed to build Boost.Build"
+}
 
 # Build Boost C++ Libraries
 $address_models = @("64", "32")
@@ -63,13 +78,13 @@ foreach ($address_model in ${address_models}) {
   $env:BOOST_ADDRESS_MODEL = ${address_model}
 
   # Determine parameters dependent on address model
-  switch ($env:BOOST_ADDRESS_MODEL) {
+  switch (${env:BOOST_ADDRESS_MODEL}) {
     "32" {
-      $env:MINGW_HOME = "${env:MINGW32_HOME}"
+      $env:MSVC_CMD_BOOTSTRAP_OPTIONS = "x86"
       $target_dir_suffix = "x86"
     }
     "64" {
-      $env:MINGW_HOME = "${env:MINGW64_HOME}"
+      $env:MSVC_CMD_BOOTSTRAP_OPTIONS = "amd64"
       $target_dir_suffix = "x64"
     }
     default {
@@ -77,18 +92,7 @@ foreach ($address_model in ${address_models}) {
     }
   }
 
-  $mingw_version_suffix = "${env:MINGW_VERSION}" -replace "([0-9]+)\.([0-9]+)\.([0-9]+)", '$1$2'
-  $env:BOOST_INSTALL_DIR = "${env:TARGET_DIR}\boost-${env:BOOST_VERSION}-${target_dir_suffix}-mingw${mingw_version_suffix}"
-
-  # Build Boost.Build
-  $env:BOOST_BOOTSTRAP = "${env:BOOST_ROOT_DIR}\bootstrap.bat"
-  Set-Location -Path "${env:BOOST_ROOT_DIR}"
-  Write-Host "Building Boost.Build engine"
-  & "${env:SCRIPT_DIR}\bootstrap.bat"
-  if (${LastExitCode} -ne 0) {
-    throw "Failed to build Boost.Build"
-  }
-
+  $env:BOOST_INSTALL_DIR = "${env:TARGET_DIR}\boost-${env:BOOST_VERSION}-${target_dir_suffix}-vs2015"
   foreach ($boost_linkage in ${boost_linkages}) {
     $env:BOOST_LINKAGE = ${boost_linkage}
     foreach ($runtime_linkage in ${runtime_linkages}) {
@@ -99,15 +103,18 @@ foreach ($address_model in ${address_models}) {
       $env:BOOST_RUNTIME_LINKAGE = ${runtime_linkage}
       Set-Location -Path "${env:BOOST_ROOT_DIR}"
       Write-Host "Building Boost C++ Libraries with these parameters:"
-      Write-Host "MINGW_HOME           : ${env:MINGW_HOME}"
-      Write-Host "B2_BIN               : ${env:B2_BIN}"
-      Write-Host "B2_TOOLSET           : ${env:B2_TOOLSET}"
-      Write-Host "BOOST_INSTALL_DIR    : ${env:BOOST_INSTALL_DIR}"
-      Write-Host "BOOST_ADDRESS_MODEL  : ${env:BOOST_ADDRESS_MODEL}"
-      Write-Host "BOOST_LINKAGE        : ${env:BOOST_LINKAGE}"
-      Write-Host "BOOST_RUNTIME_LINKAGE: ${env:BOOST_RUNTIME_LINKAGE}"
-      Write-Host "B2_OPTIONS           : ${env:B2_OPTIONS}"
-      & "$env:SCRIPT_DIR\build.bat"
+      Write-Host "MSVS_INSTALL_DIR          : ${env:MSVS_INSTALL_DIR}"
+      Write-Host "MSVC_BUILD_DIR            : ${env:MSVC_BUILD_DIR}"
+      Write-Host "MSVC_CMD_BOOTSTRAP        : ${env:MSVC_CMD_BOOTSTRAP}"
+      Write-Host "MSVC_CMD_BOOTSTRAP_OPTIONS: ${env:MSVC_CMD_BOOTSTRAP_OPTIONS}"
+      Write-Host "B2_BIN                    : ${env:B2_BIN}"
+      Write-Host "B2_TOOLSET                : ${env:B2_TOOLSET}"
+      Write-Host "BOOST_INSTALL_DIR         : ${env:BOOST_INSTALL_DIR}"
+      Write-Host "BOOST_ADDRESS_MODEL       : ${env:BOOST_ADDRESS_MODEL}"
+      Write-Host "BOOST_LINKAGE             : ${env:BOOST_LINKAGE}"
+      Write-Host "BOOST_RUNTIME_LINKAGE     : ${env:BOOST_RUNTIME_LINKAGE}"
+      Write-Host "B2_OPTIONS                : ${env:B2_OPTIONS}"
+      & "${env:SCRIPT_DIR}\build.bat"
       if (${LastExitCode} -ne 0) {
           throw "Failed to build Boost with BOOST_ADDRESS_MODEL = ${env:BOOST_ADDRESS_MODEL}, BOOST_LINKAGE = ${env:BOOST_LINKAGE}, BOOST_RUNTIME_LINKAGE = ${env:BOOST_RUNTIME_LINKAGE}"
       }

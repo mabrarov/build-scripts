@@ -2,14 +2,14 @@
 setlocal enableextensions
 
 rem
-rem Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
+rem Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
 rem
 rem Distributed under the MIT License (see accompanying LICENSE)
 rem
 
 set exit_code=0
 
-call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
+call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%" %MSVC_CMD_BOOTSTRAP_OPTIONS%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 

@@ -1,14 +1,14 @@
 #
-# Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.3.0
+FROM abrarov/msvc-2015:2.3.0
 
-ENV OPENSSL_VERSION=1.0.2q \
-    OPENSSL_URL=https://www.openssl.org/source \
-    OPENSSL_TEST="" \
+ENV ICU_VERSION=64.2 \
+    ICU_URL=http://download.icu-project.org/files/icu4c \
+    ICU_TEST="" \
     SCRIPT_DIR=C:\\app
 
 ADD ["app", "C:/app/"]
@@ -20,7 +20,7 @@ CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 ARG image_version=""
 ARG image_revision=""
 
-LABEL name="abrarov/openssl-mingw" \
+LABEL name="abrarov/icu-msvc-2015" \
     version="${image_version}" \
     revision="${image_revision}" \
-    description="Builder of OpenSSL with MinGW"
+    description="Builder of ICU with Microsoft Visual C++ 2015"

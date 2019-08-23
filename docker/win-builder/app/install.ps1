@@ -34,13 +34,16 @@ if (${p}.ExitCode -ne 0) {
 Write-Host "7-Zip ${env:SEVEN_ZIP_VERSION} installed"
 
 # Download and install MSYS2
-$msys_dist_name = "msys2-base-devel-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.7z"
-$msys_url = "${env:MSYS2_URL}%2F${env:MSYS2_VERSION}%2F${env:MSYS2_TARGET}%2F${msys_dist_name}"
+$msys_tar_name = "msys2-base-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.tar"
+$msys_dist_name = "${msys_tar_name}.xz"
+$msys_url = "${env:MSYS2_URL}/${env:MSYS2_TARGET}/${msys_dist_name}"
 $msys_dist = "${env:TMP}\${msys_dist_name}"
 Write-Host "Downloading MSYS2 from ${msys_url} into ${msys_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${msys_url}", "${msys_dist}")
 Write-Host "Extracting MSYS2 from ${msys_dist} into ${env:MSYS_HOME}"
-& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${msys_dist}" -o"C:" -aoa -y -bd | out-null
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${msys_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${env:TMP}\${msys_tar_name}" -o"C:" -aoa -y -bd | out-null
+& "${PSScriptRoot}\msys2.bat"
 Write-Host "MSYS2 ${env:MSYS2_VERSION} installed"
 
 # Download and install ActivePerl

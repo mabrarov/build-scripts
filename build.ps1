@@ -17,6 +17,10 @@ $dirs = @(
   "docker/icu-msvc-2017",
   "docker/openssl-mingw",
   "docker/openssl-msvc-2017",
+  "docker/msvc-2015",
+  "docker/boost-msvc-2015",
+  "docker/icu-msvc-2015",
+  "docker/openssl-msvc-2015",
   "docker/qt5-mingw"
 )
 
