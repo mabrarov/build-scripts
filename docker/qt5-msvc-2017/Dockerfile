@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.3.0
+FROM abrarov/msvc-2017:2.4.0
 
 ENV LLVM_VERSION=8.0.1 \
     LLVM_URL="https://github.com/llvm/llvm-project/releases/download" \
