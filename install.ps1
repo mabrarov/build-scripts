@@ -23,16 +23,16 @@ if ((Test-Path env:TRAVIS) -and (${env:TRAVIS} -eq "true")) {
   # as microsoft/windowsservercore:10.0.14393.1198
   $windows_image_repository = "microsoft/windowsservercore"
   $required_windows_image_version = "10.0.14393.1198"
-  $travis_supported_windows_image_version = "10.0.17134.950"
+  $travis_supported_windows_image_version = "1803"
   Write-Host "List of Docker images"
   docker images
   if (${LastExitCode} -ne 0) {
     throw "Failed to list Docker images"
   }
-  docker pull "${windows_image_repository}:${travis_supported_windows_image_version}"
-  if (${LastExitCode} -ne 0) {
-    throw "Failed to pull ${windows_image_repository}:${travis_supported_windows_image_version} image"
-  }
+#  docker pull "${windows_image_repository}:${travis_supported_windows_image_version}"
+#  if (${LastExitCode} -ne 0) {
+#    throw "Failed to pull ${windows_image_repository}:${travis_supported_windows_image_version} image"
+#  }
   Write-Host "Re-tagging ${windows_image_repository}:${travis_supported_windows_image_version} image as ${required_windows_image_version}"
   docker tag `
     "${windows_image_repository}:${travis_supported_windows_image_version}" `
