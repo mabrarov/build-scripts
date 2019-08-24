@@ -5,7 +5,7 @@ Docker image for building [Boost C++ Libraries](http://www.boost.org/) with MinG
 ## Building
 
 ```bash
-docker build -t abrarov/boost-mingw docker/boost-mingw
+docker build -t abrarov/boost-mingw docker/boost-mingw/src
 ```
 
 ## Usage

@@ -12,15 +12,15 @@ env:
     - DOCKER_USER: abrarov
 
 install:
-  - powershell -ExecutionPolicy Bypass -File ./install.ps1
+  - powershell -ExecutionPolicy Bypass -File ./scripts/install.ps1
 
 script:
-  - ./build_and_test.sh
+  - ./scripts/travis/build_and_test.sh
 
 # Disabled due to testing and AppVeyor (which does the same)
 #deploy:
 #  skip_cleanup: true
 #  provider: script
-#  script: powershell -ExecutionPolicy Bypass -File .\deploy.ps1
+#  script: powershell -ExecutionPolicy Bypass -File .\scripts\deploy.ps1
 #  on:
 #    branch: master

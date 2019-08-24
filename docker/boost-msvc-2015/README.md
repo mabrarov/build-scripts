@@ -5,7 +5,7 @@ Docker image for building [Boost C++ Libraries](http://www.boost.org/) with Micr
 ## Building
 
 ```bash
-docker build -t abrarov/boost-msvc-2015 docker/boost-msvc-2015
+docker build -t abrarov/boost-msvc-2015 docker/boost-msvc-2015/src
 ```
 
 ## Usage

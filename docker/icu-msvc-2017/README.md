@@ -5,7 +5,7 @@ Docker image for building [ICU4C](http://site.icu-project.org/) with Microsoft V
 ## Building
 
 ```bash
-docker build -t abrarov/icu-msvc-2017 docker/icu-msvc-2017
+docker build -t abrarov/icu-msvc-2017 docker/icu-msvc-2017/src
 ```
 
 ## Usage

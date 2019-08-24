@@ -13,7 +13,7 @@ Contains:
 ## Building
 
 ```bash
-docker build -t abrarov/windows-dev docker/windows-dev
+docker build -t abrarov/windows-dev docker/windows-dev/src
 ```
 
 ## Usage

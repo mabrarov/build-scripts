@@ -12,16 +12,16 @@ environment:
     secure: f3DqVP4VKrZqL/5I+s2M7kmMFrG0nINb0qdcamN2GtU=
 
 install:
-  - ps: .\install.ps1
+  - ps: .\scripts\install.ps1
 
 build_script:
   - ps: Write-Warning "Skipping due to exhausted quotas"
-  #- ps: .\build.ps1
+  #- ps: .\scripts\build.ps1
 
 test_script:
   - ps: Write-Host "Skipping due build is disabled"
-  #- ps: .\test.ps1
+  #- ps: .\scripts\test.ps1
 
 deploy_script:
   - ps: Write-Host "Skipping due build is disabled"
-  # - ps: .\deploy.ps1
+  # - ps: .\scripts\deploy.ps1

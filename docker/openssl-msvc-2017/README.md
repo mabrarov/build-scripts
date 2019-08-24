@@ -5,7 +5,7 @@ Docker image for building [OpenSSL](https://www.openssl.org/) with Microsoft Vis
 ## Building
 
 ```bash
-docker build -t abrarov/openssl-msvc-2017 docker/openssl-msvc-2017
+docker build -t abrarov/openssl-msvc-2017 docker/openssl-msvc-2017/src
 ```
 
 ## Usage
