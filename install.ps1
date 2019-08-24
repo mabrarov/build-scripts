@@ -52,7 +52,7 @@ if ((Test-Path env:TRAVIS) -and (${env:TRAVIS} -eq "true")) {
   }
 
   Write-Host "Testing if Travis CI Docker is able to run containers created from ${windows_image_repository}:${windows_image_version} image"
-  docker run --rm "${windows_image_repository}:${windows_image_version}" cmd /c echo "Container run successfully"
+  docker run --rm "${windows_image_repository}:${windows_image_version}" cmd /c "echo Container run successfully"
   if (${LastExitCode} -ne 0) {
     throw "Failed to run ${windows_image_repository}:${windows_image_version} image"
   }
