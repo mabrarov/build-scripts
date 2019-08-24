@@ -28,9 +28,9 @@ ENV DOWNLOAD_DIR=C:\\download \
 
 ADD ["app", "C:/app/"]
 
-RUN mkdir C:\download && \
-    mkdir C:\build && \
-    mkdir C:\target && \
+RUN mkdir "%DOWNLOAD_DIR%" && \
+    mkdir "%BUILD_DIR%" && \
+    mkdir "%TARGET_DIR%" && \
     powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
     powershell "Remove-Item -Path 'C:\app' -Recurse -Force"
 
