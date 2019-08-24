@@ -98,7 +98,7 @@ foreach ($address_model in ${address_models}) {
       }
 
       if (-not (Test-Path -Path "${env:OPENSSL_BUILD_DIR}")) {
-        New-Item -path "${env:OPENSSL_BUILD_DIR}" -type directory | out-null
+        New-Item -Path "${env:OPENSSL_BUILD_DIR}" -ItemType "directory" | out-null
       }
 
       # Unpack OpenSSL

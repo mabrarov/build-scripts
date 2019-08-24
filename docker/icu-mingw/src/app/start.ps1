@@ -136,7 +136,7 @@ foreach ($address_model in ${address_models}) {
         }
 
         if (-not (Test-Path -Path "${env:ICU_BUILD_DIR}")) {
-          New-Item -path "${env:ICU_BUILD_DIR}" -type directory | out-null
+          New-Item -Path "${env:ICU_BUILD_DIR}" -ItemType "directory" | out-null
         }
 
         # Unpack ICU
