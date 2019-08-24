@@ -11,3 +11,41 @@ $docker_host_win_version = $(gp 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVers
 Write-Host "Windows version ${docker_host_win_version}"
 
 docker version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to connect to Docker Engine"
+}
+
+if ((Test-Path env:TRAVIS) -and (${env:TRAVIS} -eq "true")) {
+  # Travis uses Windows 17134.1.amd64fre.rs4_release.180410-1804 which cannot run
+  # microsoft/windowsservercore:10.0.14393.1198 Docker image
+  # We cannot use ARG before FROM in win-builder Dockerfile due to old version of Docker,
+  # so let's trick Travis by tagging microsoft/windowsservercore:10.0.17134.950 Docker image
+  # as microsoft/windowsservercore:10.0.14393.1198
+  $windows_image_repository = "microsoft/windowsservercore"
+  $required_windows_image_version = "10.0.14393.1198"
+  $travis_supported_windows_image_version = "10.0.17134.950"
+  Write-Host "List of Docker images"
+  docker images
+  if (${LastExitCode} -ne 0) {
+    throw "Failed to list Docker images"
+  }
+  docker pull "${windows_image_repository}:${travis_supported_windows_image_version}"
+  if (${LastExitCode} -ne 0) {
+    throw "Failed to pull ${windows_image_repository}:${travis_supported_windows_image_version} image"
+  }
+  Write-Host "Re-tagging ${windows_image_repository}:${travis_supported_windows_image_version} image as ${required_windows_image_version}"
+  docker tag `
+    "${windows_image_repository}:${travis_supported_windows_image_version}" `
+    "${windows_image_repository}:${required_windows_image_version}"
+  if (${LastExitCode} -ne 0) {
+    throw "Failed to re-tag ${windows_image_repository}:${travis_supported_windows_image_version} image as ${required_windows_image_version}"
+  }
+  docker images
+  if (${LastExitCode} -ne 0) {
+    throw "Failed to list Docker images"
+  }
+  docker run --rm "${windows_image_repository}:${required_windows_image_version}" cmd /c echo "Hello, World!"
+  if (${LastExitCode} -ne 0) {
+    throw "Failed to run ${windows_image_repository}:${required_windows_image_version} image"
+  }
+}
