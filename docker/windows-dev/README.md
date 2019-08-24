@@ -1,4 +1,4 @@
-# win-builder
+# windows-dev
  
 Base Docker image for Docker images building on Windows. 
 
@@ -13,7 +13,7 @@ Contains:
 ## Building
 
 ```bash
-docker build -t abrarov/win-builder docker/win-builder
+docker build -t abrarov/windows-dev docker/windows-dev
 ```
 
 ## Usage
@@ -23,5 +23,5 @@ It's a base image with common tools, which is intended to be inherited by other 
 Test 7-Zip setup:
 
 ```bash
-docker run --rm abrarov/win-builder "C:\Program Files\7-Zip\7z.exe"
+docker run --rm abrarov/windows-dev "C:\Program Files\7-Zip\7z.exe"
 ```

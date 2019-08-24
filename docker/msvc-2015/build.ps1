@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 
 $image_repository = "${env:DOCKER_USER}/$(Split-Path "${PSScriptRoot}" -Leaf)"
 #TODO: find way to deal with tags and versions
-$image_version = "2.4.0"
+$image_version = "2.5.0"
 $image_revision = "$(git rev-parse --verify HEAD)"
 
 Write-Host "Building ${image_repository}:${image_version} image with ${image_revision} revision"

@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 $dirs = @(
-  "docker/win-builder",
+  "docker/windows-dev",
   "docker/mingw",
   "docker/msvc-2017",
   "docker/boost-mingw",
