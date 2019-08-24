@@ -8,8 +8,7 @@ FROM abrarov/mingw:2.5.0
 
 ENV OPENSSL_VERSION=1.0.2q \
     OPENSSL_URL=https://www.openssl.org/source \
-    OPENSSL_TEST="" \
-    SCRIPT_DIR=C:\\app
+    OPENSSL_TEST=""
 
 ADD ["app", "C:/app/"]
 

@@ -27,7 +27,7 @@ $icu_download_url = "${env:ICU_URL}/${env:ICU_VERSION}/icu4c-${icu_version_under
 
 # Prepare patch for ICU
 if (-not (Test-Path env:ICU_PATCH_FILE)) {
-  $env:ICU_PATCH_FILE = "${env:SCRIPT_DIR}\patches\icu4c-${env:ICU_VERSION}.patch"
+  $env:ICU_PATCH_FILE = "${PSScriptRoot}\patches\icu4c-${env:ICU_VERSION}.patch"
 }
 if (-not (Test-Path -Path "${env:ICU_PATCH_FILE}")) {
   Write-Warning "Patch for chosen version of ICU (${env:ICU_VERSION}) was not found at ${env:ICU_PATCH_FILE}"
@@ -175,7 +175,7 @@ foreach ($address_model in ${address_models}) {
       Write-Host "ICU_PATCH_FILE        : ${env:ICU_PATCH_FILE}"
       Write-Host "ICU_PATCH_MSYS_FILE   : ${env:ICU_PATCH_MSYS_FILE}"
 
-      & "${env:SCRIPT_DIR}\build.bat"
+      & "${PSScriptRoot}\build.bat"
       if (${LastExitCode} -ne 0) {
         throw "Failed to build ICU with ICU_ADDRESS_MODEL = ${env:ICU_ADDRESS_MODEL}, ICU_LINKAGE = ${env:ICU_LINKAGE}, ICU_BUILD_TYPE = ${env:ICU_BUILD_TYPE}"
       }

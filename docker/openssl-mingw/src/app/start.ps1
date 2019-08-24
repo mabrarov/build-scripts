@@ -18,7 +18,7 @@ $openssl_download_url = "${env:OPENSSL_URL}/openssl-${env:OPENSSL_VERSION}.tar.g
 
 # Prepare patch for OpenSSL
 if (-not (Test-Path env:OPENSSL_PATCH_FILE)) {
-  $env:OPENSSL_PATCH_FILE = "${env:SCRIPT_DIR}\patches\openssl-${env:OPENSSL_VERSION}.patch"
+  $env:OPENSSL_PATCH_FILE = "${PSScriptRoot}\patches\openssl-${env:OPENSSL_VERSION}.patch"
 }
 if (-not (Test-Path -Path "${env:OPENSSL_PATCH_FILE}")) {
   Write-Warning "Patch for chosen version of OpenSSL (${env:OPENSSL_VERSION}) was not found at ${env:OPENSSL_PATCH_FILE}"
@@ -134,7 +134,7 @@ foreach ($address_model in ${address_models}) {
     Write-Host "OPENSSL_PATCH_FILE        : ${env:OPENSSL_PATCH_FILE}"
     Write-Host "OPENSSL_PATCH_MSYS_FILE   : ${env:OPENSSL_PATCH_MSYS_FILE}"
 
-    & "${env:SCRIPT_DIR}\build.bat"
+    & "${PSScriptRoot}\build.bat"
     if (${LastExitCode} -ne 0) {
       throw "Failed to build OpenSSL with OPENSSL_ADDRESS_MODEL = ${env:OPENSSL_ADDRESS_MODEL}, OPENSSL_LINKAGE = ${env:OPENSSL_LINKAGE}"
     }

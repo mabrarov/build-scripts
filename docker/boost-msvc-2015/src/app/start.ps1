@@ -49,7 +49,7 @@ $env:MSVC_CMD_BOOTSTRAP_OPTIONS = "amd64"
 $env:BOOST_BOOTSTRAP = "${env:BOOST_ROOT_DIR}\bootstrap.bat"
 Set-Location -Path "${env:BOOST_ROOT_DIR}"
 Write-Host "Building Boost.Build engine"
-& "${env:SCRIPT_DIR}\bootstrap.bat"
+& "${PSScriptRoot}\bootstrap.bat"
 if (${LastExitCode} -ne 0) {
   throw "Failed to build Boost.Build"
 }
@@ -114,7 +114,7 @@ foreach ($address_model in ${address_models}) {
       Write-Host "BOOST_LINKAGE             : ${env:BOOST_LINKAGE}"
       Write-Host "BOOST_RUNTIME_LINKAGE     : ${env:BOOST_RUNTIME_LINKAGE}"
       Write-Host "B2_OPTIONS                : ${env:B2_OPTIONS}"
-      & "${env:SCRIPT_DIR}\build.bat"
+      & "${PSScriptRoot}\build.bat"
       if (${LastExitCode} -ne 0) {
           throw "Failed to build Boost with BOOST_ADDRESS_MODEL = ${env:BOOST_ADDRESS_MODEL}, BOOST_LINKAGE = ${env:BOOST_LINKAGE}, BOOST_RUNTIME_LINKAGE = ${env:BOOST_RUNTIME_LINKAGE}"
       }
