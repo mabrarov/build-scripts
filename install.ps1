@@ -22,7 +22,7 @@ if ((Test-Path env:TRAVIS) -and (${env:TRAVIS} -eq "true")) {
   # so let's trick Travis by tagging microsoft/windowsservercore:10.0.17134.950 Docker image
   # as microsoft/windowsservercore:10.0.14393.1198
   $windows_image_repository = "microsoft/windowsservercore"
-  $required_windows_image_version = "10.0.14393.1198"
+  $required_windows_image_version = "ltsc2016"
   $travis_supported_windows_image_version = "1803"
   Write-Host "List of Docker images"
   docker images

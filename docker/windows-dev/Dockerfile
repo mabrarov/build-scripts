@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM microsoft/windowsservercore:10.0.14393.1198
+FROM microsoft/windowsservercore:ltsc2016
 
 ENV DOWNLOAD_DIR=C:\\download \
     BUILD_DIR=C:\\build \
@@ -37,7 +37,7 @@ RUN mkdir C:\download && \
 ARG image_version=""
 ARG image_revision=""
 
-LABEL name="abrarov/win-builder" \
+LABEL name="abrarov/windows-dev" \
     version="${image_version}" \
     revision="${image_revision}" \
     description="Base image for builders on Windows"

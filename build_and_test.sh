@@ -18,7 +18,7 @@ source "${this_path}/travis/travis_wait.sh"
 
 # Full build disabled due to testing and resource consumption
 # powershell -ExecutionPolicy Bypass -File "${this_path}/build.ps1"
-travis_wait 120 powershell -ExecutionPolicy Bypass -File "${this_path}/docker/win-builder/build.ps1"
+travis_wait 120 powershell -ExecutionPolicy Bypass -File "${this_path}/docker/windows-dev/build.ps1"
 
 #powershell -ExecutionPolicy Bypass -File "${this_path}/test.ps1"
-travis_wait 20 powershell -ExecutionPolicy Bypass -File "${this_path}/docker/win-builder/test.ps1"
+travis_wait 20 powershell -ExecutionPolicy Bypass -File "${this_path}/docker/windows-dev/test.ps1"

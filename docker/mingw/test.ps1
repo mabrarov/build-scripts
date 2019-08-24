@@ -7,7 +7,7 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-$image_repository = "abrarov/$(Split-Path "${PSScriptRoot}" -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${PSScriptRoot}" -Leaf)"
 
 Write-Host "Get version of MinGW x64 in container created from ${image_repository}:latest image"
 docker run --rm "${image_repository}:latest" "C:\mingw64\bin\g++" --version

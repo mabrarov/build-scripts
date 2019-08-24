@@ -7,6 +7,6 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-$image_repository = "abrarov/$(Split-Path "${PSScriptRoot}" -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${PSScriptRoot}" -Leaf)"
 
 #TODO: add some tests
