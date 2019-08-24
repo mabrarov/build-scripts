@@ -16,7 +16,7 @@ install:
 
 script:
   - travis_wait 60 powershell -ExecutionPolicy Bypass -File ./docker/win-builder/build.ps1 && \
-    travis_wait 20 powershell -ExecutionPolicy Bypass -File ./docker/win-builder/test.ps1
+    powershell -ExecutionPolicy Bypass -File ./docker/win-builder/test.ps1
 
 # Disabled due to testing and AppVeyor (which does the same)
 #deploy:
