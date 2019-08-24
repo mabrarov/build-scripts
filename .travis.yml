@@ -12,7 +12,7 @@ env:
     - DOCKER_USER: abrarov
 
 install:
-  - powershell -ExecutionPolicy Bypass -File ./scripts/install.ps1
+  - powershell -ExecutionPolicy Bypass -File ".\\scripts\\install.ps1"
 
 script:
   - ./scripts/travis/build_and_test.sh

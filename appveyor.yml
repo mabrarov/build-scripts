@@ -19,9 +19,9 @@ build_script:
   #- ps: .\scripts\build.ps1
 
 test_script:
-  - ps: Write-Host "Skipping due build is disabled"
+  - ps: Write-Host "Skipping due to build is disabled"
   #- ps: .\scripts\test.ps1
 
 deploy_script:
-  - ps: Write-Host "Skipping due build is disabled"
+  - ps: Write-Host "Skipping due to build is disabled"
   # - ps: .\scripts\deploy.ps1
