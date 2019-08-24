@@ -7,7 +7,7 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-$image_repository = "abrarov/$(Split-Path "${PSScriptRoot}" -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${PSScriptRoot}" -Leaf)"
 #TODO: find way to deal with tags and versions
 $image_version = "2.4.0"
 $image_revision = "$(git rev-parse --verify HEAD)"

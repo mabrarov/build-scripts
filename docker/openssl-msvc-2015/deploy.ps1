@@ -7,7 +7,7 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
-$image_repository = "abrarov/$(Split-Path "${PSScriptRoot}" -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${PSScriptRoot}" -Leaf)"
 
 $image_version = $(docker inspect "${image_repository}:latest" --format '{{ index .Config.Labels \"version\" }}')
 Write-Host "Detected version of ${image_repository}:latest image is ${image_version}"
