@@ -1,0 +1,28 @@
+#
+# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
+#
+# Distributed under the MIT License (see accompanying LICENSE)
+#
+
+os: windows
+language: shell
+
+env:
+  global:
+    - DOCKER_USER: abrarov
+
+install:
+  - powershell -ExecutionPolicy Bypass -File ./install.ps1
+
+script:
+  - powershell "Write-Warning 'Skipping due to testing'"
+#  - powershell -ExecutionPolicy Bypass -File ./build.ps1 && \
+#    powershell -ExecutionPolicy Bypass -File ./test.ps1
+
+# Disable due to testing and AppVeyor (which does the same)
+#deploy:
+#  skip_cleanup: true
+#  provider: script
+#  script: powershell -ExecutionPolicy Bypass -File .\deploy.ps1
+#  on:
+#    branch: master
