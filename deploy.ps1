@@ -29,7 +29,7 @@ $auth64 = [Convert]::ToBase64String($auth)
 "@ | Out-File -Encoding Ascii ~/.docker/config.json
 
 $dirs = @(
-  "docker/win-builder",
+  "docker/windows-dev",
   "docker/mingw",
   "docker/msvc-2017",
   "docker/boost-mingw",
