@@ -1,0 +1,29 @@
+#
+# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
+#
+# Distributed under the MIT License (see accompanying LICENSE)
+#
+
+os: windows
+language: shell
+
+env:
+  global:
+    - DOCKER_USER: abrarov
+    - secure: "U7OMMtS9cpWcKNPhnLQ3p3mFK3+EKj1gW/fC0tyO6WMui3MOP9UqU/c66WOXfznGyMu4rBqCl9oBe/P9yBhtpE69aIWpyvcsH+T69BpC2xTq4uRs3V10ivAddCMBK6zHV8gu/wIJPc9sGW27Xl4HK2vK5JL10Wa+L3HZQ58c8h3qiE0YiuPxTJTSBQIAr4H8bxhWHxTI4GzfvCYWOL2+rrlOIQDedmDmSawIDG/JTKUohmYdgwjmNHC3ea+epDASgCGO0GcwOM0WV1mKHcRz0m5WAg6gNSyIZoV4PtiQpdCLCPP8qT9uyfBPccMwfu/0mS0HWitJZqtHztS4sLFcNL6AXJ+VydnlxOdgsC4kj2u/gBduWvGmpzKk6EM5XrHyFbuOXRcqpEZQt8fgs1eRVjj1ZphoU7oX4huEfAUhT52ZFfJ/0Nk/ULHDhHsmY9uuf5D+9d81V4aYtnJt3zSp3G2iK5993TiT9jSRy21arG2lGcpdWT4O43OK5YY+/Rq896sKIa9D20irt0/EBoUcIO6JLCwvWVgMHZ48cUqh1/QzXJQfmhrc7/4OadzauyxrfFwhj2DnaGsMinIyCDi3YrldlxGtbA6UCDuD7Yc+nDrjE8sYnaP60fhSuarq7+f5db0P6AWwMS5tqVUdkEtBV6pDtL7NIIh/KPI9mQWDxtM="
+
+install:
+  - powershell -ExecutionPolicy Bypass -File ./install.ps1
+
+script:
+  - powershell "Write-Warning 'Skipping due to testing'"
+#  - powershell -ExecutionPolicy Bypass -File ./build.ps1 && \
+#    powershell -ExecutionPolicy Bypass -File ./test.ps1
+
+# Disable due to testing and AppVeyor (which does the same)
+#deploy:
+#  skip_cleanup: true
+#  provider: script
+#  script: powershell -ExecutionPolicy Bypass -File .\deploy.ps1
+#  on:
+#    branch: master
