@@ -15,11 +15,7 @@ install:
   - powershell -ExecutionPolicy Bypass -File ./install.ps1
 
 script:
-  # Full build disabled due to testing and resource consumption
-  #- ./travis/run.sh 360 powershell -ExecutionPolicy Bypass -File ./build.ps1 && \
-  #- ./travis/run.sh 40 powershell -ExecutionPolicy Bypass -File ./test.ps1
-  - ./travis/run.sh 60 powershell -ExecutionPolicy Bypass -File ./docker/windows-dev/build.ps1 && \
-  - ./travis/run.sh 20 powershell -ExecutionPolicy Bypass -File ./docker/windows-dev/test.ps1
+  - ./build_and_test.sh
 
 # Disabled due to testing and AppVeyor (which does the same)
 #deploy:
