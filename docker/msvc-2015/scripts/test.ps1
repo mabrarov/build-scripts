@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
-$image_repository = "${env:DOCKER_USER}/$(Split-Path ${project_dir} -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 
 Write-Host "Get folder where MS Visual Studio 2015 is installed in container created from ${image_repository}:latest image"
 docker run --rm "${image_repository}:latest" vswhere -legacy -latest -version '[14.0,15.0)' -property installationPath

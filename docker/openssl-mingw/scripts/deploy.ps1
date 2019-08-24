@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
-$image_repository = "${env:DOCKER_USER}/$(Split-Path ${project_dir} -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 
 $image_version = $(docker inspect "${image_repository}:latest" --format '{{ index .Config.Labels \"version\" }}')
 Write-Host "Detected version of ${image_repository}:latest image is ${image_version}"

@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
-$image_repository = "${env:DOCKER_USER}/$(Split-Path ${project_dir} -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 
 Write-Host "Running Chocolatey package manager in container created from ${image_repository}:latest image"
 docker run --rm "${image_repository}:latest" choco --version

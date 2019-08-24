@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
-$image_repository = "${env:DOCKER_USER}/$(Split-Path ${project_dir} -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 
 Write-Host "Get version of MinGW x64 in container created from ${image_repository}:latest image"
 docker run --rm "${image_repository}:latest" "C:\mingw64\bin\g++" --version

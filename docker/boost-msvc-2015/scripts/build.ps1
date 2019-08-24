@@ -8,7 +8,7 @@
 $ErrorActionPreference = "Stop"
 
 $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
-$image_repository = "${env:DOCKER_USER}/$(Split-Path ${project_dir} -Leaf)"
+$image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 #TODO: find way to deal with tags and versions
 $image_version = "2.5.0"
 $image_revision = "$(git rev-parse --verify HEAD)"
