@@ -6,8 +6,8 @@
 
 FROM abrarov/msvc-2015:2.5.0
 
-ENV BOOST_VERSION=1.71.0 \
-    BOOST_RELEASE_URL=https://dl.bintray.com/boostorg/release \
+ENV BOOST_VERSION="1.71.0" \
+    BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
     B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
 
 ADD ["app", "C:/app/"]

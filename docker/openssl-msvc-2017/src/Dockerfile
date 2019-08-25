@@ -6,8 +6,8 @@
 
 FROM abrarov/msvc-2017:2.5.0
 
-ENV OPENSSL_VERSION=1.0.2q \
-    OPENSSL_URL=https://www.openssl.org/source \
+ENV OPENSSL_VERSION="1.0.2q" \
+    OPENSSL_URL="https://www.openssl.org/source" \
     OPENSSL_TEST=""
 
 ADD ["app", "C:/app/"]

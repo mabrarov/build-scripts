@@ -7,28 +7,28 @@
 FROM microsoft/windowsservercore:ltsc2016
 
 ENV DOWNLOAD_DIR=C:\\download \
-    BUILD_DIR=C:\\build \
-    TARGET_DIR=C:\\target \
-    SEVEN_ZIP_VERSION=18.01 \
-    SEVEN_ZIP_DOWNLOAD_URL=http://www.7-zip.org/a \
-    SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
-    GIT_VERSION=2.23.0 \
-    CMAKE_VERSION=3.15.2 \
-    CMAKE_URL=https://github.com/Kitware/CMake/releases/download \
-    CMAKE_HOME="C:\cmake" \
-    MSYS2_URL=http://repo.msys2.org/distrib \
-    MSYS2_TARGET=x86_64 \
-    MSYS2_VERSION=20190524 \
-    MSYS_HOME=C:\\msys64 \
-    ACTIVE_PERL_VERSION=5.26.3.2603 \
-    ACTIVE_PERL_BUILD=a95bce075 \
-    ACTIVE_PERL_URL=http://downloads.activestate.com/ActivePerl/releases \
-    ACTIVE_PERL_HOME=C:\\Perl64 \
-    PYTHON_URL=https://www.python.org/ftp/python \
-    PYTHON3_VERSION=3.7.4 \
-    PYTHON3_HOME="C:\Python37" \
-    PYTHON2_VERSION=2.7.16 \
-    PYTHON2_HOME="C:\Python27"
+    BUILD_DIR="C:\\build" \
+    TARGET_DIR="C:\\target" \
+    SEVEN_ZIP_VERSION="18.01" \
+    SEVEN_ZIP_DOWNLOAD_URL="http://www.7-zip.org/a" \
+    SEVEN_ZIP_HOME="C:\\Program Files\\7-Zip" \
+    GIT_VERSION="2.23.0" \
+    CMAKE_VERSION="3.15.2" \
+    CMAKE_URL="https://github.com/Kitware/CMake/releases/download" \
+    CMAKE_HOME="C:\\cmake" \
+    MSYS2_URL="http://repo.msys2.org/distrib" \
+    MSYS2_TARGET="x86_64" \
+    MSYS2_VERSION="20190524" \
+    MSYS_HOME="C:\\msys64" \
+    ACTIVE_PERL_VERSION="5.26.3.2603" \
+    ACTIVE_PERL_BUILD="a95bce075" \
+    ACTIVE_PERL_URL="http://downloads.activestate.com/ActivePerl/releases" \
+    ACTIVE_PERL_HOME="C:\\Perl64" \
+    PYTHON_URL="https://www.python.org/ftp/python" \
+    PYTHON3_VERSION="3.7.4" \
+    PYTHON3_HOME="C:\\Python37" \
+    PYTHON2_VERSION="2.7.16" \
+    PYTHON2_HOME="C:\\Python27"
 
 ADD ["app", "C:/app/"]
 

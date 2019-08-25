@@ -6,12 +6,12 @@
 
 FROM abrarov/windows-dev:2.5.0
 
-ENV MSVS_VERSION=15 \
-    MSVS_URL=https://aka.ms/vs \
-    MSVS_DIST_NAME=vs_community.exe \
-    VSWHERE_URL=https://github.com/Microsoft/vswhere/releases/download \
-    VSWHERE_VERSION=2.6.7 \
-    VSWHERE_DIST_NAME=vswhere.exe
+ENV MSVS_VERSION="15" \
+    MSVS_URL="https://aka.ms/vs" \
+    MSVS_DIST_NAME="vs_community.exe" \
+    VSWHERE_URL="https://github.com/Microsoft/vswhere/releases/download" \
+    VSWHERE_VERSION="2.6.7" \
+    VSWHERE_DIST_NAME="vswhere.exe"
 
 ADD ["app", "C:/app/"]
 
