@@ -22,8 +22,8 @@ travis_wait() {
   local result
 
   {
-    wait "${cmd_pid}" &>/dev/null && result=0 || result="${?}"
-    ps -p "${jigger_pid}" &>/dev/null && kill "${jigger_pid}" || true
+    wait "${cmd_pid}" &> /dev/null && result=0 || result="${?}"
+    ps -p "${jigger_pid}" &> /dev/null && kill "${jigger_pid}" || true
   }
 
   if [[ "${result}" -eq 0 ]]; then
