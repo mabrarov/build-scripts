@@ -22,6 +22,18 @@ if (${LastExitCode} -ne 0) {
   throw "Failed to get help from 7-Zip command line utility"
 }
 
+Write-Host "Running Git in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" git --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of Git"
+}
+
+Write-Host "Running CMake in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\cmake\bin\cmake.exe" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of CMake"
+}
+
 Write-Host "Running MSYS2 GNU Make in container created from ${image_repository}:latest image"
 docker run --rm "${image_repository}:latest" "C:\msys64\usr\bin\make" --version
 if (${LastExitCode} -ne 0) {

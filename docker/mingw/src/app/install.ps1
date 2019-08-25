@@ -19,7 +19,7 @@ Write-Host "Downloading MinGW x64 from ${mingw64_url} into ${mingw64_dist}"
 # Extract MinGW x64 and install it into C:\mingw64
 Write-Host "Extracting MinGW x64 from ${mingw64_dist} into ${env:MINGW64_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${mingw64_dist}" -o"C:" -aoa -y -bd | out-null
-Write-Host "MinGW x64 ${env:MINGW_VERSION} installed"
+Write-Host "MinGW x64 ${env:MINGW_VERSION} installed into ${env:MINGW64_HOME}"
 
 # Download MinGW x86
 $mingw32_dist_name = "${env:MINGW_32_TARGET}-${env:MINGW_VERSION}-release-${env:MINGW_32_THREADS}-${env:MINGW_32_EXCEPTIONS}-rt_v${env:MINGW_RT_FILE_SUFFIX}-rev${env:MINGW_REVISON}.7z"
@@ -30,7 +30,7 @@ Write-Host "Downloading MinGW x86 from ${mingw32_url} into ${mingw32_dist}"
 # Extract MinGW x86 and install it into C:\mingw32
 Write-Host "Extracting MinGW x86 from ${mingw32_dist} into ${env:MINGW32_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${mingw32_dist}" -o"C:" -aoa -y -bd | out-null
-Write-Host "MinGW x86 ${env:MINGW_VERSION} installed"
+Write-Host "MinGW x86 ${env:MINGW_VERSION} installed into ${env:MINGW32_HOME}"
 
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
