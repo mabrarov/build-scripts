@@ -10,7 +10,7 @@ Contains:
 ## Building
 
 ```bash
-docker build -t abrarov/mingw docker/mingw
+docker build -t abrarov/mingw docker/mingw/src
 ```
 
 ## Usage

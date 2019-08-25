@@ -12,17 +12,15 @@ env:
     - DOCKER_USER: abrarov
 
 install:
-  - powershell -ExecutionPolicy Bypass -File ./install.ps1
+  - powershell -ExecutionPolicy Bypass -File ./scripts/install.ps1
 
 script:
-  - powershell "Write-Warning 'Skipping due to testing'"
-#  - powershell -ExecutionPolicy Bypass -File ./build.ps1 && \
-#    powershell -ExecutionPolicy Bypass -File ./test.ps1
+  - ./scripts/travis/build_and_test.sh
 
-# Disable due to testing and AppVeyor (which does the same)
+# Disabled due to testing and AppVeyor (which does the same)
 #deploy:
 #  skip_cleanup: true
 #  provider: script
-#  script: powershell -ExecutionPolicy Bypass -File .\deploy.ps1
+#  script: powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1
 #  on:
 #    branch: master
