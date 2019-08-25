@@ -17,13 +17,12 @@ travis_wait() {
   "${cmd[@]}" &
   local cmd_pid="${!}"
 
-  travis_jigger "${!}" "${timeout}" "${cmd[@]}" &
+  travis_jigger "${cmd_pid}" "${timeout}" "${cmd[@]}" &
   local jigger_pid="${!}"
   local result
 
   {
-    wait "${cmd_pid}" 2>/dev/null
-    result="${?}"
+    wait "${cmd_pid}" &>/dev/null && result=0 || result="${?}"
     ps -p "${jigger_pid}" &>/dev/null && kill "${jigger_pid}"
   }
 
