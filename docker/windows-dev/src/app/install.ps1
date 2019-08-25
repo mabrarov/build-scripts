@@ -26,12 +26,32 @@ if (-not (Test-Path -Path "${seven_zip_dist}")) {
 }
 Write-Host "Installing 7-Zip from ${seven_zip_dist} into ${env:SEVEN_ZIP_HOME}"
 $p = Start-Process -FilePath msiexec `
-  -ArgumentList ("/package", "${seven_zip_dist}", "/quiet", "/qn", "/norestart") `
+  -ArgumentList ("/package", "${seven_zip_dist}", "/quiet", "/qn", "/norestart", "TargetDir=""${env:SEVEN_ZIP_HOME}""") `
   -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install 7-Zip"
 }
-Write-Host "7-Zip ${env:SEVEN_ZIP_VERSION} installed"
+Write-Host "7-Zip ${env:SEVEN_ZIP_VERSION} installed into ${env:SEVEN_ZIP_HOME}"
+
+# Install Git for Windows
+& choco install git -y --no-progress --version "${env:GIT_VERSION}" --force -params "'/NoShellIntegration /NoGuiHereIntegration /NoShellHereIntegration'"
+if (${LastExitCode} -ne 0) {
+  throw "Failed to install Git ${env:GIT_VERSION}"
+}
+Write-Host "Git ${env:GIT_VERSION} installed"
+
+$cmake_dist_base_name = "cmake-${env:CMAKE_VERSION}-win64-x64"
+$cmake_dist_name = "${cmake_dist_base_name}.zip"
+$cmake_dist = "${env:TMP}\${cmake_dist_name}"
+$cmake_url = "${env:CMAKE_URL}/v${env:CMAKE_VERSION}/${cmake_dist_name}"
+Write-Host "Downloading CMake from ${cmake_url} into ${cmake_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${cmake_url}", "${cmake_dist}")
+$cmake_temp_dir = "${env:TMP}\${cmake_dist_base_name}"
+Write-Host "Extracting CMake from ${cmake_dist} into ${cmake_temp_dir}"
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${cmake_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
+Write-Host "Moving CMake from ${cmake_temp_dir} into ${env:CMAKE_HOME}"
+[System.IO.Directory]::Move("${cmake_temp_dir}", "${env:CMAKE_HOME}")
+Write-Host "CMake ${env:CMAKE_VERSION} installed into ${env:CMAKE_HOME}"
 
 # Download and install MSYS2
 $msys_tar_name = "msys2-base-${env:MSYS2_TARGET}-${env:MSYS2_VERSION}.tar"
@@ -44,7 +64,7 @@ Write-Host "Extracting MSYS2 from ${msys_dist} into ${env:MSYS_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${msys_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${env:TMP}\${msys_tar_name}" -o"C:" -aoa -y -bd | out-null
 & "${PSScriptRoot}\msys2.bat"
-Write-Host "MSYS2 ${env:MSYS2_VERSION} installed"
+Write-Host "MSYS2 ${env:MSYS2_VERSION} installed into ${env:MSYS_HOME}"
 
 # Download and install ActivePerl
 $active_perl_dist_name = "ActivePerl-${env:ACTIVE_PERL_VERSION}-MSWin32-x64-${env:ACTIVE_PERL_BUILD}.exe"
@@ -59,7 +79,7 @@ $p = Start-Process -FilePath "${active_perl_dist}" `
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install ActivePerl"
 }
-Write-Host "ActivePerl ${env:ACTIVE_PERL_VERSION} installed"
+Write-Host "ActivePerl ${env:ACTIVE_PERL_VERSION} installed into ${env:ACTIVE_PERL_HOME}"
 
 # Download and install Python 2.x
 $python_dist_name = "python-${env:PYTHON2_VERSION}.amd64.msi"
@@ -74,7 +94,7 @@ $p = Start-Process -FilePath "${python_dist}" `
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install Python ${env:PYTHON2_VERSION}"
 }
-Write-Host "Python ${env:PYTHON2_VERSION} installed"
+Write-Host "Python ${env:PYTHON2_VERSION} installed into ${env:PYTHON2_HOME}"
 
 # Download and install Python 3.x
 $python_dist_name = "python-${env:PYTHON3_VERSION}-amd64.exe"
@@ -89,7 +109,7 @@ $p = Start-Process -FilePath "${python_dist}" `
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install Python ${env:PYTHON3_VERSION}"
 }
-Write-Host "Python ${env:PYTHON3_VERSION} installed"
+Write-Host "Python ${env:PYTHON3_VERSION} installed into ${env:PYTHON3_HOME}"
 
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
