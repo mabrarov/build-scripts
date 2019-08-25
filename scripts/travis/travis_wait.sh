@@ -24,7 +24,7 @@ travis_wait() {
   {
     wait "${cmd_pid}" 2>/dev/null
     result="${?}"
-    ps -p"${jigger_pid}" &>/dev/null && kill "${jigger_pid}"
+    ps -p "${jigger_pid}" &>/dev/null && kill "${jigger_pid}"
   }
 
   if [[ "${result}" -eq 0 ]]; then
