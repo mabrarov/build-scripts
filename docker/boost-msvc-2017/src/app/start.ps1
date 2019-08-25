@@ -42,7 +42,7 @@ if (Test-Path -Path "${env:BOOST_ROOT_DIR}") {
 }
 
 $env:B2_BIN = "${env:BOOST_ROOT_DIR}\b2.exe"
-$env:B2_TOOLSET = "msvc-15.0"
+$env:B2_TOOLSET = "msvc-14.1"
 
 # Build Boost.Build
 $env:MSVC_CMD_BOOTSTRAP = "vcvars64.bat"
