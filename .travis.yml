@@ -12,7 +12,7 @@ env:
     - DOCKER_USER: abrarov
 
 install:
-  - powershell -ExecutionPolicy Bypass -File ".\\scripts\\install.ps1"
+  - powershell -ExecutionPolicy Bypass -File ./scripts/install.ps1
 
 script:
   - ./scripts/travis/build_and_test.sh
@@ -21,6 +21,6 @@ script:
 #deploy:
 #  skip_cleanup: true
 #  provider: script
-#  script: powershell -ExecutionPolicy Bypass -File .\scripts\deploy.ps1
+#  script: powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1
 #  on:
 #    branch: master
