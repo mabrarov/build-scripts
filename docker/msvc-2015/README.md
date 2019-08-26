@@ -10,7 +10,7 @@ Contains:
 ## Building
 
 ```bash
-docker build -t abrarov/msvc-2015 docker/msvc-2015
+docker build -t abrarov/msvc-2015 docker/msvc-2015/src
 ```
 
 ## Usage

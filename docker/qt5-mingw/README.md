@@ -5,7 +5,7 @@ Docker image for building [Qt](https://www.qt.io) 5.x with MinGW.
 ## Building
 
 ```bash
-docker build -t abrarov/qt5-mingw docker/qt5-mingw
+docker build -t abrarov/qt5-mingw docker/qt5-mingw/src
 ```
 
 ## Usage

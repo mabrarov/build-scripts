@@ -5,7 +5,7 @@ Docker image for building [ICU4C](http://site.icu-project.org/) with MinGW.
 ## Building
 
 ```bash
-docker build -t abrarov/icu-mingw docker/icu-mingw
+docker build -t abrarov/icu-mingw docker/icu-mingw/src
 ```
 
 ## Usage

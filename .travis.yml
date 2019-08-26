@@ -1,0 +1,26 @@
+#
+# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
+#
+# Distributed under the MIT License (see accompanying LICENSE)
+#
+
+os: windows
+language: shell
+
+env:
+  global:
+    - DOCKER_USER: abrarov
+
+install:
+  - powershell -ExecutionPolicy Bypass -File ./scripts/install.ps1
+
+script:
+  - ./scripts/travis/build_and_test.sh
+
+# Disabled due to testing and AppVeyor (which does the same)
+#deploy:
+#  skip_cleanup: true
+#  provider: script
+#  script: powershell -ExecutionPolicy Bypass -File ./scripts/deploy.ps1
+#  on:
+#    branch: master
