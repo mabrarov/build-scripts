@@ -124,7 +124,7 @@ foreach ($address_model in ${address_models}) {
     if (Test-Path env:QT_PATCH) {
       $env:QT_PATCH_FILE = "${env:QT_PATCH}"
     } else {
-      $env:QT_PATCH_FILE = "${env:SCRIPT_DIR}\patches\qt-${env:QT_VERSION}-${env:QT_LINKAGE}.patch"
+      $env:QT_PATCH_FILE = "${PSScriptRoot}\patches\qt-${env:QT_VERSION}-${env:QT_LINKAGE}.patch"
     }
     if ("${env:QT_PATCH_FILE}" -ne "" -and -not (Test-Path -Path "${env:QT_PATCH_FILE}")) {
       Write-Warning "Patch for chosen version of Qt (${env:QT_VERSION}) and linkage (${env:QT_LINKAGE}) was not found at ${env:QT_PATCH_FILE}"
@@ -159,7 +159,7 @@ foreach ($address_model in ${address_models}) {
     Write-Host "QT_PATCH_MSYS_FILE           : ${env:QT_PATCH_MSYS_FILE}"
     Write-Host "QT_DEPLOY_DIR                : ${env:QT_DEPLOY_DIR}"
 
-    & "${env:SCRIPT_DIR}\build.bat"
+    & "${PSScriptRoot}\build.bat"
     if (${LastExitCode} -ne 0) {
       throw "Failed to build Qt with QT_ADDRESS_MODEL = ${env:QT_ADDRESS_MODEL}, QT_LINKAGE = ${env:QT_LINKAGE}"
     }
