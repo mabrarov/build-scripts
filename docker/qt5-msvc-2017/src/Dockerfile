@@ -23,7 +23,7 @@ ENV LLVM_VERSION="8.0.1" \
 
 ADD ["app", "C:/app/"]
 
-RUN mkdir C:\depend && \
+RUN mkdir "%DEPEND_DIR%" && \
     powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
     powershell "Remove-Item -Path 'C:\app\install.ps1' -Recurse -Force"
 
