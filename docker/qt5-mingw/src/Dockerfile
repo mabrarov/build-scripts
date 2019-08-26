@@ -15,7 +15,7 @@ ENV OPENSSL_VERSION="1.0.2q" \
 
 ADD ["app", "C:/app/"]
 
-RUN mkdir C:\depend
+RUN mkdir "%DEPEND_DIR%"
 
 VOLUME ["C:/target", "C:/depend"]
 
