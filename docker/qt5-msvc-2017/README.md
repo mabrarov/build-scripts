@@ -5,7 +5,7 @@ Docker image for building [Qt](https://www.qt.io) 5.x with with Microsoft Visual
 ## Building
 
 ```bash
-docker build -t abrarov/qt5-msvc-2017 docker/qt5-msvc-2017
+docker build -t abrarov/qt5-msvc-2017 docker/qt5-msvc-2017/src
 ```
 
 ## Usage
