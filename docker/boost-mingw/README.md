@@ -18,7 +18,7 @@ docker build -t abrarov/boost-mingw docker/boost-mingw/src
 | BOOST_ADDRESS_MODEL | CPU architecture | One of: `32`, `64` | Undefined | When undefined then both `64` and `32` (in the same order) are built |
 | BOOST_LINKAGE | Linkage of built libraries | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built |
 | BOOST_RUNTIME_LINKAGE | Linkage of C/C++ runtime | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built, when `BOOST_LINKAGE` is `shared` then `static` value of `BOOST_RUNTIME_LINKAGE` is ignored |
-| B2_OPTIONS | Extra options for Boost.Jam | Any extra options separated with space and passed to Boost.Jam | Empty string | | 
+| B2_OPTIONS | Extra options for Boost.Jam | Any extra options separated with space and passed to Boost.Jam | `--without-python --without-mpi --without-graph_parallel` | | 
 
 ### Paths and volumes
 
