@@ -6,7 +6,7 @@
 
 FROM microsoft/windowsservercore:ltsc2016
 
-ENV DOWNLOAD_DIR=C:\download \
+ENV DOWNLOAD_DIR="C:\download" \
     BUILD_DIR="C:\build" \
     TARGET_DIR="C:\target" \
     SEVEN_ZIP_VERSION="18.01" \
