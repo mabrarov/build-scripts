@@ -19,7 +19,7 @@ CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 ARG image_version=""
 ARG image_revision=""
 
-LABEL name="abrarov/boost-mingw" \
+LABEL name="abrarov/boost-msvc-2015" \
     version="${image_version}" \
     revision="${image_revision}" \
     description="Builder of Boost C++ Libraries with MS Visual C++ 2015"

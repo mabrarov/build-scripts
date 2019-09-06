@@ -11,11 +11,11 @@ docker build -t abrarov/boost-msvc-2015 docker/boost-msvc-2015/src
 ## Usage
 
 Download source archive, build all combinations (x86, x64, shared and static libraries, shared and static C/C++ runtime) 
-and put results of build into `C:\Users\Public\Documents\boost-msvc2015-target` folder of Docker Host:  
+and put results of build into `C:\Users\Public\Documents\boost-msvc-2015-target` folder of Docker Host:  
 
 ```bash
 docker run --rm \
--v C:/Users/Public/Documents/boost-msvc2015-target:C:/target \
+-v C:/Users/Public/Documents/boost-msvc-2015-target:C:/target \
 abrarov/boost-msvc-2015
 ```
  

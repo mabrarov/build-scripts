@@ -21,7 +21,7 @@ RUN powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
 ARG image_version=""
 ARG image_revision=""
 
-LABEL name="abrarov/msvc-2017" \
+LABEL name="abrarov/msvc-2015" \
     version="${image_version}" \
     revision="${image_revision}" \
     description="Microsoft Visual C++ as part of Microsoft Visual Studio 2017 Community"
