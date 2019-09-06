@@ -6,7 +6,7 @@
 
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
-ENV DOWNLOAD_DIR=C:\download \
+ENV DOWNLOAD_DIR="C:\download" \
     BUILD_DIR="C:\build" \
     TARGET_DIR="C:\target" \
     SEVEN_ZIP_VERSION="18.01" \
