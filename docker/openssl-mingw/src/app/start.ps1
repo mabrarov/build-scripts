@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
 # Required for unpacking with tar
-$env:PATH = "${env:PATH};${env:MSYS_HOME}\usr\bin"
+$env:PATH = "${env:MSYS_HOME}\usr\bin;${env:PATH}"
 
 $openssl_archive_file = "${env:DOWNLOAD_DIR}\openssl-${env:OPENSSL_VERSION}.tar.gz"
 $openssl_download_url = "${env:OPENSSL_URL}/openssl-${env:OPENSSL_VERSION}.tar.gz"
