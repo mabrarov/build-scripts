@@ -16,7 +16,7 @@ $env:MSVC_BUILD_DIR = "${env:MSVS_INSTALL_DIR}VC"
 $env:MSVC_CMD_BOOTSTRAP = "vcvarsall.bat"
 
 # Required for unpacking with tar
-$env:PATH = "${env:PATH};${env:MSYS_HOME}\usr\bin"
+$env:PATH = "${env:MSYS_HOME}\usr\bin;${env:PATH}"
 
 # Extension of static library files
 $lib_file_extensions = @("a", "lib", "so", "dll")

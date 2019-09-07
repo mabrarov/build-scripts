@@ -13,7 +13,7 @@ call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-set PATH=%PATH%;%MSYS_HOME%\usr\bin
+set PATH=%MSYS_HOME%\usr\bin;%PATH%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
