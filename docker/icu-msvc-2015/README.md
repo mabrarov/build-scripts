@@ -18,7 +18,7 @@ docker build -t abrarov/icu-msvc-2015 docker/icu-msvc-2015/src
 | ICU_ADDRESS_MODEL | CPU architecture | One of: `32`, `64` | Undefined | When undefined then both `64` and `32` (in the same order) are built |
 | ICU_LINKAGE | Linkage of built libraries | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built, `static` build uses static C/C++ runtime |
 | ICU_BUILD_TYPE | Linkage of C/C++ runtime | One of: `release`, `debug` | Undefined | When undefined then both `release` and `debug` (in the same order) are built. If both are built then `bin` subdirectory is populated with binaries of `release` only |
-| ICU_PATCH_FILE | Path to file in container with path applied to ICU before building |  | Undefined | When undefined the patch is chosen among embedded patches based on version of ICU. Embedded patches are located in `C:\app\pathes` directory of image | 
+| ICU_PATCH_FILE | Path to file in container with path applied to ICU before building |  | Undefined | When undefined the patch is chosen among embedded patches based on version of ICU. Embedded patches are located in `C:\app\patches` directory of image | 
 
 ### Paths and volumes
 
