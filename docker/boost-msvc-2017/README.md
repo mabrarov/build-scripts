@@ -31,7 +31,7 @@ docker build -t abrarov/boost-msvc-2017 docker/boost-msvc-2017/src
 ### Examples
 
 Download source archive, build all combinations (x86, x64, shared and static libraries, shared and static C/C++ runtime) 
-and put results of build into `C:\Users\Public\Documents\boost-msvc-2017-target` folder of Docker Host:  
+and put results of build into `C:\Users\Public\Documents\boost-msvc-2017-target` folder of Docker Host:
 
 ```bash
 docker run --rm \

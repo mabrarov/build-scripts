@@ -11,7 +11,7 @@ docker build -t abrarov/icu-msvc-2017 docker/icu-msvc-2017/src
 ## Usage
 
 Download source archive, build all combinations (x86, x64, shared and static libraries) and put results of build into 
-`C:\Users\Public\icu-msvc-2017\target` folder of Docker Host:  
+`C:\Users\Public\icu-msvc-2017\target` folder of Docker Host:
 
 ```bash
 docker run --rm \

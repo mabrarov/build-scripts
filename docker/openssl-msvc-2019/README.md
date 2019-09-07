@@ -11,7 +11,7 @@ docker build -t abrarov/openssl-msvc-2019 docker/openssl-msvc-2019/src
 ## Usage
 
 Download source archive, build all combinations (x86, x64, shared and static libraries) and put results of build into 
-`C:\Users\Public\openssl-msvc-2019\target` folder of Docker Host:  
+`C:\Users\Public\openssl-msvc-2019\target` folder of Docker Host:
 
 ```bash
 docker run --rm \
