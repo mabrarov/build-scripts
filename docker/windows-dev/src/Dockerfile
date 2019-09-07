@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM microsoft/windowsservercore:ltsc2016
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 ENV DOWNLOAD_DIR="C:\download" \
     BUILD_DIR="C:\build" \
