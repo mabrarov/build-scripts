@@ -9,11 +9,11 @@ rem
 
 set exit_code=0
 
-call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%" %MSVC_CMD_BOOTSTRAP_OPTIONS%
+set PATH=%MSYS_HOME%\usr\bin;%PATH%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-set PATH=%MSYS_HOME%\usr\bin;%PATH%
+call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%" %MSVC_CMD_BOOTSTRAP_OPTIONS%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
