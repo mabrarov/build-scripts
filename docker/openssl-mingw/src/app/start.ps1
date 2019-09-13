@@ -10,9 +10,6 @@ $ErrorActionPreference = "Stop"
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
-# Required for unpacking with tar
-$env:PATH = "${env:PATH};${env:MSYS_HOME}\usr\bin"
-
 $openssl_archive_file = "${env:DOWNLOAD_DIR}\openssl-${env:OPENSSL_VERSION}.tar.gz"
 $openssl_download_url = "${env:OPENSSL_URL}/openssl-${env:OPENSSL_VERSION}.tar.gz"
 
@@ -106,8 +103,14 @@ foreach ($address_model in ${address_models}) {
       Set-Location -Path "${env:OPENSSL_BUILD_DIR}"
       $openssl_archive_msys_file = "${openssl_archive_file}" -replace "\\", "/"
       $openssl_archive_msys_file = "${openssl_archive_msys_file}" -replace "^(C):", "/c"
+
+      # Path is required to be changed for Gnu tar shipped with MSYS2
+      $path_backup = "${env:PATH}"
+      $env:PATH = "${env:MSYS_HOME}\usr\bin;${env:PATH}"
       & tar.exe xzf "${openssl_archive_msys_file}"
-      if (${LastExitCode} -ne 0) {
+      $tar_exit_code = ${LastExitCode}
+      $env:PATH = "${path_backup}"
+      if (${tar_exit_code} -ne 0) {
         throw "Failed to extract OpenSSL from ${openssl_archive_file} to ${env:OPENSSL_BUILD_DIR}"
       }
       Write-Host "Extracted source code archive"

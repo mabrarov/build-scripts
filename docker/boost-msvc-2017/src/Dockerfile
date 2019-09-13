@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.5.0
+FROM abrarov/msvc-2017:2.6.0
 
 ENV BOOST_VERSION="1.71.0" \
     BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
@@ -19,7 +19,7 @@ CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 ARG image_version=""
 ARG image_revision=""
 
-LABEL name="abrarov/boost-mingw" \
+LABEL name="abrarov/boost-msvc-2017" \
     version="${image_version}" \
     revision="${image_revision}" \
     description="Builder of Boost C++ Libraries with MS Visual C++ 2017"

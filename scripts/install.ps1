@@ -14,13 +14,14 @@ if (${LastExitCode} -ne 0) {
 
 if ((Test-Path env:TRAVIS) -and (${env:TRAVIS} -eq "true")) {
   # Travis CI uses Windows 17134.1.amd64fre.rs4_release.180410-1804 which cannot run
-  # microsoft/windowsservercore:ltsc2016 Docker image.
+  # mcr.microsoft.com/windows/servercore:ltsc2019 Docker image.
   # We cannot use ARG before FROM in windows-dev Dockerfile due to old version of Docker.
   # Let's trick Travis CI by tagging microsoft/windowsservercore:1803 Docker image, which Travis CI already has
-  # in its Docker Engine, as microsoft/windowsservercore:ltsc2016
+  # in its Docker Engine, as mcr.microsoft.com/windows/servercore:ltsc2019
 
-  $windows_image_repository = "microsoft/windowsservercore"
-  $windows_image_version = "ltsc2016"
+  $windows_image_repository = "mcr.microsoft.com/windows/servercore"
+  $windows_image_version = "ltsc2019"
+  $travis_windows_image_repository = "microsoft/windowsservercore"
   $travis_windows_image_version = "1803"
 
   Write-Host "List of Docker images"
@@ -29,21 +30,21 @@ if ((Test-Path env:TRAVIS) -and (${env:TRAVIS} -eq "true")) {
     throw "Failed to list Docker images"
   }
 
-  docker inspect --type image "${windows_image_repository}:${travis_windows_image_version}" *> $null
+  docker inspect --type image "${travis_windows_image_repository}:${travis_windows_image_version}" *> $null
   if (${LastExitCode} -ne 0) {
-    Write-Host "${windows_image_repository}:${travis_windows_image_version} image not found, pulling it..."
-    docker pull "${windows_image_repository}:${travis_windows_image_version}"
+    Write-Host "${travis_windows_image_repository}:${travis_windows_image_version} image not found, pulling it..."
+    docker pull "${travis_windows_image_repository}:${travis_windows_image_version}"
     if (${LastExitCode} -ne 0) {
-      throw "Failed to pull ${windows_image_repository}:${travis_windows_image_version} image"
+      throw "Failed to pull ${travis_windows_image_repository}:${travis_windows_image_version} image"
     }
   }
 
-  Write-Host "Re-tagging ${windows_image_repository}:${travis_windows_image_version} image as ${windows_image_version}"
+  Write-Host "Re-tagging ${travis_windows_image_repository}:${travis_windows_image_version} image as ${windows_image_repository}:${windows_image_version}"
   docker tag `
-    "${windows_image_repository}:${travis_windows_image_version}" `
+    "${travis_windows_image_repository}:${travis_windows_image_version}" `
     "${windows_image_repository}:${windows_image_version}"
   if (${LastExitCode} -ne 0) {
-    throw "Failed to re-tag ${windows_image_repository}:${travis_windows_image_version} image as ${windows_image_version}"
+    throw "Failed to re-tag ${travis_windows_image_repository}:${travis_windows_image_version} image as ${windows_image_repository}:${windows_image_version}"
   }
 
   docker images
