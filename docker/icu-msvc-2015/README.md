@@ -26,7 +26,7 @@ docker build -t abrarov/icu-msvc-2015 docker/icu-msvc-2015/src
 | Path in Docker image | Meaning of path | Comments |
 |----------------------|-----------------|----------|
 | C:\target | Location of built ICU, i.e. output directory | Usually is mapped to external directory to retrieve results of build |
-| C:\downloads | Location of downloaded ICU source archive | May be mapped to external directory for caching / speedup |
+| C:\download | Location of downloaded ICU source archive | May be mapped to external directory for caching / speedup |
 | C:\build | Location where the building of ICU is performed | May be mapped to external directory for debug |
 
 ### Examples
