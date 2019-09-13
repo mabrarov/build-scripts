@@ -25,7 +25,7 @@ docker build -t abrarov/openssl-msvc-2019 docker/openssl-msvc-2019/src
 | Path in Docker image | Meaning of path | Comments |
 |----------------------|-----------------|----------|
 | C:\target | Location of built OpenSSL, i.e. output directory | Usually is mapped to external directory to retrieve results of build |
-| C:\downloads | Location of downloaded OpenSSL source archive | May be mapped to external directory for caching / speedup |
+| C:\download | Location of downloaded OpenSSL source archive | May be mapped to external directory for caching / speedup |
 | C:\build | Location where the building of OpenSSL is performed | May be mapped to external directory for debug |
 
 ### Examples
