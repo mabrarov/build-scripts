@@ -4,16 +4,16 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM microsoft/windowsservercore:ltsc2016
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
-ENV DOWNLOAD_DIR=C:\download \
+ENV DOWNLOAD_DIR="C:\download" \
     BUILD_DIR="C:\build" \
     TARGET_DIR="C:\target" \
     SEVEN_ZIP_VERSION="18.01" \
     SEVEN_ZIP_DOWNLOAD_URL="http://www.7-zip.org/a" \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
     GIT_VERSION="2.23.0" \
-    CMAKE_VERSION="3.15.2" \
+    CMAKE_VERSION="3.15.3" \
     CMAKE_URL="https://github.com/Kitware/CMake/releases/download" \
     CMAKE_HOME="C:\cmake" \
     MSYS2_URL="http://repo.msys2.org/distrib" \

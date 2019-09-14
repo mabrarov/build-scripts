@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.5.0
+FROM abrarov/msvc-2017:2.6.0
 
 ENV LLVM_VERSION="8.0.1" \
     LLVM_URL="https://github.com/llvm/llvm-project/releases/download" \
@@ -13,7 +13,7 @@ ENV LLVM_VERSION="8.0.1" \
     JOM_HOME="C:\jom" \
     OPENSSL_VERSION="1.0.2q" \
     ICU_VERSION="64.2" \
-    QT_VERSION="5.13.0" \
+    QT_VERSION="5.13.1" \
     QT_URL="http://download.qt.io/official_releases/qt" \
     JOM_URL="http://master.qt.io/official_releases/jom" \
     JOM_VERSION="1.1.3" \

@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.5.0
+FROM abrarov/mingw:2.6.0
 
 ENV OPENSSL_VERSION="1.0.2q" \
     OPENSSL_URL="https://www.openssl.org/source" \
