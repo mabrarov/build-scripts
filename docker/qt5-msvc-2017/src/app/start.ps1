@@ -40,6 +40,9 @@ if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
     "5.13.0" {
       # todo
     }
+    "5.13.1" {
+      # todo
+    }
     default {
       Write-Warning "Predfined QT_CONFIGURE_OPTIONS are missing because of unknown Qt version: ${env:QT_VERSION}"
     }
