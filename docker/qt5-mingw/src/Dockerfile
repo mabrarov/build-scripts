@@ -8,7 +8,7 @@ FROM abrarov/mingw:2.6.0
 
 ENV OPENSSL_VERSION="1.0.2q" \
     ICU_VERSION="64.2" \
-    QT_VERSION="5.13.0" \
+    QT_VERSION="5.13.1" \
     QT_URL="http://download.qt.io/official_releases/qt" \
     DEPEND_DIR="C:\depend" \
     MAKE_OPTIONS=""
