@@ -18,7 +18,7 @@ Write-Host "Starting deploy"
 
 # "$env:DOCKER_PASS" | docker login --username "$env:DOCKER_USER" --password-stdin
 # docker login with the old config.json style that is needed for manifest-tool
-$auth =[System.Text.Encoding]::UTF8.GetBytes("$($env:DOCKER_USER):$($env:DOCKER_PASS)")
+$auth =[System.Text.Encoding]::UTF8.GetBytes("$(${env:DOCKER_USER}):$(${env:DOCKER_PASS})")
 $auth64 = [Convert]::ToBase64String($auth)
 @"
 {
@@ -44,6 +44,10 @@ $dirs = @(
   "docker\boost-msvc-2015",
   "docker\icu-msvc-2015",
   "docker\openssl-msvc-2015",
+  "docker\msvc-2019",
+  "docker\boost-msvc-2019",
+  "docker\icu-msvc-2019",
+  "docker\openssl-msvc-2019",
   "docker\qt5-mingw",
   "docker\qt5-msvc-2017"
 )

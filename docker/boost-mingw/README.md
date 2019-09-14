@@ -25,13 +25,13 @@ docker build -t abrarov/boost-mingw docker/boost-mingw/src
 | Path in Docker image | Meaning of path | Comments |
 |----------------------|-----------------|----------|
 | C:\target | Location of built Boost libraries, i.e. output directory | Usually is mapped to external directory to retrieve results of build |
-| C:\downloads | Location of downloaded Boost source archive | May be mapped to external directory for caching / speedup |
+| C:\download | Location of downloaded Boost source archive | May be mapped to external directory for caching / speedup |
 | C:\build | Location where the building of Boost is performed | May be mapped to external directory for debug |
 
 ### Examples
 
 Download source archive, build all combinations (x86, x64, shared and static libraries, shared and static C/C++ runtime) 
-and put results of build into `C:\Users\Public\Documents\boost-mingw-target` folder of Docker Host:  
+and put results of build into `C:\Users\Public\Documents\boost-mingw-target` folder of Docker Host:
 
 ```bash
 docker run --rm \
