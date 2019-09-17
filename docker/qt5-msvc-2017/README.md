@@ -14,7 +14,7 @@ todo
 
 ```bash
 docker run --rm \
---storage-opt "size=50GB" \
+--storage-opt "size=120GB" \
 -v C:/Users/Public/build-scripts/qt5/target:C:/target \
 -v C:/Users/Public/build-scripts/qt5/download:C:/download \
 -v C:/Users/Public/build-scripts/qt5/depend:C:/depend:ro \
@@ -26,7 +26,7 @@ abrarov/qt5-msvc-2017
 
 ```bash
 docker run --rm \
---storage-opt "size=50GB" \
+--storage-opt "size=120GB" \
 -e JOM_OPTIONS="-j4" \
 -v C:/Users/Public/build-scripts/qt5/target:C:/target \
 -v C:/Users/Public/build-scripts/qt5/download:C:/download \
