@@ -11,21 +11,21 @@ ENV LLVM_VERSION="8.0.1" \
     LLVM_DIST_NAME="LLVM-8.0.1-win64.exe" \
     LLVM_INSTALL_DIR="C:\Program Files\LLVM" \
     JOM_HOME="C:\jom" \
-    OPENSSL_VERSION="1.0.2q" \
-    ICU_VERSION="64.2" \
-    QT_VERSION="5.13.0" \
-    QT_URL="http://download.qt.io/official_releases/qt" \
     JOM_URL="http://master.qt.io/official_releases/jom" \
     JOM_VERSION="1.1.3" \
-    NINJA_SYNTAX_VERSION="1.7.2" \
-    DEPEND_DIR="C:\depend" \
-    JOM_OPTIONS=""
+    DEPEND_DIR="C:\depend"
 
 ADD ["app", "C:/app/"]
 
 RUN mkdir "%DEPEND_DIR%" && \
     powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
     powershell "Remove-Item -Path 'C:\app\install.ps1' -Recurse -Force"
+
+ENV OPENSSL_VERSION="1.0.2q" \
+    ICU_VERSION="64.2" \
+    QT_VERSION="5.13.1" \
+    QT_URL="http://download.qt.io/official_releases/qt" \
+    JOM_OPTIONS=""
 
 VOLUME ["C:/target", "C:/depend"]
 
