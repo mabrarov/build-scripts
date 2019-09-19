@@ -22,6 +22,11 @@ if (Test-Path env:OPENSSL_DIR) {
   $openssl_base_dir = "${env:OPENSSL_DIR}"
 }
 
+$icu_base_dir = "${env:DEPEND_DIR}"
+if (Test-Path env:ICU_DIR) {
+  $openssl_base_dir = "${env:ICU_DIR}"
+}
+
 # Build Qt
 $address_models = @("64", "32")
 $qt_linkages = @("shared", "static")
@@ -145,7 +150,7 @@ foreach ($address_model in ${address_models}) {
       Write-Error "OpenSSL not found at ${env:OPENSSL_DIR}"
     }
 
-    $env:ICU_DIR = "${openssl_base_dir}\icu4c-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
+    $env:ICU_DIR = "${icu_base_dir}\icu4c-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
     if (-not (Test-Path -Path "${env:ICU_DIR}")) {
       Write-Error "ICU not found at ${env:ICU_DIR}"
     }
