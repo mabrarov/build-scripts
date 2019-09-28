@@ -34,10 +34,7 @@ $env:ICU_PATCH_MSYS_FILE = "${env:ICU_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 # Build ICU4C
 $address_models = @("64", "32")
 $icu_linkages = @("shared", "static")
-# By some reason ICU names debug version of libraries the same way as release version.
-# Let's skip building of debug version of libraries for now.
-# $icu_build_types = @("release", "debug")
-$icu_build_types = @("release")
+$icu_build_types = @("release", "debug")
 
 # Limit build configurations if user asked for that
 if (Test-Path env:ICU_ADDRESS_MODEL) {
