@@ -6,8 +6,8 @@
 
 FROM abrarov/windows-dev:2.6.0
 
-ENV MINGW_VERSION="8.1.0" \
-    MINGW_RT_FILE_SUFFIX="6" \
+ENV MINGW_VERSION="7.3.0" \
+    MINGW_RT_FILE_SUFFIX="5" \
     MINGW_REVISON="0" \
     MINGW_URL="https://sourceforge.net/projects/mingw-w64/files" \
     MINGW_URL_POSTFIX="/download" \
