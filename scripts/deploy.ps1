@@ -16,19 +16,19 @@ if (${env:APPVEYOR_PULL_REQUEST_NUMBER} -or -not ${env:APPVEYOR_REPO_BRANCH}.Equ
 
 Write-Host "Starting deploy"
 
-# "$env:DOCKER_PASS" | docker login --username "$env:DOCKER_USER" --password-stdin
+"${env:DOCKER_PASS}" | docker login --username "${env:DOCKER_USER}" --password-stdin
 # docker login with the old config.json style that is needed for manifest-tool
-$auth =[System.Text.Encoding]::UTF8.GetBytes("$(${env:DOCKER_USER}):$(${env:DOCKER_PASS})")
-$auth64 = [Convert]::ToBase64String($auth)
-@"
-{
-  "auths": {
-    "https://index.docker.io/v1/": {
-      "auth": "$auth64"
-    }
-  }
-}
-"@ | Out-File -Encoding Ascii ~/.docker/config.json
+#$auth =[System.Text.Encoding]::UTF8.GetBytes("$(${env:DOCKER_USER}):$(${env:DOCKER_PASS})")
+#$auth64 = [Convert]::ToBase64String($auth)
+#@"
+#{
+#  "auths": {
+#    "https://index.docker.io/v1/": {
+#      "auth": "$auth64"
+#    }
+#  }
+#}
+#"@ | Out-File -Encoding Ascii ~/.docker/config.json
 
 $dirs = @(
   "docker\windows-dev",
