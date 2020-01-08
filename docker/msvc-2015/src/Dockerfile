@@ -10,7 +10,7 @@ ENV MSVS_VERSION="14" \
     MSVS_URL="https://go.microsoft.com/fwlink/?LinkId=532606&clcid=0x409" \
     MSVS_DIST_NAME="vs_community.exe" \
     VSWHERE_URL="https://github.com/Microsoft/vswhere/releases/download" \
-    VSWHERE_VERSION="2.6.7" \
+    VSWHERE_VERSION="2.8.4" \
     VSWHERE_DIST_NAME="vswhere.exe"
 
 ADD ["app", "C:/app/"]
