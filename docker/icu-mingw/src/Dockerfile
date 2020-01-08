@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.7.0
+FROM abrarov/mingw:2.8.0
 
 ENV ICU_VERSION="64.2" \
     ICU_URL="http://download.icu-project.org/files/icu4c" \

@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/windows-dev:2.7.0
+FROM abrarov/windows-dev:2.8.0
 
 ENV MSVS_VERSION="16" \
     MSVS_URL="https://aka.ms/vs" \
