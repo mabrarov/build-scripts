@@ -12,8 +12,8 @@ ENV DOWNLOAD_DIR="C:\download" \
     SEVEN_ZIP_VERSION="18.01" \
     SEVEN_ZIP_DOWNLOAD_URL="http://www.7-zip.org/a" \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
-    GIT_VERSION="2.23.0" \
-    CMAKE_VERSION="3.15.3" \
+    GIT_VERSION="2.24.1.2" \
+    CMAKE_VERSION="3.16.2" \
     CMAKE_URL="https://github.com/Kitware/CMake/releases/download" \
     CMAKE_HOME="C:\cmake" \
     MSYS2_URL="http://repo.msys2.org/distrib" \
@@ -25,9 +25,9 @@ ENV DOWNLOAD_DIR="C:\download" \
     ACTIVE_PERL_URL="http://downloads.activestate.com/ActivePerl/releases" \
     ACTIVE_PERL_HOME="C:\Perl64" \
     PYTHON_URL="https://www.python.org/ftp/python" \
-    PYTHON3_VERSION="3.7.4" \
+    PYTHON3_VERSION="3.8.1" \
     PYTHON3_HOME="C:\Python37" \
-    PYTHON2_VERSION="2.7.16" \
+    PYTHON2_VERSION="2.7.17" \
     PYTHON2_HOME="C:\Python27"
 
 ADD ["app", "C:/app/"]
