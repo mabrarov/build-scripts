@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2019:2.8.0
+FROM abrarov/msvc-2019:2.9.0
 
 ENV BOOST_VERSION="1.73.0" \
     BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
