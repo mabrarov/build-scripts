@@ -6,7 +6,7 @@
 
 FROM abrarov/msvc-2015:2.8.0
 
-ENV BOOST_VERSION="1.72.0" \
+ENV BOOST_VERSION="1.73.0" \
     BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
     B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
 
