@@ -14,7 +14,7 @@ docker build -t abrarov/boost-mingw docker/boost-mingw/src
 
 | Name | Meaning of variable | Possible values | Default value | Comments |
 |------|---------------------|-----------------|---------------|----------|
-| BOOST_VERSION | Version of Boost to build | One of: `1.70.0`, `1.71.0` | `1.71.0` | |
+| BOOST_VERSION | Version of Boost to build | One of: `1.70.0`, `1.71.0`, `1.72.0`, `1.73.0` | `1.73.0` | |
 | BOOST_ADDRESS_MODEL | CPU architecture | One of: `32`, `64` | Undefined | When undefined then both `64` and `32` (in the same order) are built |
 | BOOST_LINKAGE | Linkage of built libraries | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built |
 | BOOST_RUNTIME_LINKAGE | Linkage of C/C++ runtime | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built, when `BOOST_LINKAGE` is `shared` then `static` value of `BOOST_RUNTIME_LINKAGE` is ignored |
@@ -39,14 +39,14 @@ docker run --rm \
 abrarov/boost-mingw
 ```
  
-Use pre-downloaded source archive located at `C:\Users\Public\Documents\boost-mingw\download\boost_1_69_0.zip` file 
+Use pre-downloaded source archive located at `C:\Users\Public\Documents\boost-mingw\download\boost_1_73_0.zip` file 
 on Docker Host, build all combinations and put results of build into `C:\Users\Public\Documents\boost-mingw\target` 
 folder of Docker Host:
  
 ```bash
 docker run --rm \
 -v C:/Users/Public/Documents/boost-mingw/target:C:/target \
--v C:/Users/Public/Documents/boost-mingw/download/boost_1_69_0.zip:C:/download/boost_1_69_0.zip \
+-v C:/Users/Public/Documents/boost-mingw/download/boost_1_73_0.zip:C:/download/boost_1_73_0.zip \
 abrarov/boost-mingw
 ```
 

@@ -63,7 +63,7 @@ foreach ($address_model in ${address_models}) {
   $env:BOOST_ADDRESS_MODEL = ${address_model}
 
   # Determine parameters dependent on address model
-  switch ($env:BOOST_ADDRESS_MODEL) {
+  switch (${env:BOOST_ADDRESS_MODEL}) {
     "32" {
       $env:MINGW_HOME = "${env:MINGW32_HOME}"
       $target_dir_suffix = "x86"
