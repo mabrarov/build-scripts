@@ -1,6 +1,6 @@
-# Builder of Boost C++ Libraries with GCC and Musl
+# Builder of Boost C++ Libraries with GCC and musl libc
 
-Docker image for building [Boost C++ Libraries](http://www.boost.org/) with GCC 9 and Musl shipped with Alpine Linux.
+Docker image for building [Boost C++ Libraries](http://www.boost.org/) with GCC 9 and [musl libc](https://musl.libc.org/) shipped with [Alpine Linux](https://alpinelinux.org/).
 
 ## Building
 

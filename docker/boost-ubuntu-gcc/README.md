@@ -1,6 +1,6 @@
 # Builder of Boost C++ Libraries with GCC and Glibc
 
-Docker image for building [Boost C++ Libraries](http://www.boost.org/) with GCC 9 and Glibc shipped with Ubuntu 20.04.
+Docker image for building [Boost C++ Libraries](http://www.boost.org/) with GCC 9 and Glibc shipped with Ubuntu Linux.
 
 ## Building
 
