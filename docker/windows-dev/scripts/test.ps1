@@ -59,13 +59,13 @@ if (${LastExitCode} -ne 0) {
 }
 
 Write-Host "Running Python 2 in container created from ${image_repository}:latest image"
-docker run --rm "${image_repository}:latest" "C:\Python27\python.exe" --version
+docker run --rm "${image_repository}:latest" "C:\Python2\python.exe" --version
 if (${LastExitCode} -ne 0) {
   throw "Failed to get version of Python 2"
 }
 
 Write-Host "Running Python 3 in container created from ${image_repository}:latest image"
-docker run --rm "${image_repository}:latest" "C:\Python37\python.exe" --version
+docker run --rm "${image_repository}:latest" "C:\Python3\python.exe" --version
 if (${LastExitCode} -ne 0) {
   throw "Failed to get version of Python 3"
 }
