@@ -6,9 +6,10 @@
 
 FROM abrarov/mingw:2.10.0
 
-ENV BOOST_VERSION="1.74.0" \
+ENV BOOST_VERSION="1.75.0" \
     BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
-    B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
+    B2_OPTIONS="--without-python --without-mpi --without-graph_parallel" \
+    BOOST_MINGW_HOME="C:\MinGW"
 
 ADD ["app", "C:/app/"]
 

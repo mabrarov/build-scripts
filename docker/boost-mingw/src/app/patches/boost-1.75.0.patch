@@ -1,0 +1,11 @@
+--- ./bootstrap.bat	2020-12-03 08:01:08 +0300
++++ ./bootstrap.bat	2020-12-03 08:01:08 +0300
+@@ -12,7 +12,7 @@
+ if exist ".\tools\build\src\engine\b2.exe" del tools\build\src\engine\b2.exe
+ pushd tools\build\src\engine
+ 
+-call .\build.bat
++call .\build.bat %1
+ @ECHO OFF
+ 
+ popd
