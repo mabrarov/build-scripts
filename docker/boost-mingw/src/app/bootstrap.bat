@@ -23,6 +23,9 @@ if not "--%BOOST_PATCH_MSYS_FILE%" == "--" (
     if %exit_code% neq 1 goto exit
   )
 
+  rem Reset errorlevel to zero
+  cmd /c "exit /b 0"
+
   set PATH=%DEFAULT_PATH%
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
