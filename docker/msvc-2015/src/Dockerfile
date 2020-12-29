@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/windows-dev:2.9.0
+FROM abrarov/windows-dev:2.10.0
 
 ENV MSVS_VERSION="14" \
     MSVS_URL="https://go.microsoft.com/fwlink/?LinkId=532606&clcid=0x409" \
