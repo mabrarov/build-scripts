@@ -4,14 +4,11 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM alpine:3.12.0
+FROM alpine:3.12.3
 
 ENV DOWNLOAD_DIR="/download" \
     BUILD_DIR="/build" \
-    TARGET_DIR="/target" \
-    BOOST_VERSION="1.74.0" \
-    BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
-    B2_OPTIONS="--without-mpi --without-graph_parallel"
+    TARGET_DIR="/target"
 
 RUN apk add --no-cache \
       bash \
@@ -36,6 +33,10 @@ ADD ["app", "/app"]
 VOLUME ["/target"]
 
 CMD ["/app/start.sh"]
+
+ENV BOOST_VERSION="1.75.0" \
+    BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
+    B2_OPTIONS="--without-mpi --without-graph_parallel"
 
 ARG image_version=""
 ARG image_revision=""

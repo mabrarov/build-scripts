@@ -72,6 +72,7 @@ for boost_linkage in "${boost_linkages[@]}"; do
     echo "BOOST_LINKAGE        : ${boost_linkage}"
     echo "BOOST_RUNTIME_LINKAGE: ${boost_runtime_linkage}"
     echo "B2_OPTIONS           : ${B2_OPTIONS}"
+    # shellcheck disable=SC2086
     "${b2_bin}" \
       --toolset="${b2_toolset}" \
       link="${boost_linkage}" \

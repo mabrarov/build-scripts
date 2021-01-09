@@ -9,10 +9,7 @@ FROM ubuntu:20.04
 ENV TZ="Europe/Moscow" \
     DOWNLOAD_DIR="/download" \
     BUILD_DIR="/build" \
-    TARGET_DIR="/target" \
-    BOOST_VERSION="1.74.0" \
-    BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
-    B2_OPTIONS="--without-mpi --without-graph_parallel"
+    TARGET_DIR="/target"
 
 RUN ln -snf "/usr/share/zoneinfo/${TZ}" /etc/localtime && \
     echo "${TZ}" > /etc/timezone && \
@@ -40,6 +37,10 @@ ADD ["app", "/app"]
 VOLUME ["/target"]
 
 CMD ["/app/start.sh"]
+
+ENV BOOST_VERSION="1.75.0" \
+    BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
+    B2_OPTIONS="--without-mpi --without-graph_parallel"
 
 ARG image_version=""
 ARG image_revision=""
