@@ -76,7 +76,7 @@ Write-Host "Downloading ActivePerl from ${active_perl_url} into ${active_perl_di
 (New-Object System.Net.WebClient).DownloadFile("${active_perl_url}", "${active_perl_dist}")
 Write-Host "Installing ActivePerl from ${active_perl_dist} into ${env:ACTIVE_PERL_HOME}"
 $p = Start-Process -FilePath "${active_perl_dist}" `
-  -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "ALLUSERS=1", "TargetDir=""${env:ACTIVE_PERL_HOME}""") `
+  -ArgumentList ("/norestart", "/quiet", "/qn", "TargetDir=""${env:ACTIVE_PERL_HOME}""") `
   -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install ActivePerl"
