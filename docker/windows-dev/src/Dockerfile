@@ -26,9 +26,9 @@ ENV DOWNLOAD_DIR="C:\download" \
     ACTIVE_PERL_HOME="C:\Perl64" \
     PYTHON_URL="https://www.python.org/ftp/python" \
     PYTHON3_VERSION="3.9.1" \
-    PYTHON3_HOME="C:\Python37" \
+    PYTHON3_HOME="C:\Python3" \
     PYTHON2_VERSION="2.7.18" \
-    PYTHON2_HOME="C:\Python27"
+    PYTHON2_HOME="C:\Python2"
 
 ADD ["app", "C:/app/"]
 
