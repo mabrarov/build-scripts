@@ -12,23 +12,22 @@ ENV DOWNLOAD_DIR="C:\download" \
     SEVEN_ZIP_VERSION="19.00" \
     SEVEN_ZIP_DOWNLOAD_URL="http://www.7-zip.org/a" \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
-    GIT_VERSION="2.29.2.3" \
-    CMAKE_VERSION="3.19.2" \
+    GIT_VERSION="2.30.0" \
+    CMAKE_VERSION="3.19.3" \
     CMAKE_URL="https://github.com/Kitware/CMake/releases/download" \
     CMAKE_HOME="C:\cmake" \
     MSYS2_URL="http://repo.msys2.org/distrib" \
     MSYS2_TARGET="x86_64" \
     MSYS2_VERSION="20201109" \
     MSYS_HOME="C:\msys64" \
-    ACTIVE_PERL_VERSION="5.26.3.2603" \
-    ACTIVE_PERL_BUILD="a95bce075" \
-    ACTIVE_PERL_URL="http://downloads.activestate.com/ActivePerl/releases" \
-    ACTIVE_PERL_HOME="C:\Perl64" \
+    ACTIVE_PERL_VERSION="5.28" \
+    ACTIVE_PERL_URL="https://cli-msi.s3.amazonaws.com" \
+    ACTIVE_PERL_HOME="C:\Perl" \
     PYTHON_URL="https://www.python.org/ftp/python" \
     PYTHON3_VERSION="3.9.1" \
-    PYTHON3_HOME="C:\Python37" \
+    PYTHON3_HOME="C:\Python3" \
     PYTHON2_VERSION="2.7.18" \
-    PYTHON2_HOME="C:\Python27"
+    PYTHON2_HOME="C:\Python2"
 
 ADD ["app", "C:/app/"]
 

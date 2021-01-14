@@ -69,14 +69,14 @@ Write-Host "Extracting MSYS2 from ${msys_dist} into ${env:MSYS_HOME}"
 Write-Host "MSYS2 ${env:MSYS2_VERSION} installed into ${env:MSYS_HOME}"
 
 # Download and install ActivePerl
-$active_perl_dist_name = "ActivePerl-${env:ACTIVE_PERL_VERSION}-MSWin32-x64-${env:ACTIVE_PERL_BUILD}.exe"
-$active_perl_url = "${env:ACTIVE_PERL_URL}/${env:ACTIVE_PERL_VERSION}/${active_perl_dist_name}"
+$active_perl_dist_name = "ActivePerl-${env:ACTIVE_PERL_VERSION}.msi"
+$active_perl_url = "${env:ACTIVE_PERL_URL}/${active_perl_dist_name}"
 $active_perl_dist = "${env:TMP}\${active_perl_dist_name}"
 Write-Host "Downloading ActivePerl from ${active_perl_url} into ${active_perl_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${active_perl_url}", "${active_perl_dist}")
 Write-Host "Installing ActivePerl from ${active_perl_dist} into ${env:ACTIVE_PERL_HOME}"
 $p = Start-Process -FilePath "${active_perl_dist}" `
-  -ArgumentList ("/exenoui", "/norestart", "/quiet", "/qn", "TargetDir=""${env:ACTIVE_PERL_HOME}""") `
+  -ArgumentList ("/norestart", "/quiet", "/qn", "TargetDir=""${env:ACTIVE_PERL_HOME}""") `
   -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
   throw "Failed to install ActivePerl"
