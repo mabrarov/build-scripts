@@ -6,7 +6,7 @@
 
 FROM abrarov/msvc-2017:2.11.0
 
-ENV LLVM_VERSION="8.0.1" \
+ENV LLVM_VERSION="11.1.0" \
     LLVM_URL="https://github.com/llvm/llvm-project/releases/download" \
     LLVM_DIST_NAME="LLVM-11.0.1-win64.exe" \
     LLVM_INSTALL_DIR="C:\Program Files\LLVM" \
