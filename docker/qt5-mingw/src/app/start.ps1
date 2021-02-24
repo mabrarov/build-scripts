@@ -37,11 +37,8 @@ if (Test-Path env:QT_LINKAGE) {
 if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
   $env:QT_CONFIGURE_OPTIONS = "-opengl desktop -icu"
   switch (${env:QT_VERSION}) {
-    "5.13.0" {
-      $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -no-feature-accessibility"
-    }
-    "5.13.1" {
-      $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -no-feature-accessibility"
+    "5.15.2" {
+      # TODO
     }
     default {
       Write-Warning "Predfined QT_CONFIGURE_OPTIONS are missing because of unknown Qt version: ${env:QT_VERSION}"
