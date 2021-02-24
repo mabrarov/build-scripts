@@ -28,6 +28,7 @@ call "configure.bat" ^
   -debug-and-release ^
   -opensource -confirm-license ^
   "%QT_CONFIGURE_OPTIONS_LINKAGE%" ^
+  -feature-relocatable ^
   -nomake examples ^
   -nomake tests ^
   %QT_CONFIGURE_OPTIONS% ^
