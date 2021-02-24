@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/windows-dev:2.9.0
+FROM abrarov/windows-dev:2.11.0
 
 ENV MINGW_VERSION="7.3.0" \
     MINGW_RT_FILE_SUFFIX="5" \
