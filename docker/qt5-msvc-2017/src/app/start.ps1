@@ -42,10 +42,7 @@ if (Test-Path env:QT_LINKAGE) {
 if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
   $env:QT_CONFIGURE_OPTIONS = "-opengl desktop -icu"
   switch (${env:QT_VERSION}) {
-    "5.13.0" {
-      # todo
-    }
-    "5.13.1" {
+    "5.15.2" {
       # todo
     }
     default {

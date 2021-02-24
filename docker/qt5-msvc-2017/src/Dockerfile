@@ -8,7 +8,7 @@ FROM abrarov/msvc-2017:2.11.0
 
 ENV LLVM_VERSION="8.0.1" \
     LLVM_URL="https://github.com/llvm/llvm-project/releases/download" \
-    LLVM_DIST_NAME="LLVM-8.0.1-win64.exe" \
+    LLVM_DIST_NAME="LLVM-11.0.1-win64.exe" \
     LLVM_INSTALL_DIR="C:\Program Files\LLVM" \
     JOM_HOME="C:\jom" \
     JOM_URL="http://master.qt.io/official_releases/jom" \
@@ -23,7 +23,7 @@ RUN mkdir "%DEPEND_DIR%" && \
 
 ENV OPENSSL_VERSION="1.0.2q" \
     ICU_VERSION="64.2" \
-    QT_VERSION="5.13.1" \
+    QT_VERSION="5.15.2" \
     QT_URL="http://download.qt.io/official_releases/qt" \
     JOM_OPTIONS=""
 
