@@ -19,7 +19,7 @@ if (Test-Path env:OPENSSL_DIR) {
 
 $icu_base_dir = "${env:DEPEND_DIR}"
 if (Test-Path env:ICU_DIR) {
-  $openssl_base_dir = "${env:ICU_DIR}"
+  $icu_base_dir = "${env:ICU_DIR}"
 }
 
 # Build Qt
