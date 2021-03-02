@@ -24,9 +24,12 @@ if (Test-Path env:QT_LINKAGE) {
   $qt_linkages = @("${env:QT_LINKAGE}")
 }
 
+$build_with_openssl = (Test-Path env:OPENSSL_DIR) -or "${env:OPENSSL_VERSION}"
+$build_with_icu = (Test-Path env:ICU_DIR) -or "${env:ICU_VERSION}"
+
 if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
   $env:QT_CONFIGURE_OPTIONS = "-opengl desktop"
-  if (Test-Path env:ICU_DIR -or ("${env:ICU_VERSION}" -ne "")) {
+  if (${build_with_icu}) {
     $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -icu"
   } else {
     $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -no-icu"
@@ -136,7 +139,7 @@ foreach ($address_model in ${address_models}) {
     $env:QT_CONFIGURE_OPTIONS_DIRS = ""
 
     $env:QT_OPENSSL_DIR = ""
-    if (Test-Path env:OPENSSL_DIR -or ("${env:OPENSSL_VERSION}" -ne "")) {
+    if (${build_with_openssl}) {
       if (Test-Path env:OPENSSL_DIR) {
         $env:QT_OPENSSL_DIR = "${env:OPENSSL_DIR}"
       } else {
@@ -149,7 +152,7 @@ foreach ($address_model in ${address_models}) {
     }
 
     $env:QT_ICU_DIR = ""
-    if (Test-Path env:ICU_DIR -or ("${env:ICU_VERSION}" -ne "")) {
+    if (${build_with_icu}) {
       if (Test-Path env:ICU_DIR) {
         $env:QT_ICU_DIR = "${env:ICU_DIR}"
       } else {
