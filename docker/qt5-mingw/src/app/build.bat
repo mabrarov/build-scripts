@@ -8,9 +8,21 @@ rem
 
 set exit_code=0
 
-set PATH=%MINGW_HOME%\bin;%OPENSSL_DIR%\bin;%ICU_DIR%\bin;%ICU_DIR%\lib;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%PATH%
+set PATH=%MINGW_HOME%\bin;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%PATH%
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
+
+if not "--%QT_OPENSSL_DIR%" == "--" (
+  set PATH=%QT_OPENSSL_DIR%\bin;%PATH%
+  set exit_code=%errorlevel%
+  if %exit_code% neq 0 goto exit
+)
+
+if not "--%QT_ICU_DIR%" == "--" (
+  set PATH=%QT_ICU_DIR%\bin;%QT_ICU_DIR%\lib;%PATH%
+  set exit_code=%errorlevel%
+  if %exit_code% neq 0 goto exit
+)
 
 set LANG="en"
 set exit_code=%errorlevel%
@@ -32,10 +44,7 @@ call "configure.bat" ^
   -nomake examples ^
   -nomake tests ^
   %QT_CONFIGURE_OPTIONS% ^
-  -I "%OPENSSL_DIR%\include" ^
-  -L "%OPENSSL_DIR%\lib" ^
-  -I "%ICU_DIR%\include" ^
-  -L "%ICU_DIR%\lib" ^
+  %QT_CONFIGURE_OPTIONS_DIRS% ^
   -prefix "%QT_INSTALL_DIR%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit

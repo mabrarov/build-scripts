@@ -12,16 +12,6 @@ $qt_dist_base_name = "qt-everywhere-src-"
 $qt_archive_file = "${env:DOWNLOAD_DIR}\${qt_dist_base_name}${env:QT_VERSION}.zip"
 $qt_download_url = "${env:QT_URL}/${qt_version_short}/${env:QT_VERSION}/single/${qt_dist_base_name}${env:QT_VERSION}.zip"
 
-$openssl_base_dir = "${env:DEPEND_DIR}"
-if (Test-Path env:OPENSSL_DIR) {
-  $openssl_base_dir = "${env:OPENSSL_DIR}"
-}
-
-$icu_base_dir = "${env:DEPEND_DIR}"
-if (Test-Path env:ICU_DIR) {
-  $icu_base_dir = "${env:ICU_DIR}"
-}
-
 # Build Qt
 $address_models = @("64", "32")
 $qt_linkages = @("shared", "static")
@@ -34,8 +24,16 @@ if (Test-Path env:QT_LINKAGE) {
   $qt_linkages = @("${env:QT_LINKAGE}")
 }
 
+$build_with_openssl = (Test-Path env:OPENSSL_DIR) -or "${env:OPENSSL_VERSION}"
+$build_with_icu = (Test-Path env:ICU_DIR) -or "${env:ICU_VERSION}"
+
 if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
-  $env:QT_CONFIGURE_OPTIONS = "-opengl desktop -icu"
+  $env:QT_CONFIGURE_OPTIONS = "-opengl desktop"
+  if (${build_with_icu}) {
+    $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -icu"
+  } else {
+    $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -no-icu"
+  }
   switch (${env:QT_VERSION}) {
     "5.15.2" {
       $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -no-feature-accessibility"
@@ -138,28 +136,47 @@ foreach ($address_model in ${address_models}) {
     $env:QT_PATCH_MSYS_FILE = "${env:QT_PATCH_FILE}" -replace "\\", "/"
     $env:QT_PATCH_MSYS_FILE = "${env:QT_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
-    $env:OPENSSL_DIR = "${openssl_base_dir}\openssl-${env:OPENSSL_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
-    if (-not (Test-Path -Path "${env:OPENSSL_DIR}")) {
-      Write-Error "OpenSSL not found at ${env:OPENSSL_DIR}"
+    $env:QT_CONFIGURE_OPTIONS_DIRS = ""
+
+    $env:QT_OPENSSL_DIR = ""
+    if (${build_with_openssl}) {
+      if (Test-Path env:OPENSSL_DIR) {
+        $env:QT_OPENSSL_DIR = "${env:OPENSSL_DIR}"
+      } else {
+        $env:QT_OPENSSL_DIR = "${env:DEPEND_DIR}\openssl-${env:OPENSSL_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
+      }
+      if (-not (Test-Path -Path "${env:QT_OPENSSL_DIR}")) {
+        Write-Error "OpenSSL not found at ${env:QT_OPENSSL_DIR}"
+      }
+      $env:QT_CONFIGURE_OPTIONS_DIRS = "${env:QT_CONFIGURE_OPTIONS_DIRS} -I ""${env:QT_OPENSSL_DIR}\include"" -L ""${env:QT_OPENSSL_DIR}\lib"""
     }
 
-    $env:ICU_DIR = "${icu_base_dir}\icu4c-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
-    if (-not (Test-Path -Path "${env:ICU_DIR}")) {
-      Write-Error "ICU not found at ${env:ICU_DIR}"
+    $env:QT_ICU_DIR = ""
+    if (${build_with_icu}) {
+      if (Test-Path env:ICU_DIR) {
+        $env:QT_ICU_DIR = "${env:ICU_DIR}"
+      } else {
+        $env:QT_ICU_DIR = "${env:DEPEND_DIR}\icu4c-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:QT_LINKAGE}"
+      }
+      if (-not (Test-Path -Path "${env:QT_ICU_DIR}")) {
+        Write-Error "ICU not found at ${env:QT_ICU_DIR}"
+      }
+      $env:QT_CONFIGURE_OPTIONS_DIRS = "${env:QT_CONFIGURE_OPTIONS_DIRS} -I ""${env:QT_ICU_DIR}\include"" -L ""${env:QT_ICU_DIR}\lib"""
     }
 
     Set-Location -Path "${env:QT_HOME}"
 
     Write-Host "Building Qt with these parameters:"
     Write-Host "MINGW_HOME                   : ${env:MINGW_HOME}"
-    Write-Host "OPENSSL_DIR                  : ${env:OPENSSL_DIR}"
-    Write-Host "ICU_DIR                      : ${env:ICU_DIR}"
+    Write-Host "QT_OPENSSL_DIR               : ${env:QT_OPENSSL_DIR}"
+    Write-Host "QT_ICU_DIR                   : ${env:QT_ICU_DIR}"
     Write-Host "QT_HOME                      : ${env:QT_HOME}"
     Write-Host "QT_INSTALL_DIR               : ${env:QT_INSTALL_DIR}"
     Write-Host "QT_ADDRESS_MODEL             : ${env:QT_ADDRESS_MODEL}"
     Write-Host "QT_LINKAGE                   : ${env:QT_LINKAGE}"
     Write-Host "QT_CONFIGURE_OPTIONS_LINKAGE : ${env:QT_CONFIGURE_OPTIONS_LINKAGE}"
     Write-Host "QT_CONFIGURE_OPTIONS         : ${env:QT_CONFIGURE_OPTIONS}"
+    Write-Host "QT_CONFIGURE_OPTIONS_DIRS    : ${env:QT_CONFIGURE_OPTIONS_DIRS}"
     Write-Host "QT_PATCH_FILE                : ${env:QT_PATCH_FILE}"
     Write-Host "QT_PATCH_MSYS_FILE           : ${env:QT_PATCH_MSYS_FILE}"
     Write-Host "QT_DEPLOY_DIR                : ${env:QT_DEPLOY_DIR}"
