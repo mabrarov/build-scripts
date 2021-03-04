@@ -7,6 +7,9 @@
 # Stop immediately if any error happens
 $ErrorActionPreference = "Stop"
 
+# Enable all versions of TLS
+[System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
+
 $qt_version_short = "${env:QT_VERSION}" -replace '(\d+)\.(\d+)\.(\d)', '$1.$2'
 $qt_dist_base_name = "qt-everywhere-src-"
 $qt_archive_file = "${env:DOWNLOAD_DIR}\${qt_dist_base_name}${env:QT_VERSION}.zip"
