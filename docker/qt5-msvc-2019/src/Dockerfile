@@ -13,6 +13,9 @@ ENV LLVM_VERSION="11.1.0" \
     JOM_HOME="C:\jom" \
     JOM_URL="http://master.qt.io/official_releases/jom" \
     JOM_VERSION="1.1.3" \
+    NODE_JS_VERSION="14.16.0" \
+    NODE_JS_URL="https://nodejs.org/dist" \
+    NODE_JS_HOME="C:\node" \
     DEPEND_DIR="C:\depend"
 
 ADD ["app", "C:/app/"]
