@@ -11,7 +11,7 @@ $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
 $image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 
 Write-Host "Running Clang in container created from ${image_repository}:latest image"
-docker run --rm "${image_repository}:latest" "C:\Program Files\LLVM\bin\clang" --version
+docker run --rm "${image_repository}:latest" "C:\Program Files\LLVM\bin\clang.exe" --version
 if (${LastExitCode} -ne 0) {
   throw "Failed to get version of Clang"
 }
@@ -23,7 +23,7 @@ if (${LastExitCode} -ne 0) {
 }
 
 Write-Host "Running Node.js in container created from ${image_repository}:latest image"
-docker run --rm "${image_repository}:latest" "C:\node\node" --version
+docker run --rm "${image_repository}:latest" "C:\node\node.exe" --version
 if (${LastExitCode} -ne 0) {
   throw "Failed to get version of Node.js"
 }
