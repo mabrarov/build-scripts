@@ -33,6 +33,17 @@ Write-Host "Installing jom into ${env:JOM_HOME}"
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${jom_dist}" -o"${env:JOM_HOME}" -aoa -y -bd | out-null
 Write-Host "Jom ${env:JOM_VERSION} installed"
 
+# Download and install Node.js for buildin QtWebEngine
+$node_js_dist_filename = "node-v${env:NODE_JS_VERSION}-win-x64.zip"
+$node_js_url = "${env:NODE_JS_URL}/v${env:NODE_JS_VERSION}/${node_js_dist_filename}"
+$node_js_dist = "${env:TMP}\${node_js_dist_filename}"
+Write-Host "Downloading Node.js from ${node_js_url} into ${node_js_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${node_js_url}", "${node_js_dist}")
+Write-Host "Installing Node.js into ${env:NODE_JS_HOME}"
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${node_js_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
+Move-Item -Path "${env:TMP}\node-v${env:NODE_JS_VERSION}-win-x64" -Destination "${env:NODE_JS_HOME}" -force
+Write-Host "Node.js ${env:NODE_JS_VERSION} installed"
+
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
 Remove-Item -Path "${env:TMP}\*" -Recurse -Force
