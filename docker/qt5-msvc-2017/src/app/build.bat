@@ -8,9 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%JOM_HOME%;%NODE_JS_HOME%;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%PATH%
-set exit_code=%errorlevel%
-if %exit_code% neq 0 goto exit
+set "PATH=%JOM_HOME%;%NODE_JS_HOME%;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%PATH%"
 
 if not "--%QT_OPENSSL_DIR%" == "--" (
   set PATH=%QT_OPENSSL_DIR%\bin;%PATH%
@@ -28,9 +26,7 @@ call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-set LANG="en"
-set exit_code=%errorlevel%
-if %exit_code% neq 0 goto exit
+set "LANG=en"
 
 if not "--%QT_PATCH_MSYS_FILE%" == "--" (
   echo Patching Qt with %QT_PATCH_MSYS_FILE%
@@ -39,7 +35,7 @@ if not "--%QT_PATCH_MSYS_FILE%" == "--" (
   if %exit_code% neq 0 goto exit
 )
 
-call "configure.bat" ^
+call configure.bat ^
   -platform win32-msvc ^
   -debug-and-release ^
   -opensource -confirm-license ^
