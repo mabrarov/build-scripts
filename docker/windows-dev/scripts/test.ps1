@@ -53,7 +53,7 @@ if (${LastExitCode} -ne 0) {
 }
 
 Write-Host "Running ActivePerl in container created from ${image_repository}:latest image"
-docker run --rm "${image_repository}:latest" "C:\Perl64\bin\perl.exe" --version
+docker run --rm "${image_repository}:latest" "C:\Perl\bin\perl.exe" --version
 if (${LastExitCode} -ne 0) {
   throw "Failed to get version of ActivePerl"
 }
