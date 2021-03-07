@@ -6,7 +6,8 @@
 
 FROM abrarov/msvc-2017:2.12.0
 
-ENV LLVM_VERSION="11.1.0" \
+ENV WINDOWS_SDK_URL="https://go.microsoft.com/fwlink/p/?linkid=2120843" \
+    LLVM_VERSION="11.1.0" \
     LLVM_URL="https://github.com/llvm/llvm-project/releases/download" \
     LLVM_DIST_NAME="LLVM-11.1.0-win64.exe" \
     LLVM_INSTALL_DIR="C:\Program Files\LLVM" \

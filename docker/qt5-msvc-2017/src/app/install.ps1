@@ -10,6 +10,17 @@ $ErrorActionPreference = "Stop"
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
+# Download and install Windows SDK, because Qt (WebKit) may require a more recent version of Windows SDK than the one shipped with MSVS 2017
+$windows_sdk_dist = "${env:TMP}\winsdksetup.exe"
+Write-Host "Downloading Windows SDK from ${env:WINDOWS_SDK_URL} into ${windows_sdk_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${env:WINDOWS_SDK_URL}", "${windows_sdk_dist}")
+Write-Host "Installing Windows SDK"
+$p = Start-Process -FilePath "${windows_sdk_dist}" -ArgumentList ("/quiet", "/norestart", "/ceip", "off") -Wait -PassThru
+if (${p}.ExitCode -ne 0) {
+  throw "Failed to install Windows SDK"
+}
+Write-Host "Windows SDK installed"
+
 # Download and install LLVM for building Qt documentation
 $llvm_url = "${env:LLVM_URL}/llvmorg-${env:LLVM_VERSION}/${env:LLVM_DIST_NAME}"
 $llvm_dist = "${env:TMP}\${env:LLVM_DIST_NAME}"
