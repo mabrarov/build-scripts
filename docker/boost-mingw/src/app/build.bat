@@ -8,9 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%MINGW_HOME%\bin;%PATH%
-set exit_code=%errorlevel%
-if %exit_code% neq 0 goto exit
+set "PATH=%MINGW_HOME%\bin;%PATH%"
 
 "%B2_BIN%" ^
   --toolset="%B2_TOOLSET%" ^
