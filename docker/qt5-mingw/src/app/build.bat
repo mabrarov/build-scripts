@@ -8,9 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%MINGW_HOME%\bin;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%PATH%
-set exit_code=%errorlevel%
-if %exit_code% neq 0 goto exit
+set "PATH=%MINGW_HOME%\bin;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\Scripts;%PATH%"
 
 if not "--%QT_OPENSSL_DIR%" == "--" (
   set PATH=%QT_OPENSSL_DIR%\bin;%PATH%
@@ -24,9 +22,7 @@ if not "--%QT_ICU_DIR%" == "--" (
   if %exit_code% neq 0 goto exit
 )
 
-set LANG="en"
-set exit_code=%errorlevel%
-if %exit_code% neq 0 goto exit
+set "LANG=en"
 
 if not "--%QT_PATCH_MSYS_FILE%" == "--" (
   echo Patching Qt with %QT_PATCH_MSYS_FILE%
@@ -35,7 +31,7 @@ if not "--%QT_PATCH_MSYS_FILE%" == "--" (
   if %exit_code% neq 0 goto exit
 )
 
-call "configure.bat" ^
+call configure.bat ^
   -platform win32-g++ ^
   -debug-and-release ^
   -opensource -confirm-license ^
