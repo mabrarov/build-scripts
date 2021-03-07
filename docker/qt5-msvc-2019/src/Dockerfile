@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2019:2.11.0
+FROM abrarov/msvc-2019:2.12.0
 
 ENV LLVM_VERSION="11.1.0" \
     LLVM_URL="https://github.com/llvm/llvm-project/releases/download" \
