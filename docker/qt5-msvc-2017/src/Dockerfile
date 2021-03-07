@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.12.0
+FROM abrarov/msvc-2017:2.12.1
 
 ENV WINDOWS_SDK_URL="https://go.microsoft.com/fwlink/p/?linkid=2120843" \
     LLVM_VERSION="11.1.0" \

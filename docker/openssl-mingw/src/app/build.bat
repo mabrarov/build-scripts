@@ -8,9 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%
-set exit_code=%errorlevel%
-if %exit_code% neq 0 goto exit
+set "PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%"
 
 if not "--%OPENSSL_PATCH_MSYS_FILE%" == "--" (
   patch -uNf -p0 -i "%OPENSSL_PATCH_MSYS_FILE%"

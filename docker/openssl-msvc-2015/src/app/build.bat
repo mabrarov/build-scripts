@@ -8,9 +8,7 @@ rem
 
 set exit_code=0
 
-set PATH=%ACTIVE_PERL_HOME%\bin;%PATH%
-set exit_code=%errorlevel%
-if %exit_code% neq 0 goto exit
+set "PATH=%ACTIVE_PERL_HOME%\bin;%PATH%"
 
 call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%" %MSVC_CMD_BOOTSTRAP_OPTIONS%
 set exit_code=%errorlevel%
