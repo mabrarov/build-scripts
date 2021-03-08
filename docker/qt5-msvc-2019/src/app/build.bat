@@ -12,14 +12,10 @@ set "PATH=%JOM_HOME%;%NODE_JS_HOME%;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHO
 
 if not "--%QT_OPENSSL_DIR%" == "--" (
   set "PATH=%QT_OPENSSL_DIR%\bin;%PATH%"
-  set exit_code=%errorlevel%
-  if %exit_code% neq 0 goto exit
 )
 
 if not "--%QT_ICU_DIR%" == "--" (
   set "PATH=%QT_ICU_DIR%\bin;%QT_ICU_DIR%\lib;%PATH%"
-  set exit_code=%errorlevel%
-  if %exit_code% neq 0 goto exit
 )
 
 call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
