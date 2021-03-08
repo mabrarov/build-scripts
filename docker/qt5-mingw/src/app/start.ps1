@@ -32,6 +32,11 @@ $build_with_icu = (Test-Path env:ICU_DIR) -or "${env:ICU_VERSION}"
 
 if (!(Test-Path env:QT_CONFIGURE_OPTIONS)) {
   $env:QT_CONFIGURE_OPTIONS = "-opengl desktop"
+  if (${build_with_openssl}) {
+    $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -openssl"
+  } else {
+    $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -no-openssl"
+  }
   if (${build_with_icu}) {
     $env:QT_CONFIGURE_OPTIONS = "${env:QT_CONFIGURE_OPTIONS} -icu"
   } else {
