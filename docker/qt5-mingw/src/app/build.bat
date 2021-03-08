@@ -12,14 +12,10 @@ set "PATH=%MINGW_HOME%\bin;%ACTIVE_PERL_HOME%\bin;%PYTHON2_HOME%;%PYTHON2_HOME%\
 
 if not "--%QT_OPENSSL_DIR%" == "--" (
   set "PATH=%QT_OPENSSL_DIR%\bin;%PATH%"
-  set exit_code=%errorlevel%
-  if %exit_code% neq 0 goto exit
 )
 
 if not "--%QT_ICU_DIR%" == "--" (
   set "PATH=%QT_ICU_DIR%\bin;%QT_ICU_DIR%\lib;%PATH%"
-  set exit_code=%errorlevel%
-  if %exit_code% neq 0 goto exit
 )
 
 set "LANG=en"
