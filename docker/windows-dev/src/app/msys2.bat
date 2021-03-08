@@ -6,7 +6,7 @@ rem
 rem Distributed under the MIT License (see accompanying LICENSE)
 rem
 
-set PATH=%MSYS_HOME%\usr\bin;%PATH%
+set "PATH=%MSYS_HOME%\usr\bin;%PATH%"
 
 set exit_code=0
 
