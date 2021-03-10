@@ -47,8 +47,6 @@ if (-not (Test-Path -Path "${env:BOOST_PATCH_FILE}")) {
   Write-Warning "Patch for chosen version of Boost (${env:BOOST_VERSION}) was not found at ${env:BOOST_PATCH_FILE}"
   $env:BOOST_PATCH_FILE = ""
 }
-$env:BOOST_PATCH_MSYS_FILE = "${env:BOOST_PATCH_FILE}" -replace "\\", "/"
-$env:BOOST_PATCH_MSYS_FILE = "${env:BOOST_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
 # Build Boost C++ Libraries
 $address_models = @("64", "32")
@@ -95,8 +93,7 @@ foreach ($address_model in ${address_models}) {
   $env:BOOST_BOOTSTRAP = "${env:BOOST_ROOT_DIR}\bootstrap.bat"
   Set-Location -Path "${env:BOOST_ROOT_DIR}"
   Write-Host "Building Boost.Build engine"
-  Write-Host "BOOST_PATCH_FILE     : ${env:BOOST_PATCH_FILE}"
-  Write-Host "BOOST_PATCH_MSYS_FILE: ${env:BOOST_PATCH_MSYS_FILE}"
+  Write-Host "BOOST_PATCH_FILE: ${env:BOOST_PATCH_FILE}"
   & "${PSScriptRoot}\bootstrap.bat"
   if (${LastExitCode} -ne 0) {
     throw "Failed to build Boost.Build"

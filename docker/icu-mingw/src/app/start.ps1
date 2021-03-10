@@ -28,8 +28,6 @@ if (-not (Test-Path -Path "${env:ICU_PATCH_FILE}")) {
   Write-Warning "Patch for chosen version of ICU (${env:ICU_VERSION}) was not found at ${env:ICU_PATCH_FILE}"
   $env:ICU_PATCH_FILE = ""
 }
-$env:ICU_PATCH_MSYS_FILE = "${env:ICU_PATCH_FILE}" -replace "\\", "/"
-$env:ICU_PATCH_MSYS_FILE = "${env:ICU_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
 # Build ICU4C
 $address_models = @("64", "32")
@@ -153,21 +151,20 @@ foreach ($address_model in ${address_models}) {
       Set-Location -Path "${env:ICU_HOME}\source"
 
       Write-Host "Building ICU with these parameters:"
-      Write-Host "MINGW_HOME            : ${env:MINGW_HOME}"
-      Write-Host "MSYS_HOME             : ${env:MSYS_HOME}"
-      Write-Host "ICU_HOME              : ${env:ICU_HOME}"
-      Write-Host "ICU_INSTALL_DIR       : ${env:ICU_INSTALL_DIR}"
-      Write-Host "ICU_STAGE_DIR         : ${env:ICU_STAGE_DIR}"
-      Write-Host "ICU_STAGE_MSYS_DIR    : ${env:ICU_STAGE_MSYS_DIR}"
-      Write-Host "ICU_CONFIGURE_OPTIONS : ${env:ICU_CONFIGURE_OPTIONS}"
-      Write-Host "ICU_PLATFORM          : ${env:ICU_PLATFORM}"
-      Write-Host "ICU_BUILD_MACHINE     : ${env:ICU_BUILD_MACHINE}"
-      Write-Host "ICU_BUILD_OPTIONS     : ${env:ICU_BUILD_OPTIONS}"
-      Write-Host "ICU_ADDRESS_MODEL     : ${env:ICU_ADDRESS_MODEL}"
-      Write-Host "ICU_LINKAGE           : ${env:ICU_LINKAGE}"
-      Write-Host "ICU_BUILD_TYPE        : ${env:ICU_BUILD_TYPE}"
-      Write-Host "ICU_PATCH_FILE        : ${env:ICU_PATCH_FILE}"
-      Write-Host "ICU_PATCH_MSYS_FILE   : ${env:ICU_PATCH_MSYS_FILE}"
+      Write-Host "MINGW_HOME           : ${env:MINGW_HOME}"
+      Write-Host "MSYS_HOME            : ${env:MSYS_HOME}"
+      Write-Host "ICU_HOME             : ${env:ICU_HOME}"
+      Write-Host "ICU_INSTALL_DIR      : ${env:ICU_INSTALL_DIR}"
+      Write-Host "ICU_STAGE_DIR        : ${env:ICU_STAGE_DIR}"
+      Write-Host "ICU_STAGE_MSYS_DIR   : ${env:ICU_STAGE_MSYS_DIR}"
+      Write-Host "ICU_CONFIGURE_OPTIONS: ${env:ICU_CONFIGURE_OPTIONS}"
+      Write-Host "ICU_PLATFORM         : ${env:ICU_PLATFORM}"
+      Write-Host "ICU_BUILD_MACHINE    : ${env:ICU_BUILD_MACHINE}"
+      Write-Host "ICU_BUILD_OPTIONS    : ${env:ICU_BUILD_OPTIONS}"
+      Write-Host "ICU_ADDRESS_MODEL    : ${env:ICU_ADDRESS_MODEL}"
+      Write-Host "ICU_LINKAGE          : ${env:ICU_LINKAGE}"
+      Write-Host "ICU_BUILD_TYPE       : ${env:ICU_BUILD_TYPE}"
+      Write-Host "ICU_PATCH_FILE       : ${env:ICU_PATCH_FILE}"
 
       & "${PSScriptRoot}\build.bat"
       if (${LastExitCode} -ne 0) {

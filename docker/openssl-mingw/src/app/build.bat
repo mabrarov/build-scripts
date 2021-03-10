@@ -8,17 +8,15 @@ rem
 
 set exit_code=0
 
-set PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%
-set exit_code=%errorlevel%
-if %exit_code% neq 0 goto exit
+set "PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%"
 
-if not "--%OPENSSL_PATCH_MSYS_FILE%" == "--" (
-  patch -uNf -p0 -i "%OPENSSL_PATCH_MSYS_FILE%"
+if not "--%OPENSSL_PATCH_FILE%" == "--" (
+  patch -uNf -p0 -i "%OPENSSL_PATCH_FILE%"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 )
 
-perl Configure --prefix=%OPENSSL_STAGE_MSYS_DIR% %OPENSSL_TOOLSET% enable-static-engine %OPENSSL_CONFIGURE_LINKAGE%
+perl Configure --prefix="%OPENSSL_STAGE_MSYS_DIR%" "%OPENSSL_TOOLSET%" enable-static-engine "%OPENSSL_CONFIGURE_LINKAGE%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 

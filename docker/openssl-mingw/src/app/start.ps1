@@ -21,8 +21,6 @@ if (-not (Test-Path -Path "${env:OPENSSL_PATCH_FILE}")) {
   Write-Warning "Patch for chosen version of OpenSSL (${env:OPENSSL_VERSION}) was not found at ${env:OPENSSL_PATCH_FILE}"
   $env:OPENSSL_PATCH_FILE = ""
 }
-$env:OPENSSL_PATCH_MSYS_FILE = "${env:OPENSSL_PATCH_FILE}" -replace "\\", "/"
-$env:OPENSSL_PATCH_MSYS_FILE = "${env:OPENSSL_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
 # Build OpenSSL
 $address_models = @("64", "32")
@@ -103,7 +101,6 @@ foreach ($address_model in ${address_models}) {
       Set-Location -Path "${env:OPENSSL_BUILD_DIR}"
       $openssl_archive_msys_file = "${openssl_archive_file}" -replace "\\", "/"
       $openssl_archive_msys_file = "${openssl_archive_msys_file}" -replace "^(C):", "/c"
-
       # Path is required to be changed for Gnu tar shipped with MSYS2
       $path_backup = "${env:PATH}"
       $env:PATH = "${env:MSYS_HOME}\usr\bin;${env:PATH}"
@@ -124,18 +121,17 @@ foreach ($address_model in ${address_models}) {
     Set-Location -Path "${env:OPENSSL_HOME}"
 
     Write-Host "Building OpenSSL with these parameters:"
-    Write-Host "MINGW_HOME                : ${env:MINGW_HOME}"
-    Write-Host "MSYS_HOME                 : ${env:MSYS_HOME}"
-    Write-Host "OPENSSL_HOME              : ${env:OPENSSL_HOME}"
-    Write-Host "OPENSSL_INSTALL_DIR       : ${env:OPENSSL_INSTALL_DIR}"
-    Write-Host "OPENSSL_STAGE_DIR         : ${env:OPENSSL_STAGE_DIR}"
-    Write-Host "OPENSSL_STAGE_MSYS_DIR    : ${env:OPENSSL_STAGE_MSYS_DIR}"
-    Write-Host "OPENSSL_TOOLSET           : ${env:OPENSSL_TOOLSET}"
-    Write-Host "OPENSSL_ADDRESS_MODEL     : ${env:OPENSSL_ADDRESS_MODEL}"
-    Write-Host "OPENSSL_LINKAGE           : ${env:OPENSSL_LINKAGE}"
-    Write-Host "OPENSSL_CONFIGURE_LINKAGE : ${env:OPENSSL_CONFIGURE_LINKAGE}"
-    Write-Host "OPENSSL_PATCH_FILE        : ${env:OPENSSL_PATCH_FILE}"
-    Write-Host "OPENSSL_PATCH_MSYS_FILE   : ${env:OPENSSL_PATCH_MSYS_FILE}"
+    Write-Host "MINGW_HOME               : ${env:MINGW_HOME}"
+    Write-Host "MSYS_HOME                : ${env:MSYS_HOME}"
+    Write-Host "OPENSSL_HOME             : ${env:OPENSSL_HOME}"
+    Write-Host "OPENSSL_INSTALL_DIR      : ${env:OPENSSL_INSTALL_DIR}"
+    Write-Host "OPENSSL_STAGE_DIR        : ${env:OPENSSL_STAGE_DIR}"
+    Write-Host "OPENSSL_STAGE_MSYS_DIR   : ${env:OPENSSL_STAGE_MSYS_DIR}"
+    Write-Host "OPENSSL_TOOLSET          : ${env:OPENSSL_TOOLSET}"
+    Write-Host "OPENSSL_ADDRESS_MODEL    : ${env:OPENSSL_ADDRESS_MODEL}"
+    Write-Host "OPENSSL_LINKAGE          : ${env:OPENSSL_LINKAGE}"
+    Write-Host "OPENSSL_CONFIGURE_LINKAGE: ${env:OPENSSL_CONFIGURE_LINKAGE}"
+    Write-Host "OPENSSL_PATCH_FILE       : ${env:OPENSSL_PATCH_FILE}"
 
     & "${PSScriptRoot}\build.bat"
     if (${LastExitCode} -ne 0) {
