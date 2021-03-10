@@ -141,8 +141,6 @@ foreach ($address_model in ${address_models}) {
       Write-Warning "Patch for chosen version of Qt (${env:QT_VERSION}) and linkage (${env:QT_LINKAGE}) was not found at ${env:QT_PATCH_FILE}"
       $env:QT_PATCH_FILE = ""
     }
-    $env:QT_PATCH_MSYS_FILE = "${env:QT_PATCH_FILE}" -replace "\\", "/"
-    $env:QT_PATCH_MSYS_FILE = "${env:QT_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
     $env:QT_CONFIGURE_OPTIONS_DIRS = ""
 
@@ -175,19 +173,18 @@ foreach ($address_model in ${address_models}) {
     Set-Location -Path "${env:QT_HOME}"
 
     Write-Host "Building Qt with these parameters:"
-    Write-Host "MINGW_HOME                   : ${env:MINGW_HOME}"
-    Write-Host "QT_OPENSSL_DIR               : ${env:QT_OPENSSL_DIR}"
-    Write-Host "QT_ICU_DIR                   : ${env:QT_ICU_DIR}"
-    Write-Host "QT_HOME                      : ${env:QT_HOME}"
-    Write-Host "QT_INSTALL_DIR               : ${env:QT_INSTALL_DIR}"
-    Write-Host "QT_ADDRESS_MODEL             : ${env:QT_ADDRESS_MODEL}"
-    Write-Host "QT_LINKAGE                   : ${env:QT_LINKAGE}"
-    Write-Host "QT_CONFIGURE_OPTIONS_LINKAGE : ${env:QT_CONFIGURE_OPTIONS_LINKAGE}"
-    Write-Host "QT_CONFIGURE_OPTIONS         : ${env:QT_CONFIGURE_OPTIONS}"
-    Write-Host "QT_CONFIGURE_OPTIONS_DIRS    : ${env:QT_CONFIGURE_OPTIONS_DIRS}"
-    Write-Host "QT_PATCH_FILE                : ${env:QT_PATCH_FILE}"
-    Write-Host "QT_PATCH_MSYS_FILE           : ${env:QT_PATCH_MSYS_FILE}"
-    Write-Host "QT_DEPLOY_DIR                : ${env:QT_DEPLOY_DIR}"
+    Write-Host "MINGW_HOME                  : ${env:MINGW_HOME}"
+    Write-Host "QT_OPENSSL_DIR              : ${env:QT_OPENSSL_DIR}"
+    Write-Host "QT_ICU_DIR                  : ${env:QT_ICU_DIR}"
+    Write-Host "QT_HOME                     : ${env:QT_HOME}"
+    Write-Host "QT_INSTALL_DIR              : ${env:QT_INSTALL_DIR}"
+    Write-Host "QT_ADDRESS_MODEL            : ${env:QT_ADDRESS_MODEL}"
+    Write-Host "QT_LINKAGE                  : ${env:QT_LINKAGE}"
+    Write-Host "QT_CONFIGURE_OPTIONS_LINKAGE: ${env:QT_CONFIGURE_OPTIONS_LINKAGE}"
+    Write-Host "QT_CONFIGURE_OPTIONS        : ${env:QT_CONFIGURE_OPTIONS}"
+    Write-Host "QT_CONFIGURE_OPTIONS_DIRS   : ${env:QT_CONFIGURE_OPTIONS_DIRS}"
+    Write-Host "QT_PATCH_FILE               : ${env:QT_PATCH_FILE}"
+    Write-Host "QT_DEPLOY_DIR               : ${env:QT_DEPLOY_DIR}"
 
     & "${PSScriptRoot}\build.bat"
     if (${LastExitCode} -ne 0) {
