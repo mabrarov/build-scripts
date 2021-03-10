@@ -83,11 +83,13 @@ foreach ($address_model in ${address_models}) {
         $env:OPENSSL_DLL_STR = "dll"
         $env:OPENSSL_LINK_STR = ""
         $openssl_runtime_suffix = "MD"
+        $env:OPENSSL_CONFIGURE_LINKAGE = "shared"
       }
       "static" {
         $env:OPENSSL_DLL_STR = ""
         $env:OPENSSL_LINK_STR = "static_lib"
         $openssl_runtime_suffix = "MT"
+        $env:OPENSSL_CONFIGURE_LINKAGE = "no-shared"
       }
       default {
         throw "Unsupported linkage: ${env:OPENSSL_LINKAGE}"
@@ -97,16 +99,31 @@ foreach ($address_model in ${address_models}) {
     foreach ($openssl_build_type in ${openssl_build_types}) {
       $env:OPENSSL_BUILD_TYPE = ${openssl_build_type}
 
-      if (${env:OPENSSL_BUILD_TYPE} -eq "debug") {
-        $env:OPENSSL_TOOLSET = "debug-${env:OPENSSL_BASE_TOOLSET}"
-        $env:OPENSSL_BUILD_STR_PLAIN = "debug"
-        $env:OPENSSL_BUILD_STR = "debug_lib"
-        $openssl_libsuffix = "d"
+      $openssl_stripped_version = "${env:OPENSSL_VERSION}" -replace '(\d+)\.(\d+)\.(\d+)[^\d]*', '$1.$2.$3'
+      $openssl_build_script = "build-${openssl_stripped_version}.bat"
+      if (([System.Version] "${openssl_stripped_version}" -ge [System.Version] "1.0.2") -and ([System.Version] "${openssl_stripped_version}" -lt [System.Version] "1.0.3")) {
+        if (${env:OPENSSL_BUILD_TYPE} -eq "debug") {
+          $env:OPENSSL_TOOLSET = "debug-${env:OPENSSL_BASE_TOOLSET}"
+          $env:OPENSSL_BUILD_STR_PLAIN = "debug"
+          $env:OPENSSL_BUILD_STR = "debug_lib"
+          $openssl_libsuffix = "d"
+        } else {
+          $env:OPENSSL_TOOLSET = "${env:OPENSSL_BASE_TOOLSET}"
+          $env:OPENSSL_BUILD_STR_PLAIN = ""
+          $env:OPENSSL_BUILD_STR = ""
+          $openssl_libsuffix = ""
+        }
       } else {
-        $env:OPENSSL_TOOLSET = "${env:OPENSSL_BASE_TOOLSET}"
-        $env:OPENSSL_BUILD_STR_PLAIN = ""
-        $env:OPENSSL_BUILD_STR = ""
-        $openssl_libsuffix = ""
+        if (([System.Version] "${openssl_stripped_version}" -ge [System.Version] "1.1.1") -and ([System.Version] "${openssl_stripped_version}" -lt [System.Version] "1.1.2")) {
+          $env:OPENSSL_TOOLSET = "${env:OPENSSL_BASE_TOOLSET}"
+          if (${env:OPENSSL_BUILD_TYPE} -eq "debug") {
+            $env:OPENSSL_BUILD_STR_PLAIN = "--debug"
+          } else {
+            $env:OPENSSL_BUILD_STR_PLAIN = "--release"
+          }
+        } else {
+          throw "Unsupported OpenSSL version: ${env:OPENSSL_VERSION}"
+        }
       }
 
       $env:OPENSSL_RUNTIME_FULL_SUFFIX = "${openssl_runtime_suffix}${openssl_libsuffix}"
@@ -174,8 +191,9 @@ foreach ($address_model in ${address_models}) {
       Write-Host "OPENSSL_ARCH               : ${env:OPENSSL_ARCH}"
       Write-Host "OPENSSL_RUNTIME_FULL_SUFFIX: ${env:OPENSSL_RUNTIME_FULL_SUFFIX}"
       Write-Host "OPENSSL_PATCH_FILE         : ${env:OPENSSL_PATCH_FILE}"
+      Write-Host "Build script               : ${openssl_build_script}"
 
-      & "${PSScriptRoot}\build.bat"
+      & "${PSScriptRoot}\${openssl_build_script}"
       if (${LastExitCode} -ne 0) {
         throw "Failed to build OpenSSL with OPENSSL_ADDRESS_MODEL = ${env:OPENSSL_ADDRESS_MODEL}, OPENSSL_LINKAGE = ${env:OPENSSL_LINKAGE}, OPENSSL_BUILD_TYPE = ${env:OPENSSL_BUILD_TYPE}"
       }

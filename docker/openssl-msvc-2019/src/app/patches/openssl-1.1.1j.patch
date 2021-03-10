@@ -1,0 +1,109 @@
+--- ./Configurations/10-main.conf	2021-02-16 18:24:01 +0300
++++ ./Configurations/10-main.conf	2021-03-09 20:17:47 +0300
+@@ -13,7 +13,7 @@
+         } elsif ($disabled{asm}) {
+             # assembler is still used to compile uplink shim
+             $vc_win64a_info = { AS        => "ml64",
+-                                ASFLAGS   => "/nologo /Zi",
++                                ASFLAGS   => "/nologo",
+                                 asflags   => "/c /Cp /Cx",
+                                 asoutflag => "/Fo" };
+         } else {
+@@ -41,7 +41,7 @@
+         } elsif ($disabled{asm}) {
+             # not actually used, uplink shim is inlined into C code
+             $vc_win32_info = { AS        => "ml",
+-                               ASFLAGS   => "/nologo /Zi",
++                               ASFLAGS   => "/nologo",
+                                asflags   => "/Cp /coff /c /Cx",
+                                asoutflag => "/Fo",
+                                perlasm_scheme => "win32" };
+@@ -1224,10 +1224,9 @@
+                                 "UNICODE", "_UNICODE",
+                                 "_CRT_SECURE_NO_DEPRECATE",
+                                 "_WINSOCK_DEPRECATED_NO_WARNINGS"),
+-        lib_cflags       => add("/Zi /Fdossl_static.pdb"),
+         lib_defines      => add("L_ENDIAN"),
+-        dso_cflags       => "/Zi /Fddso.pdb",
+-        bin_cflags       => "/Zi /Fdapp.pdb",
++        dso_cflags       => "",
++        bin_cflags       => "",
+         shared_ldflag    => "/dll",
+         shared_target    => "win-shared", # meaningless except it gives Configure a hint
+         thread_scheme    => "winthreads",
+
+--- ./Configurations/50-masm.conf	2021-02-16 18:24:01 +0300
++++ ./Configurations/50-masm.conf	2021-03-09 20:17:59 +0300
+@@ -12,7 +12,7 @@
+         inherit_from    => [ "VC-WIN64-common", asm("x86_64_asm"),
+                              sub { $disabled{shared} ? () : "x86_64_uplink" } ],
+         AS              => "ml64",
+-        ASFLAGS         => "/nologo /Zi",
++        ASFLAGS         => "/nologo",
+         asoutflag       => "/Fo",
+         asflags         => "/c /Cp /Cx",
+         sys_id          => "WIN64A",
+
+--- ./Configurations/windows-makefile.tmpl	2021-02-16 18:24:01 +0300
+--- ./Configurations/windows-makefile.tmpl	2021-03-09 21:40:13 +0300
+@@ -78,11 +78,8 @@
+
+ LIBS={- join(" ", map { ( shlib_import($_), lib($_) ) } @{$unified_info{libraries}}) -}
+ SHLIBS={- join(" ", map { shlib($_) } @{$unified_info{libraries}}) -}
+-SHLIBPDBS={- join(" ", map { local $shlibext = ".pdb"; shlib($_) } @{$unified_info{libraries}}) -}
+ ENGINES={- join(" ", map { dso($_) } @{$unified_info{engines}}) -}
+-ENGINEPDBS={- join(" ", map { local $dsoext = ".pdb"; dso($_) } @{$unified_info{engines}}) -}
+ PROGRAMS={- our @PROGRAMS = map { $_.$exeext } @{$unified_info{programs}}; join(" ", @PROGRAMS) -}
+-PROGRAMPDBS={- join(" ", map { $_.".pdb" } @{$unified_info{programs}}) -}
+ SCRIPTS={- join(" ", @{$unified_info{scripts}}) -}
+ {- output_off() if $disabled{makedepend}; "" -}
+ DEPS={- join(" ", map { (my $x = $_) =~ s|\.o$|$depext|; $x; }
+@@ -96,11 +93,8 @@
+
+ INSTALL_LIBS={- join(" ", map { quotify1(shlib_import($_) or lib($_)) } @{$unified_info{install}->{libraries}}) -}
+ INSTALL_SHLIBS={- join(" ", map { quotify_l(shlib($_)) } @{$unified_info{install}->{libraries}}) -}
+-INSTALL_SHLIBPDBS={- join(" ", map { local $shlibext = ".pdb"; quotify_l(shlib($_)) } @{$unified_info{install}->{libraries}}) -}
+ INSTALL_ENGINES={- join(" ", map { quotify1(dso($_)) } @{$unified_info{install}->{engines}}) -}
+-INSTALL_ENGINEPDBS={- join(" ", map { local $dsoext = ".pdb"; quotify1(dso($_)) } @{$unified_info{install}->{engines}}) -}
+ INSTALL_PROGRAMS={- join(" ", map { quotify1($_.$exeext) } grep { !m|^test\\| } @{$unified_info{install}->{programs}}) -}
+-INSTALL_PROGRAMPDBS={- join(" ", map { quotify1($_.".pdb") } grep { !m|^test\\| } @{$unified_info{install}->{programs}}) -}
+ {- output_off() if $disabled{apps}; "" -}
+ BIN_SCRIPTS="$(BLDDIR)\tools\c_rehash.pl"
+ MISC_SCRIPTS="$(BLDDIR)\apps\CA.pl" "$(BLDDIR)\apps\tsget.pl"
+@@ -424,8 +418,6 @@
+ 				       "$(INSTALLTOP)\include\openssl"
+ 	@"$(PERL)" "$(SRCDIR)\util\mkdir-p.pl" "$(libdir)"
+ 	@"$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_LIBS) "$(libdir)"
+-	@if "$(SHLIBS)"=="" \
+-	 "$(PERL)" "$(SRCDIR)\util\copy.pl" ossl_static.pdb "$(libdir)"
+
+ uninstall_dev:
+
+@@ -435,8 +427,6 @@
+ 	@"$(PERL)" "$(SRCDIR)\util\mkdir-p.pl" "$(ENGINESDIR)"
+ 	@if not "$(ENGINES)"=="" \
+ 	 "$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_ENGINES) "$(ENGINESDIR)"
+-	@if not "$(ENGINES)"=="" \
+-	 "$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_ENGINEPDBS) "$(ENGINESDIR)"
+
+ uninstall_engines:
+
+@@ -448,9 +438,6 @@
+ 	@"$(PERL)" "$(SRCDIR)\util\mkdir-p.pl" "$(INSTALLTOP)\bin"
+ 	@if not "$(SHLIBS)"=="" \
+ 	 "$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_SHLIBS) "$(INSTALLTOP)\bin"
+-	@if not "$(SHLIBS)"=="" \
+-	 "$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_SHLIBPDBS) \
+-                                        "$(INSTALLTOP)\bin"
+
+ install_programs: install_runtime_libs build_programs
+ 	@if "$(INSTALLTOP)"=="" ( $(ECHO) "INSTALLTOP should not be empty" & exit 1 )
+@@ -458,8 +445,6 @@
+ 	@"$(PERL)" "$(SRCDIR)\util\mkdir-p.pl" "$(INSTALLTOP)\bin"
+ 	@"$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_PROGRAMS) \
+                                         "$(INSTALLTOP)\bin"
+-	@"$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_PROGRAMPDBS) \
+-                                        "$(INSTALLTOP)\bin"
+ 	@"$(PERL)" "$(SRCDIR)\util\copy.pl" $(BIN_SCRIPTS) \
+                                         "$(INSTALLTOP)\bin"
+

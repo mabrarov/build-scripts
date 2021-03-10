@@ -6,7 +6,7 @@
 
 FROM abrarov/msvc-2019:2.12.1
 
-ENV OPENSSL_VERSION="1.0.2q" \
+ENV OPENSSL_VERSION="1.1.1j" \
     OPENSSL_URL="https://www.openssl.org/source" \
     OPENSSL_TEST=""
 
