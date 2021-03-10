@@ -36,8 +36,6 @@ if (-not (Test-Path -Path "${env:OPENSSL_PATCH_FILE}")) {
   Write-Warning "Patch for chosen version of OpenSSL (${env:OPENSSL_VERSION}) was not found at ${env:OPENSSL_PATCH_FILE}"
   $env:OPENSSL_PATCH_FILE = ""
 }
-$env:OPENSSL_PATCH_MSYS_FILE = "${env:OPENSSL_PATCH_FILE}" -replace "\\", "/"
-$env:OPENSSL_PATCH_MSYS_FILE = "${env:OPENSSL_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
 # Build OpenSSL
 $address_models = @("64", "32")
@@ -85,11 +83,13 @@ foreach ($address_model in ${address_models}) {
         $env:OPENSSL_DLL_STR = "dll"
         $env:OPENSSL_LINK_STR = ""
         $openssl_runtime_suffix = "MD"
+        $env:OPENSSL_CONFIGURE_LINKAGE = "shared"
       }
       "static" {
         $env:OPENSSL_DLL_STR = ""
         $env:OPENSSL_LINK_STR = "static_lib"
         $openssl_runtime_suffix = "MT"
+        $env:OPENSSL_CONFIGURE_LINKAGE = "no-shared"
       }
       default {
         throw "Unsupported linkage: ${env:OPENSSL_LINKAGE}"
@@ -99,16 +99,31 @@ foreach ($address_model in ${address_models}) {
     foreach ($openssl_build_type in ${openssl_build_types}) {
       $env:OPENSSL_BUILD_TYPE = ${openssl_build_type}
 
-      if (${env:OPENSSL_BUILD_TYPE} -eq "debug") {
-        $env:OPENSSL_TOOLSET = "debug-${env:OPENSSL_BASE_TOOLSET}"
-        $env:OPENSSL_BUILD_STR_PLAIN = "debug"
-        $env:OPENSSL_BUILD_STR = "debug_lib"
-        $openssl_libsuffix = "d"
+      $openssl_stripped_version = "${env:OPENSSL_VERSION}" -replace '(\d+)\.(\d+)\.(\d+)[^\d]*', '$1.$2.$3'
+      $openssl_build_script = "build-${openssl_stripped_version}.bat"
+      if (([System.Version] "${openssl_stripped_version}" -ge [System.Version] "1.0.2") -and ([System.Version] "${openssl_stripped_version}" -lt [System.Version] "1.0.3")) {
+        if (${env:OPENSSL_BUILD_TYPE} -eq "debug") {
+          $env:OPENSSL_TOOLSET = "debug-${env:OPENSSL_BASE_TOOLSET}"
+          $env:OPENSSL_BUILD_STR_PLAIN = "debug"
+          $env:OPENSSL_BUILD_STR = "debug_lib"
+          $openssl_libsuffix = "d"
+        } else {
+          $env:OPENSSL_TOOLSET = "${env:OPENSSL_BASE_TOOLSET}"
+          $env:OPENSSL_BUILD_STR_PLAIN = ""
+          $env:OPENSSL_BUILD_STR = ""
+          $openssl_libsuffix = ""
+        }
       } else {
-        $env:OPENSSL_TOOLSET = "${env:OPENSSL_BASE_TOOLSET}"
-        $env:OPENSSL_BUILD_STR_PLAIN = ""
-        $env:OPENSSL_BUILD_STR = ""
-        $openssl_libsuffix = ""
+        if (([System.Version] "${openssl_stripped_version}" -ge [System.Version] "1.1.1") -and ([System.Version] "${openssl_stripped_version}" -lt [System.Version] "1.1.2")) {
+          $env:OPENSSL_TOOLSET = "${env:OPENSSL_BASE_TOOLSET}"
+          if (${env:OPENSSL_BUILD_TYPE} -eq "debug") {
+            $env:OPENSSL_BUILD_STR_PLAIN = "--debug"
+          } else {
+            $env:OPENSSL_BUILD_STR_PLAIN = "--release"
+          }
+        } else {
+          throw "Unsupported OpenSSL version: ${env:OPENSSL_VERSION}"
+        }
       }
 
       $env:OPENSSL_RUNTIME_FULL_SUFFIX = "${openssl_runtime_suffix}${openssl_libsuffix}"
@@ -138,13 +153,10 @@ foreach ($address_model in ${address_models}) {
         # Unpack OpenSSL
         Write-Host "Extracting source code archive from ${openssl_archive_file} to ${env:OPENSSL_BUILD_DIR}"
         Set-Location -Path "${env:OPENSSL_BUILD_DIR}"
-        $openssl_archive_msys_file = "${openssl_archive_file}" -replace "\\", "/"
-        $openssl_archive_msys_file = "${openssl_archive_msys_file}" -replace "^(C):", "/c"
-
         # Path is required to be changed for Gnu tar shipped with MSYS2
         $path_backup = "${env:PATH}"
         $env:PATH = "${env:MSYS_HOME}\usr\bin;${env:PATH}"
-        & tar.exe xzf "${openssl_archive_msys_file}"
+        & tar.exe xzf "${openssl_archive_file}"
         $tar_exit_code = ${LastExitCode}
         $env:PATH = "${path_backup}"
         if (${tar_exit_code} -ne 0) {
@@ -158,29 +170,29 @@ foreach ($address_model in ${address_models}) {
       Set-Location -Path "${env:OPENSSL_HOME}"
 
       Write-Host "Building OpenSSL with these parameters:"
-      Write-Host "MSVS_INSTALL_DIR            : ${env:MSVS_INSTALL_DIR}"
-      Write-Host "MSVC_BUILD_DIR              : ${env:MSVC_BUILD_DIR}"
-      Write-Host "MSVC_CMD_BOOTSTRAP          : ${env:MSVC_CMD_BOOTSTRAP}"
-      Write-Host "ACTIVE_PERL_HOME            : ${env:ACTIVE_PERL_HOME}"
-      Write-Host "MSYS_HOME                   : ${env:MSYS_HOME}"
-      Write-Host "OPENSSL_HOME                : ${env:OPENSSL_HOME}"
-      Write-Host "OPENSSL_INSTALL_DIR         : ${env:OPENSSL_INSTALL_DIR}"
-      Write-Host "OPENSSL_STAGE_DIR           : ${env:OPENSSL_STAGE_DIR}"
-      Write-Host "OPENSSL_ADDRESS_MODEL       : ${env:OPENSSL_ADDRESS_MODEL}"
-      Write-Host "OPENSSL_LINKAGE             : ${env:OPENSSL_LINKAGE}"
-      Write-Host "OPENSSL_BUILD_TYPE          : ${env:OPENSSL_BUILD_TYPE}"
-      Write-Host "OPENSSL_BASE_TOOLSET        : ${env:OPENSSL_BASE_TOOLSET}"
-      Write-Host "OPENSSL_TOOLSET             : ${env:OPENSSL_TOOLSET}"
-      Write-Host "OPENSSL_BUILD_STR_PLAIN     : ${env:OPENSSL_BUILD_STR_PLAIN}"
-      Write-Host "OPENSSL_BUILD_STR           : ${env:OPENSSL_BUILD_STR}"
-      Write-Host "OPENSSL_LINK_STR            : ${env:OPENSSL_LINK_STR}"
-      Write-Host "OPENSSL_DLL_STR             : ${env:OPENSSL_DLL_STR}"
-      Write-Host "OPENSSL_ARCH                : ${env:OPENSSL_ARCH}"
-      Write-Host "OPENSSL_RUNTIME_FULL_SUFFIX : ${env:OPENSSL_RUNTIME_FULL_SUFFIX}"
-      Write-Host "OPENSSL_PATCH_FILE          : ${env:OPENSSL_PATCH_FILE}"
-      Write-Host "OPENSSL_PATCH_MSYS_FILE     : ${env:OPENSSL_PATCH_MSYS_FILE}"
+      Write-Host "MSVS_INSTALL_DIR           : ${env:MSVS_INSTALL_DIR}"
+      Write-Host "MSVC_BUILD_DIR             : ${env:MSVC_BUILD_DIR}"
+      Write-Host "MSVC_CMD_BOOTSTRAP         : ${env:MSVC_CMD_BOOTSTRAP}"
+      Write-Host "ACTIVE_PERL_HOME           : ${env:ACTIVE_PERL_HOME}"
+      Write-Host "MSYS_HOME                  : ${env:MSYS_HOME}"
+      Write-Host "OPENSSL_HOME               : ${env:OPENSSL_HOME}"
+      Write-Host "OPENSSL_INSTALL_DIR        : ${env:OPENSSL_INSTALL_DIR}"
+      Write-Host "OPENSSL_STAGE_DIR          : ${env:OPENSSL_STAGE_DIR}"
+      Write-Host "OPENSSL_ADDRESS_MODEL      : ${env:OPENSSL_ADDRESS_MODEL}"
+      Write-Host "OPENSSL_LINKAGE            : ${env:OPENSSL_LINKAGE}"
+      Write-Host "OPENSSL_BUILD_TYPE         : ${env:OPENSSL_BUILD_TYPE}"
+      Write-Host "OPENSSL_BASE_TOOLSET       : ${env:OPENSSL_BASE_TOOLSET}"
+      Write-Host "OPENSSL_TOOLSET            : ${env:OPENSSL_TOOLSET}"
+      Write-Host "OPENSSL_BUILD_STR_PLAIN    : ${env:OPENSSL_BUILD_STR_PLAIN}"
+      Write-Host "OPENSSL_BUILD_STR          : ${env:OPENSSL_BUILD_STR}"
+      Write-Host "OPENSSL_LINK_STR           : ${env:OPENSSL_LINK_STR}"
+      Write-Host "OPENSSL_DLL_STR            : ${env:OPENSSL_DLL_STR}"
+      Write-Host "OPENSSL_ARCH               : ${env:OPENSSL_ARCH}"
+      Write-Host "OPENSSL_RUNTIME_FULL_SUFFIX: ${env:OPENSSL_RUNTIME_FULL_SUFFIX}"
+      Write-Host "OPENSSL_PATCH_FILE         : ${env:OPENSSL_PATCH_FILE}"
+      Write-Host "Build script               : ${openssl_build_script}"
 
-      & "${PSScriptRoot}\build.bat"
+      & "${PSScriptRoot}\${openssl_build_script}"
       if (${LastExitCode} -ne 0) {
         throw "Failed to build OpenSSL with OPENSSL_ADDRESS_MODEL = ${env:OPENSSL_ADDRESS_MODEL}, OPENSSL_LINKAGE = ${env:OPENSSL_LINKAGE}, OPENSSL_BUILD_TYPE = ${env:OPENSSL_BUILD_TYPE}"
       }
