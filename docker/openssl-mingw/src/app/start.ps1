@@ -99,11 +99,12 @@ foreach ($address_model in ${address_models}) {
       # Unpack OpenSSL
       Write-Host "Extracting source code archive from ${openssl_archive_file} to ${env:OPENSSL_BUILD_DIR}"
       Set-Location -Path "${env:OPENSSL_BUILD_DIR}"
-
+      $openssl_archive_msys_file = "${openssl_archive_file}" -replace "\\", "/"
+      $openssl_archive_msys_file = "${openssl_archive_msys_file}" -replace "^(C):", "/c"
       # Path is required to be changed for Gnu tar shipped with MSYS2
       $path_backup = "${env:PATH}"
       $env:PATH = "${env:MSYS_HOME}\usr\bin;${env:PATH}"
-      & tar.exe xzf "${openssl_archive_file}"
+      & tar.exe xzf "${openssl_archive_msys_file}"
       $tar_exit_code = ${LastExitCode}
       $env:PATH = "${path_backup}"
       if (${tar_exit_code} -ne 0) {

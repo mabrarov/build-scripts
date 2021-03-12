@@ -29,7 +29,7 @@ set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 if /i "%OPENSSL_ADDRESS_MODEL%" == "32" (
-  perl util\mk1mf.pl "%OPENSSL_DLL_STR%" "%OPENSSL_BUILD_STR_PLAIN%" "%OPENSSL_BUILD_STR%" "%OPENSSL_LINK_STR%" no-asm "%OPENSSL_BASE_TOOLSET%" > "ms\nt%OPENSSL_DLL_STR%-%OPENSSL_ARCH%.mak"
+  perl util\mk1mf.pl %OPENSSL_DLL_STR% %OPENSSL_BUILD_STR_PLAIN% %OPENSSL_BUILD_STR% %OPENSSL_LINK_STR% no-asm "%OPENSSL_BASE_TOOLSET%" > "ms\nt%OPENSSL_DLL_STR%-%OPENSSL_ARCH%.mak"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 ) else (
@@ -41,16 +41,16 @@ if /i "%OPENSSL_ADDRESS_MODEL%" == "32" (
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 
-  perl util\mk1mf.pl "%OPENSSL_DLL_STR%" "%OPENSSL_BUILD_STR_PLAIN%" "%OPENSSL_BUILD_STR%" "%OPENSSL_LINK_STR%" "%OPENSSL_BASE_TOOLSET%" > "ms\nt%OPENSSL_DLL_STR%-%OPENSSL_ARCH%.mak"
+  perl util\mk1mf.pl %OPENSSL_DLL_STR% %OPENSSL_BUILD_STR_PLAIN% %OPENSSL_BUILD_STR% %OPENSSL_LINK_STR% "%OPENSSL_BASE_TOOLSET%" > "ms\nt%OPENSSL_DLL_STR%-%OPENSSL_ARCH%.mak"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 )
 
-perl util\mkdef.pl "%OPENSSL_BUILD_STR%" "%OPENSSL_LINK_STR%" 32 libeay > "ms\libeay32%OPENSSL_RUNTIME_FULL_SUFFIX%.def"
+perl util\mkdef.pl %OPENSSL_BUILD_STR% %OPENSSL_LINK_STR% 32 libeay > "ms\libeay32%OPENSSL_RUNTIME_FULL_SUFFIX%.def"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-perl util\mkdef.pl "%OPENSSL_BUILD_STR%" "%OPENSSL_LINK_STR%" 32 ssleay > "ms\ssleay32%OPENSSL_RUNTIME_FULL_SUFFIX%.def"
+perl util\mkdef.pl %OPENSSL_BUILD_STR% %OPENSSL_LINK_STR% 32 ssleay > "ms\ssleay32%OPENSSL_RUNTIME_FULL_SUFFIX%.def"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
