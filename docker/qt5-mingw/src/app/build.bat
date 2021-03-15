@@ -20,9 +20,9 @@ if not "--%QT_ICU_DIR%" == "--" (
 
 set "LANG=en"
 
-if not "--%QT_PATCH_MSYS_FILE%" == "--" (
-  echo Patching Qt with %QT_PATCH_MSYS_FILE%
-  "%MSYS_HOME%\usr\bin\patch.exe" -uNf -p0 -i "%QT_PATCH_MSYS_FILE%"
+if not "--%QT_PATCH_FILE%" == "--" (
+  echo Patching Qt with %QT_PATCH_FILE%
+  "%MSYS_HOME%\usr\bin\patch.exe" -uNf -p0 -i "%QT_PATCH_FILE%"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
 )
