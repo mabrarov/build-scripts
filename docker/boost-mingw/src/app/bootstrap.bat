@@ -8,11 +8,11 @@ rem
 
 set exit_code=0
 
-if not "--%BOOST_PATCH_MSYS_FILE%" == "--" (
+if not "--%BOOST_PATCH_FILE%" == "--" (
   set "DEFAULT_PATH=%PATH%"
   set "PATH=%MSYS_HOME%\usr\bin;%PATH%"
 
-  patch -uNf -p0 -i "%BOOST_PATCH_MSYS_FILE%"
+  patch -uNf -p0 -i "%BOOST_PATCH_FILE%"
   set exit_code=%errorlevel%
   if %exit_code% neq 0 (
     if %exit_code% neq 1 goto exit

@@ -33,8 +33,6 @@ if (-not (Test-Path -Path "${env:ICU_PATCH_FILE}")) {
   Write-Warning "Patch for chosen version of ICU (${env:ICU_VERSION}) was not found at ${env:ICU_PATCH_FILE}"
   $env:ICU_PATCH_FILE = ""
 }
-$env:ICU_PATCH_MSYS_FILE = "${env:ICU_PATCH_FILE}" -replace "\\", "/"
-$env:ICU_PATCH_MSYS_FILE = "${env:ICU_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
 # Build ICU4C
 $address_models = @("64", "32")
@@ -173,7 +171,6 @@ foreach ($address_model in ${address_models}) {
       Write-Host "ICU_LINKAGE               : ${env:ICU_LINKAGE}"
       Write-Host "ICU_BUILD_TYPE            : ${env:ICU_BUILD_TYPE}"
       Write-Host "ICU_PATCH_FILE            : ${env:ICU_PATCH_FILE}"
-      Write-Host "ICU_PATCH_MSYS_FILE       : ${env:ICU_PATCH_MSYS_FILE}"
 
       & "${PSScriptRoot}\build.bat"
       if (${LastExitCode} -ne 0) {
