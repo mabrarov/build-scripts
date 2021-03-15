@@ -145,8 +145,6 @@ foreach ($address_model in ${address_models}) {
       Write-Warning "Patch for chosen version of Qt (${env:QT_VERSION}) and linkage (${env:QT_LINKAGE}) was not found at ${env:QT_PATCH_FILE}"
       $env:QT_PATCH_FILE = ""
     }
-    $env:QT_PATCH_MSYS_FILE = "${env:QT_PATCH_FILE}" -replace "\\", "/"
-    $env:QT_PATCH_MSYS_FILE = "${env:QT_PATCH_MSYS_FILE}" -replace "^(C):", "/c"
 
     $env:QT_CONFIGURE_OPTIONS_DIRS = ""
 
