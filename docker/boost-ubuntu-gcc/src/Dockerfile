@@ -38,7 +38,7 @@ VOLUME ["/target"]
 
 CMD ["/app/start.sh"]
 
-ENV BOOST_VERSION="1.75.0" \
+ENV BOOST_VERSION="1.76.0" \
     BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
     B2_OPTIONS="--without-mpi --without-graph_parallel"
 

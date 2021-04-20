@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM alpine:3.12.3
+FROM alpine:3.13.5
 
 ENV DOWNLOAD_DIR="/download" \
     BUILD_DIR="/build" \
@@ -34,7 +34,7 @@ VOLUME ["/target"]
 
 CMD ["/app/start.sh"]
 
-ENV BOOST_VERSION="1.75.0" \
+ENV BOOST_VERSION="1.76.0" \
     BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
     B2_OPTIONS="--without-mpi --without-graph_parallel"
 
