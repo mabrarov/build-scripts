@@ -6,8 +6,8 @@
 
 FROM abrarov/mingw:2.12.1
 
-ENV BOOST_VERSION="1.76.0" \
-    BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
+ENV BOOST_VERSION="1.77.0" \
+    BOOST_RELEASE_URL="https://boostorg.jfrog.io/artifactory/main/release" \
     B2_OPTIONS="--without-python --without-mpi --without-graph_parallel" \
     BOOST_MINGW_HOME="C:\MinGW"
 
