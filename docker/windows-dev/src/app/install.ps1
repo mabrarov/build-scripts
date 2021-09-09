@@ -42,7 +42,16 @@ if (${LastExitCode} -ne 0) {
 }
 Write-Host "Git ${env:GIT_VERSION} installed"
 
-$cmake_dist_base_name = "cmake-${env:CMAKE_VERSION}-win64-x64"
+if ([System.Version] "${env:CMAKE_VERSION}" -ge [System.Version] "3.20.0") {
+  $cmake_dist_base_name = "cmake-${env:CMAKE_VERSION}-windows-x86_64"
+} else {
+  if ([System.Version] "${env:CMAKE_VERSION}" -ge [System.Version] "3.6.0") {
+    $cmake_dist_base_name = "cmake-${env:CMAKE_VERSION}-win64-x64"
+  } else {
+    # CMake x64 binary is not available for CMake version < 3.6.0
+    $cmake_dist_base_name = "cmake-${env:CMAKE_VERSION}-win32-x86"
+  }
+}
 $cmake_dist_name = "${cmake_dist_base_name}.zip"
 $cmake_dist = "${env:TMP}\${cmake_dist_name}"
 $cmake_url = "${env:CMAKE_URL}/v${env:CMAKE_VERSION}/${cmake_dist_name}"
