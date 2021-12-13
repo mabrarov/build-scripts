@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.12.1
+FROM abrarov/msvc-2017:2.13.0
 
 ENV ICU_VERSION="64.2" \
     ICU_URL="http://download.icu-project.org/files/icu4c" \
