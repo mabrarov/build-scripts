@@ -4,10 +4,10 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2019:2.12.1
+FROM abrarov/msvc-2019:2.13.0
 
-ENV BOOST_VERSION="1.75.0" \
-    BOOST_RELEASE_URL="https://dl.bintray.com/boostorg/release" \
+ENV BOOST_VERSION="1.78.0" \
+    BOOST_RELEASE_URL="https://boostorg.jfrog.io/artifactory/main/release" \
     B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
 
 ADD ["app", "C:/app/"]
