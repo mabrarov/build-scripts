@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.13.0
+FROM abrarov/msvc-2017:2.14.0
 
 ENV BOOST_VERSION="1.78.0" \
     BOOST_RELEASE_URL="https://boostorg.jfrog.io/artifactory/main/release" \

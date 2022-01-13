@@ -10,7 +10,7 @@ $ErrorActionPreference = "Stop"
 $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
 $image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 #TODO: find way to deal with tags and versions
-$image_version = "2.13.0"
+$image_version = "2.14.0"
 $image_revision = "$(git -C "${project_dir}" rev-parse --verify HEAD)"
 
 Write-Host "Building ${image_repository}:${image_version} image with ${image_revision} revision"
