@@ -10,28 +10,28 @@ $ErrorActionPreference = "Stop"
 # Enable all versions of TLS
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
-# Download Visual Studio 2022 Community edition
+# Download Visual Studio Build Tools 2022
 $msvs_url = "${env:MSVS_URL}/${env:MSVS_VERSION}/release/${env:MSVS_DIST_NAME}"
 $msvs_dist = "${env:TMP}\${env:MSVS_DIST_NAME}"
-Write-Host "Downloading Visual Studio 2022 Community edition from ${msvs_url} into ${msvs_dist}"
+Write-Host "Downloading Visual Studio Build Tools 2022 from ${msvs_url} into ${msvs_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${msvs_url}", "${msvs_dist}")
 
-# Install Visual C++ part of Visual Studio 2022 Community edition
-Write-Host "Installing Visual C++ part of Visual Studio 2022 Community edition with support of Desktop applications and MFC"
+# Install Visual C++ part of Visual Studio Build Tools 2022
+Write-Host "Installing Visual C++ part of Visual Studio Build Tools 2022 with support of Desktop applications and MFC"
 $p = Start-Process -FilePath "${msvs_dist}" -ArgumentList `
   ("--locale en-US", `
    "--quiet", `
    "--norestart", `
    "--wait", `
    "--nocache", `
-   "--add Microsoft.VisualStudio.Workload.NativeDesktop", `
+   "--add Microsoft.VisualStudio.Workload.VCTools", `
    "--add Microsoft.VisualStudio.Component.VC.ATLMFC", `
    "--includeRecommended") `
   -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
-  throw "Failed to install Visual Studio 2022 Community edition"
+  throw "Failed to install Visual Studio Build Tools 2022"
 }
-Write-Host "Visual C++ part of Visual Studio 2022 (${env:MSVS_VERSION}) installed"
+Write-Host "Visual C++ part of Visual Studio Build Tools 2022 (${env:MSVS_VERSION}) installed"
 
 # Download and install Visual Studio Locator
 $vswhere_url = "${env:VSWHERE_URL}/${env:VSWHERE_VERSION}/${env:VSWHERE_DIST_NAME}"
