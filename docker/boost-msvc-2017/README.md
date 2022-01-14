@@ -51,23 +51,23 @@ abrarov/boost-msvc-2017
 ```
 
 Download source archive, build all combinations for x64 platform (shared and static libraries, shared and static C/C++ runtime) 
-and put results of build into `C:\Users\Public\Documents\boost-msvc2017\target` folder of Docker Host:
+and put results of build into `C:\Users\Public\Documents\boost-msvc-2017\target` folder of Docker Host:
 
 ```bash
 docker run --rm \
 -e BOOST_ADDRESS_MODEL=64 \
--v C:/Users/Public/Documents/boost-msvc2017/target:C:/target \
+-v C:/Users/Public/Documents/boost-msvc-2017/target:C:/target \
 abrarov/boost-msvc-2017
 ```
 
 Download source archive, build static libraries with shared C/C++ runtime for x64 platform and put results of build into 
-`C:\Users\Public\Documents\boost-msvc2017\target` folder of Docker Host:
+`C:\Users\Public\Documents\boost-msvc-2017\target` folder of Docker Host:
 
 ```bash
 docker run --rm \
 -e BOOST_ADDRESS_MODEL=64 \
 -e BOOST_LINKAGE=static \
 -e BOOST_RUNTIME_LINKAGE=shared \
--v C:/Users/Public/Documents/boost-msvc2017/target:C:/target \
+-v C:/Users/Public/Documents/boost-msvc-2017/target:C:/target \
 abrarov/boost-msvc-2017
 ```
