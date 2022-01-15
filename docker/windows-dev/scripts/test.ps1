@@ -69,3 +69,9 @@ docker run --rm "${image_repository}:latest" "C:\Python3\python.exe" --version
 if (${LastExitCode} -ne 0) {
   throw "Failed to get version of Python 3"
 }
+
+Write-Host "Running Ninja in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\ninja\ninja.exe" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of Ninja"
+}
