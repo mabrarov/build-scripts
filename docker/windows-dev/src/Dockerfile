@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 ENV DOWNLOAD_DIR="C:\download" \
     BUILD_DIR="C:\build" \
     TARGET_DIR="C:\target" \
-    SEVEN_ZIP_VERSION="21.06" \
+    SEVEN_ZIP_VERSION="21.07" \
     SEVEN_ZIP_DOWNLOAD_URL="http://www.7-zip.org/a" \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
     GIT_VERSION="2.34.1" \
@@ -27,7 +27,10 @@ ENV DOWNLOAD_DIR="C:\download" \
     PYTHON3_VERSION="3.10.1" \
     PYTHON3_HOME="C:\Python3" \
     PYTHON2_VERSION="2.7.18" \
-    PYTHON2_HOME="C:\Python2"
+    PYTHON2_HOME="C:\Python2" \
+    NINJA_VERSION="1.10.2" \
+    NINJA_URL="https://github.com/ninja-build/ninja/releases/download" \
+    NINJA_HOME="C:\ninja"
 
 ADD ["app", "C:/app/"]
 

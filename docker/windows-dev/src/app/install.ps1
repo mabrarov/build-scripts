@@ -122,6 +122,17 @@ if (${p}.ExitCode -ne 0) {
 }
 Write-Host "Python ${env:PYTHON3_VERSION} installed into ${env:PYTHON3_HOME}"
 
+# Download and install Ninja
+$ninja_dist_name = "ninja-win.zip"
+$ninja_dist_url = "${env:NINJA_URL}/v${env:NINJA_VERSION}/${ninja_dist_name}"
+$ninja_dist = "${env:TMP}\${ninja_dist_name}"
+Write-Host "Downloading Ninja ${env:NINJA_VERSION} from ${ninja_dist_url} into ${ninja_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${ninja_dist_url}", "${ninja_dist}")
+New-Item -Path "${env:NINJA_HOME}" -ItemType "directory" | out-null
+Write-Host "Extracting Ninja from ${ninja_dist} into ${env:NINJA_HOME} directory"
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${ninja_dist}" -o"${env:NINJA_HOME}" -aoa -y -bd | out-null
+Write-Host "Ninja ${env:NINJA_VERSION} installed into ${env:NINJA_HOME}"
+
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
 Remove-Item -Path "${env:TMP}\*" -Recurse -Force

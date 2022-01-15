@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2022 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #

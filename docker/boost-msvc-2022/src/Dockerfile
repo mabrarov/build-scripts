@@ -1,10 +1,10 @@
 #
-# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2022 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2019:2.14.0
+FROM abrarov/msvc-2022:2.14.0
 
 ENV BOOST_VERSION="1.78.0" \
     BOOST_RELEASE_URL="https://boostorg.jfrog.io/artifactory/main/release" \
@@ -19,7 +19,7 @@ CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 ARG image_version=""
 ARG image_revision=""
 
-LABEL name="abrarov/boost-msvc-2019" \
+LABEL name="abrarov/boost-msvc-2022" \
     version="${image_version}" \
     revision="${image_revision}" \
-    description="Builder of Boost C++ Libraries with MS Visual C++ 2019"
+    description="Builder of Boost C++ Libraries with MS Visual C++ 2022"
