@@ -77,14 +77,10 @@ foreach ($address_model in ${address_models}) {
 
     $icu_configure_options_linkage = ""
     $icu_build_options_linkage = ""
-    $icu_extra_build_options = ""
     switch (${env:ICU_LINKAGE}) {
       "static" {
         $icu_configure_options_linkage = "${icu_configure_options_linkage} --static-runtime"
         $icu_build_options_linkage = "${icu_build_options_linkage} --enable-static --disable-shared"
-        if ([System.Version] "${env:ICU_VERSION}" -gt [System.Version] "67.1") {
-          $icu_extra_build_options = "--disable-extras"
-        }
       }
       "shared" {
         $icu_configure_options_linkage = "${icu_configure_options_linkage}"
@@ -115,7 +111,7 @@ foreach ($address_model in ${address_models}) {
       }
 
       $env:ICU_CONFIGURE_OPTIONS = "${icu_configure_options_linkage} ${icu_configure_options_build_type}"
-      $env:ICU_BUILD_OPTIONS = "${icu_build_options_linkage} ${icu_build_options_build_type} ${icu_extra_build_options}"
+      $env:ICU_BUILD_OPTIONS = "${icu_build_options_linkage} ${icu_build_options_build_type}"
 
       $env:ICU_BUILD_DIR = "${env:BUILD_DIR}\icu-${env:ICU_VERSION}\${address_model}\${env:ICU_LINKAGE}\${env:ICU_BUILD_TYPE}"
       $env:ICU_HOME = "${env:ICU_BUILD_DIR}\icu"
