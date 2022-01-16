@@ -179,14 +179,12 @@ foreach ($address_model in ${address_models}) {
       }
 
       if (-not (Test-Path -Path "${env:ICU_INSTALL_DIR}")) {
-        New-Item -Path "${env:ICU_INSTALL_DIR}" -ItemType "directory" | out-null
         Write-Host "Copying built ICU from ${env:ICU_STAGE_DIR} to ${env:ICU_INSTALL_DIR}"
         Copy-Item -Force -Recurse -Path "${env:ICU_STAGE_DIR}" -Destination "${env:ICU_INSTALL_DIR}"
       } else {
         Write-Host "Found existing ${env:ICU_INSTALL_DIR}, copying just built libraries"
         foreach ($icu_lib_dir in ${icu_lib_dirs}) {
           $icu_lib_path = "${env:ICU_INSTALL_DIR}\${icu_lib_dir}"
-          New-Item -Path "${icu_lib_path}" -ItemType "directory" | out-null
           foreach ($lib_file_extension in ${lib_file_extensions}) {
             Write-Host "Copying built ICU libraries (${lib_file_extension}) from ${env:ICU_STAGE_DIR}\${icu_lib_dir} to ${icu_lib_path}"
             $lib_files = Get-ChildItem "${env:ICU_STAGE_DIR}\${icu_lib_dir}\*.${lib_file_extension}"
