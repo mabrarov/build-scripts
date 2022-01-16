@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2022 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #
@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
 # Find location of Visual Studio
-$env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.Community -version [16.0,17.0) -requires Microsoft.VisualStudio.Workload.NativeDesktop -property installationPath
+$env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.BuildTools -version [17.0,18.0) -requires Microsoft.VisualStudio.Workload.VCTools -property installationPath
 $env:MSVC_AUXILARY_DIR = "${env:MSVS_INSTALL_DIR}\VC\Auxiliary"
 $env:MSVC_BUILD_DIR = "${env:MSVC_AUXILARY_DIR}\Build"
 
@@ -51,7 +51,7 @@ if (Test-Path env:ICU_BUILD_TYPE) {
   $icu_build_types = @("${env:ICU_BUILD_TYPE}")
 }
 
-$compiler_target_dir_suffix = "vs2019"
+$compiler_target_dir_suffix = "vs2022"
 $icu_downloaded = $false
 
 $env:ICU_PLATFORM = "MSYS/MSVC"
@@ -95,7 +95,7 @@ foreach ($address_model in ${address_models}) {
         $icu_build_options_linkage = "${icu_build_options_linkage} --enable-shared --disable-static"
       }
       default {
-        throw "Unsupported linkage: $env:ICU_LINKAGE"
+        throw "Unsupported linkage: ${env:ICU_LINKAGE}"
       }
     }
 

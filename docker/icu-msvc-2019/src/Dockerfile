@@ -6,8 +6,8 @@
 
 FROM abrarov/msvc-2019:2.14.0
 
-ENV ICU_VERSION="64.2" \
-    ICU_URL="http://download.icu-project.org/files/icu4c" \
+ENV ICU_VERSION="70.1" \
+    ICU_URL="https://github.com/unicode-org/icu/releases/download" \
     ICU_TEST=""
 
 ADD ["app", "C:/app/"]

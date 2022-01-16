@@ -1,11 +1,11 @@
-# Builder of ICU4C with Microsoft Visual C++ 2017
+# Builder of ICU4C with Microsoft Visual C++ 2022
 
-Docker image for building [ICU4C](http://site.icu-project.org/) with Microsoft Visual C++ 2017.
+Docker image for building [ICU4C](http://site.icu-project.org/) with Microsoft Visual C++ 2022.
 
 ## Building
 
 ```bash
-docker build -t abrarov/icu-msvc-2017 docker/icu-msvc-2017/src
+docker build -t abrarov/icu-msvc-2022 docker/icu-msvc-2022/src
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ docker build -t abrarov/icu-msvc-2017 docker/icu-msvc-2017/src
 
 | Name | Meaning of variable | Possible values | Default value | Comments |
 |------|---------------------|-----------------|---------------|----------|
-| ICU_VERSION | Version of ICU to build | One of: `57.1`, `58.2`, `64.2`, `70.1` | `70.1` | |
+| ICU_VERSION | Version of ICU to build | One of: `70.1` | `70.1` | |
 | ICU_ADDRESS_MODEL | CPU architecture | One of: `32`, `64` | Undefined | When undefined then both `64` and `32` (in the same order) are built |
 | ICU_LINKAGE | Linkage of built libraries | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built, `static` build uses static C/C++ runtime |
 | ICU_BUILD_TYPE | Linkage of C/C++ runtime | One of: `release`, `debug` | Undefined | When undefined then both `release` and `debug` (in the same order) are built. If both are built then `bin` subdirectory is populated with binaries of `release` only |
@@ -32,21 +32,21 @@ docker build -t abrarov/icu-msvc-2017 docker/icu-msvc-2017/src
 ### Examples
 
 Download source archive, build all combinations (x86, x64, shared and static libraries) and put results of build into 
-`C:\Users\Public\icu-msvc-2017\target` folder of Docker Host:
+`C:\Users\Public\icu-msvc-2022\target` folder of Docker Host:
 
 ```bash
 docker run --rm \
--v C:/Users/Public/icu-msvc-2017/target:C:/target \
-abrarov/icu-msvc-2017
+-v C:/Users/Public/icu-msvc-2022/target:C:/target \
+abrarov/icu-msvc-2022
 ```
 
-Download source archive, build x64 shared libraries and put results of build into `C:\Users\Public\icu-msvc-2017\target` 
+Download source archive, build x64 shared libraries and put results of build into `C:\Users\Public\icu-msvc-2022\target` 
 folder of Docker Host:
  
 ```bash
 docker run --rm \
 -e ICU_ADDRESS_MODEL=64 \
 -e ICU_LINKAGE=shared \ 
--v C:/Users/Public/icu-msvc-2017/target:C:/target \
-abrarov/icu-msvc-2017
+-v C:/Users/Public/icu-msvc-2022/target:C:/target \
+abrarov/icu-msvc-2022
 ```

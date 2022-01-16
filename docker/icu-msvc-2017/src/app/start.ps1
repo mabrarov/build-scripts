@@ -22,8 +22,9 @@ $lib_file_extensions = @("a", "lib", "so", "dll")
 $icu_lib_dirs = @("lib")
 
 $icu_version_underscore = "${env:ICU_VERSION}" -replace "\.", '_'
+$icu_version_dash = "${env:ICU_VERSION}" -replace "\.", '-'
+$icu_download_url = "${env:ICU_URL}/release-${icu_version_dash}/icu4c-${icu_version_underscore}-src.zip"
 $icu_archive_file = "${env:DOWNLOAD_DIR}\icu4c-${icu_version_underscore}-src.zip"
-$icu_download_url = "${env:ICU_URL}/${env:ICU_VERSION}/icu4c-${icu_version_underscore}-src.zip"
 
 # Prepare patch for ICU
 if (-not (Test-Path env:ICU_PATCH_FILE)) {
@@ -80,10 +81,14 @@ foreach ($address_model in ${address_models}) {
 
     $icu_configure_options_linkage = ""
     $icu_build_options_linkage = ""
+    $icu_extra_build_options = ""
     switch (${env:ICU_LINKAGE}) {
       "static" {
         $icu_configure_options_linkage = "${icu_configure_options_linkage} --static-runtime"
         $icu_build_options_linkage = "${icu_build_options_linkage} --enable-static --disable-shared"
+        if ([System.Version] "${env:ICU_VERSION}" -gt [System.Version] "67.1") {
+          $icu_extra_build_options = "--disable-extras"
+        }
       }
       "shared" {
         $icu_configure_options_linkage = "${icu_configure_options_linkage}"
@@ -114,7 +119,7 @@ foreach ($address_model in ${address_models}) {
       }
 
       $env:ICU_CONFIGURE_OPTIONS = "${icu_configure_options_linkage} ${icu_configure_options_build_type}"
-      $env:ICU_BUILD_OPTIONS = "${icu_build_options_linkage} ${icu_build_options_build_type}"
+      $env:ICU_BUILD_OPTIONS = "${icu_build_options_linkage} ${icu_build_options_build_type} ${icu_extra_build_options}"
 
       $env:ICU_BUILD_DIR = "${env:BUILD_DIR}\icu-${env:ICU_VERSION}\${address_model}\${env:ICU_LINKAGE}\${env:ICU_BUILD_TYPE}"
       $env:ICU_HOME = "${env:ICU_BUILD_DIR}\icu"
@@ -178,17 +183,20 @@ foreach ($address_model in ${address_models}) {
       }
 
       if (-not (Test-Path -Path "${env:ICU_INSTALL_DIR}")) {
+        New-Item -Path "${env:ICU_INSTALL_DIR}" -ItemType "directory" | out-null
         Write-Host "Copying built ICU from ${env:ICU_STAGE_DIR} to ${env:ICU_INSTALL_DIR}"
         Copy-Item -Force -Recurse -Path "${env:ICU_STAGE_DIR}" -Destination "${env:ICU_INSTALL_DIR}"
       } else {
         Write-Host "Found existing ${env:ICU_INSTALL_DIR}, copying just built libraries"
         foreach ($icu_lib_dir in ${icu_lib_dirs}) {
+          $icu_lib_path = "${env:ICU_INSTALL_DIR}\${icu_lib_dir}"
+          New-Item -Path "${icu_lib_path}" -ItemType "directory" | out-null
           foreach ($lib_file_extension in ${lib_file_extensions}) {
-            Write-Host "Copying built ICU libraries (${lib_file_extension}) from ${env:ICU_STAGE_DIR}\${icu_lib_dir} to ${env:ICU_INSTALL_DIR}\${icu_lib_dir}"
+            Write-Host "Copying built ICU libraries (${lib_file_extension}) from ${env:ICU_STAGE_DIR}\${icu_lib_dir} to ${icu_lib_path}"
             $lib_files = Get-ChildItem "${env:ICU_STAGE_DIR}\${icu_lib_dir}\*.${lib_file_extension}"
             foreach ($lib_file in ${lib_files}) {
               $lib_file_name = ${lib_file} | % {$_.Name}
-              Copy-Item -Force -Path "${lib_file}" -Destination "${env:ICU_INSTALL_DIR}\${icu_lib_dir}\${lib_file_name}"
+              Copy-Item -Force -Path "${lib_file}" -Destination "${icu_lib_path}\${lib_file_name}"
             }
           }
         }
