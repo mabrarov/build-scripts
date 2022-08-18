@@ -8,7 +8,7 @@ rem
 
 set exit_code=0
 
-set "PATH=%ACTIVE_PERL_HOME%\bin;%PATH%"
+set "PATH=%STRAWBERRY_PERL_HOME%\perl\bin;%PATH%"
 
 call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
 set exit_code=%errorlevel%

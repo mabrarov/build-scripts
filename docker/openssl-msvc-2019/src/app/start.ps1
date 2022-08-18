@@ -159,7 +159,7 @@ foreach ($address_model in ${address_models}) {
       Write-Host "MSVS_INSTALL_DIR           : ${env:MSVS_INSTALL_DIR}"
       Write-Host "MSVC_BUILD_DIR             : ${env:MSVC_BUILD_DIR}"
       Write-Host "MSVC_CMD_BOOTSTRAP         : ${env:MSVC_CMD_BOOTSTRAP}"
-      Write-Host "ACTIVE_PERL_HOME           : ${env:ACTIVE_PERL_HOME}"
+      Write-Host "STRAWBERRY_PERL_HOME       : ${env:STRAWBERRY_PERL_HOME}"
       Write-Host "MSYS_HOME                  : ${env:MSYS_HOME}"
       Write-Host "OPENSSL_HOME               : ${env:OPENSSL_HOME}"
       Write-Host "OPENSSL_INSTALL_DIR        : ${env:OPENSSL_INSTALL_DIR}"
