@@ -28,7 +28,7 @@ ENV DOWNLOAD_DIR="C:\download" \
     PYTHON3_HOME="C:\Python3" \
     PYTHON2_VERSION="2.7.18" \
     PYTHON2_HOME="C:\Python2" \
-    NINJA_VERSION="1.10.2" \
+    NINJA_VERSION="1.11.0" \
     NINJA_URL="https://github.com/ninja-build/ninja/releases/download" \
     NINJA_HOME="C:\ninja"
 
