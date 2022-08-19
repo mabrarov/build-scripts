@@ -14,7 +14,7 @@ docker build -t abrarov/boost-msvc-2019 docker/boost-msvc-2019/src
 
 | Name | Meaning of variable | Possible values | Default value | Comments |
 |------|---------------------|-----------------|---------------|----------|
-| BOOST_VERSION | Version of Boost to build | One of: `1.70.0`, `1.71.0`, `1.72.0`, `1.73.0`, `1.74.0`, `1.75.0`, `1.76.0`, `1.77.0`, `1.78.0` | `1.78.0` | |
+| BOOST_VERSION | Version of Boost to build | One of: `1.77.0`, `1.78.0`, `1.79.0`, `1.80.0` | `1.80.0` | |
 | BOOST_ADDRESS_MODEL | CPU architecture | One of: `32`, `64` | Undefined | When undefined then both `64` and `32` (in the same order) are built |
 | BOOST_LINKAGE | Linkage of built libraries | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built |
 | BOOST_RUNTIME_LINKAGE | Linkage of C/C++ runtime | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built, when `BOOST_LINKAGE` is `shared` then `static` value of `BOOST_RUNTIME_LINKAGE` is ignored |
@@ -31,43 +31,43 @@ docker build -t abrarov/boost-msvc-2019 docker/boost-msvc-2019/src
 ### Examples
 
 Download source archive, build all combinations (x86, x64, shared and static libraries, shared and static C/C++ runtime) 
-and put results of build into `C:\Users\Public\Documents\boost-msvc-2019-target` folder of Docker Host:
+and put results of build into `C:\Users\Public\Documents\boost-msvc-2019\target` folder of Docker Host:
 
 ```bash
 docker run --rm \
--v C:/Users/Public/Documents/boost-msvc-2019-target:C:/target \
+-v C:/Users/Public/Documents/boost-msvc-2019/target:C:/target \
 abrarov/boost-msvc-2019
 ```
  
-Use pre-downloaded source archive located at `C:\Users\Public\Documents\boost-msvc-2019\download\boost_1_74_0.zip` file 
+Use pre-downloaded source archive located at `C:\Users\Public\Documents\boost-msvc-2019\download\boost_1_78_0.zip` file 
 on Docker Host, build all combinations and put results of build into `C:\Users\Public\Documents\boost-msvc-2019\target` 
 folder of Docker Host:
  
 ```bash
 docker run --rm \
 -v C:/Users/Public/Documents/boost-msvc-2019/target:C:/target \
--v C:/Users/Public/Documents/boost-msvc-2019/download/boost_1_74_0.zip:C:/download/boost_1_74_0.zip \
+-v C:/Users/Public/Documents/boost-msvc-2019/download/boost_1_78_0.zip:C:/download/boost_1_78_0.zip \
 abrarov/boost-msvc-2019
 ```
 
 Download source archive, build all combinations for x64 platform (shared and static libraries, shared and static C/C++ runtime) 
-and put results of build into `C:\Users\Public\Documents\boost-msvc2019\target` folder of Docker Host:
+and put results of build into `C:\Users\Public\Documents\boost-msvc-2019\target` folder of Docker Host:
 
 ```bash
 docker run --rm \
 -e BOOST_ADDRESS_MODEL=64 \
--v C:/Users/Public/Documents/boost-msvc2019/target:C:/target \
+-v C:/Users/Public/Documents/boost-msvc-2019/target:C:/target \
 abrarov/boost-msvc-2019
 ```
 
 Download source archive, build static libraries with shared C/C++ runtime for x64 platform and put results of build into 
-`C:\Users\Public\Documents\boost-msvc2019\target` folder of Docker Host:
+`C:\Users\Public\Documents\boost-msvc-2019\target` folder of Docker Host:
 
 ```bash
 docker run --rm \
 -e BOOST_ADDRESS_MODEL=64 \
 -e BOOST_LINKAGE=static \
 -e BOOST_RUNTIME_LINKAGE=shared \
--v C:/Users/Public/Documents/boost-msvc2019/target:C:/target \
+-v C:/Users/Public/Documents/boost-msvc-2019/target:C:/target \
 abrarov/boost-msvc-2019
 ```

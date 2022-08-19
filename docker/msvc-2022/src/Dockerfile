@@ -1,14 +1,14 @@
 #
-# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2022 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
 FROM abrarov/windows-dev:2.15.0
 
-ENV MSVS_VERSION="16" \
+ENV MSVS_VERSION="17" \
     MSVS_URL="https://aka.ms/vs" \
-    MSVS_DIST_NAME="vs_community.exe" \
+    MSVS_DIST_NAME="vs_buildtools.exe" \
     VSWHERE_URL="https://github.com/Microsoft/vswhere/releases/download" \
     VSWHERE_VERSION="2.8.4" \
     VSWHERE_DIST_NAME="vswhere.exe"
@@ -21,7 +21,7 @@ RUN powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \
 ARG image_version=""
 ARG image_revision=""
 
-LABEL name="abrarov/msvc-2019" \
+LABEL name="abrarov/msvc-2022" \
     version="${image_version}" \
     revision="${image_revision}" \
-    description="Microsoft Visual C++ as part of Microsoft Visual Studio 2019 Community"
+    description="Microsoft Visual C++ as part of Microsoft Visual Studio Build Tools 2022"

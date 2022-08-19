@@ -9,25 +9,28 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 ENV DOWNLOAD_DIR="C:\download" \
     BUILD_DIR="C:\build" \
     TARGET_DIR="C:\target" \
-    SEVEN_ZIP_VERSION="21.06" \
+    SEVEN_ZIP_VERSION="22.01" \
     SEVEN_ZIP_DOWNLOAD_URL="http://www.7-zip.org/a" \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
-    GIT_VERSION="2.34.1" \
-    CMAKE_VERSION="3.22.1" \
+    GIT_VERSION="2.37.2.2" \
+    CMAKE_VERSION="3.24.1" \
     CMAKE_URL="https://github.com/Kitware/CMake/releases/download" \
     CMAKE_HOME="C:\cmake" \
     MSYS2_URL="http://repo.msys2.org/distrib" \
     MSYS2_TARGET="x86_64" \
-    MSYS2_VERSION="20211130" \
+    MSYS2_VERSION="20220603" \
     MSYS_HOME="C:\msys64" \
-    ACTIVE_PERL_VERSION="5.28" \
-    ACTIVE_PERL_URL="https://cli-msi.s3.amazonaws.com" \
-    ACTIVE_PERL_HOME="C:\Perl" \
+    STRAWBERRY_PERL_VERSION="5.32.1.1" \
+    STRAWBERRY_PERL_URL="https://strawberryperl.com/download" \
+    STRAWBERRY_PERL_HOME="C:\Perl" \
     PYTHON_URL="https://www.python.org/ftp/python" \
-    PYTHON3_VERSION="3.10.1" \
+    PYTHON3_VERSION="3.10.6" \
     PYTHON3_HOME="C:\Python3" \
     PYTHON2_VERSION="2.7.18" \
-    PYTHON2_HOME="C:\Python2"
+    PYTHON2_HOME="C:\Python2" \
+    NINJA_VERSION="1.11.0" \
+    NINJA_URL="https://github.com/ninja-build/ninja/releases/download" \
+    NINJA_HOME="C:\ninja"
 
 ADD ["app", "C:/app/"]
 

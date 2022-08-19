@@ -9,7 +9,7 @@ Contains:
 1. [Git](https://git-scm.com)
 1. [CMake](https://cmake.org)
 1. [MSYS2](http://www.msys2.org) with base-devel Pacman package group
-1. [ActivePerl](https://www.activestate.com/products/activeperl)
+1. [Strawberry Perl](https://www.activestate.com/products/activeperl)
 1. [Python 2.x and 3.x](https://www.python.org)
 
 ## Building

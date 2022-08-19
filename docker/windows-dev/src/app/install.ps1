@@ -77,20 +77,20 @@ Write-Host "Extracting MSYS2 from ${msys_dist} into ${env:MSYS_HOME}"
 & "${PSScriptRoot}\msys2.bat"
 Write-Host "MSYS2 ${env:MSYS2_VERSION} installed into ${env:MSYS_HOME}"
 
-# Download and install ActivePerl
-$active_perl_dist_name = "ActivePerl-${env:ACTIVE_PERL_VERSION}.msi"
-$active_perl_url = "${env:ACTIVE_PERL_URL}/${active_perl_dist_name}"
-$active_perl_dist = "${env:TMP}\${active_perl_dist_name}"
-Write-Host "Downloading ActivePerl from ${active_perl_url} into ${active_perl_dist}"
-(New-Object System.Net.WebClient).DownloadFile("${active_perl_url}", "${active_perl_dist}")
-Write-Host "Installing ActivePerl from ${active_perl_dist} into ${env:ACTIVE_PERL_HOME}"
-$p = Start-Process -FilePath "${active_perl_dist}" `
-  -ArgumentList ("/norestart", "/quiet", "/qn", "INSTALLDIR=""${env:ACTIVE_PERL_HOME}\""") `
+# Download and install Strawberry Perl
+$strawberry_perl_dist_name = "strawberry-perl-${env:STRAWBERRY_PERL_VERSION}-64bit.msi"
+$strawberry_perl_url = "${env:STRAWBERRY_PERL_URL}/${env:STRAWBERRY_PERL_VERSION}/${strawberry_perl_dist_name}"
+$strawberry_perl_dist = "${env:TMP}\${strawberry_perl_dist_name}"
+Write-Host "Downloading Strawberry Perl from ${strawberry_perl_url} into ${strawberry_perl_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${strawberry_perl_url}", "${strawberry_perl_dist}")
+Write-Host "Installing Strawberry Perl from ${strawberry_perl_dist} into ${env:STRAWBERRY_PERL_HOME}"
+$p = Start-Process -FilePath "${strawberry_perl_dist}" `
+  -ArgumentList ("/norestart", "/quiet", "/qn", "INSTALLDIR=""${env:STRAWBERRY_PERL_HOME}\""") `
   -Wait -PassThru
 if (${p}.ExitCode -ne 0) {
-  throw "Failed to install ActivePerl"
+  throw "Failed to install Strawberry Perl"
 }
-Write-Host "ActivePerl ${env:ACTIVE_PERL_VERSION} installed into ${env:ACTIVE_PERL_HOME}"
+Write-Host "Strawberry Perl ${env:STRAWBERRY_PERL_VERSION} installed into ${env:STRAWBERRY_PERL_HOME}"
 
 # Download and install Python 2.x
 $python_dist_name = "python-${env:PYTHON2_VERSION}.amd64.msi"
@@ -121,6 +121,17 @@ if (${p}.ExitCode -ne 0) {
   throw "Failed to install Python ${env:PYTHON3_VERSION}"
 }
 Write-Host "Python ${env:PYTHON3_VERSION} installed into ${env:PYTHON3_HOME}"
+
+# Download and install Ninja
+$ninja_dist_name = "ninja-win.zip"
+$ninja_dist_url = "${env:NINJA_URL}/v${env:NINJA_VERSION}/${ninja_dist_name}"
+$ninja_dist = "${env:TMP}\${ninja_dist_name}"
+Write-Host "Downloading Ninja ${env:NINJA_VERSION} from ${ninja_dist_url} into ${ninja_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${ninja_dist_url}", "${ninja_dist}")
+New-Item -Path "${env:NINJA_HOME}" -ItemType "directory" | out-null
+Write-Host "Extracting Ninja from ${ninja_dist} into ${env:NINJA_HOME} directory"
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${ninja_dist}" -o"${env:NINJA_HOME}" -aoa -y -bd | out-null
+Write-Host "Ninja ${env:NINJA_VERSION} installed into ${env:NINJA_HOME}"
 
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
