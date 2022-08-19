@@ -52,10 +52,10 @@ if (${LastExitCode} -ne 0) {
   throw "Failed to get version of MSYS2 GNU patch"
 }
 
-Write-Host "Running ActivePerl in container created from ${image_repository}:latest image"
-docker run --rm "${image_repository}:latest" "C:\Perl\bin\perl.exe" --version
+Write-Host "Running Strawberry Perl in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\Perl\perl\bin\perl.exe" --version
 if (${LastExitCode} -ne 0) {
-  throw "Failed to get version of ActivePerl"
+  throw "Failed to get version of Strawberry Perl"
 }
 
 Write-Host "Running Python 2 in container created from ${image_repository}:latest image"

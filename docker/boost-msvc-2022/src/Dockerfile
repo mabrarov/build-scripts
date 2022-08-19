@@ -4,9 +4,9 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2022:2.14.0
+FROM abrarov/msvc-2022:2.15.0
 
-ENV BOOST_VERSION="1.78.0" \
+ENV BOOST_VERSION="1.80.0" \
     BOOST_RELEASE_URL="https://boostorg.jfrog.io/artifactory/main/release" \
     B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
 
