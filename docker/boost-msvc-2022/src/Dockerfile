@@ -6,7 +6,7 @@
 
 FROM abrarov/msvc-2022:2.16.0
 
-ENV BOOST_VERSION="1.80.0" \
+ENV BOOST_VERSION="1.83.0" \
     BOOST_RELEASE_URL="https://boostorg.jfrog.io/artifactory/main/release" \
     B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
 
