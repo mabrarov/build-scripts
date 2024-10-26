@@ -134,5 +134,11 @@ Write-Host "Extracting Ninja from ${ninja_dist} into ${env:NINJA_HOME} directory
 Write-Host "Ninja ${env:NINJA_VERSION} installed into ${env:NINJA_HOME}"
 
 # Cleanup
-Write-Host "Removing all files and directories from ${env:TMP}"
-Remove-Item -Path "${env:TMP}\*" -Recurse -Force
+$chocolatey_subdir = "chocolatey"
+Write-Host "Removing all files and directories from ${env:TMP} except ${chocolatey_subdir} subdirectory"
+Get-ChildItem -Path "${env:TMP}" -Recurse |
+  Select -ExpandProperty FullName |
+  Where {$_ -notlike "${env:TMP}\${chocolatey_subdir}\*"} |
+  Where {$_ -notlike "${env:TMP}\${chocolatey_subdir}"} |
+  Sort length -Descending |
+  Remove-Item -Recurse -Force
