@@ -1,5 +1,5 @@
 # MinGW
- 
+
 Docker image with MinGW from MinGW-builds. 
 
 Contains:

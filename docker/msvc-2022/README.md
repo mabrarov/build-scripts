@@ -1,5 +1,5 @@
 # Microsoft Visual C++ 2022
- 
+
 Docker image with Microsoft Visual C++ 2022 installed as part of Microsoft Visual Studio Build Tools 2022.
 
 Contains:

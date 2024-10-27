@@ -42,7 +42,7 @@ abrarov/icu-mingw
 
 Download source archive, build x64 shared libraries and put results of build into `C:\Users\Public\icu-mingw\target` 
 folder of Docker Host:
- 
+
 ```bash
 docker run --rm \
 -e ICU_ADDRESS_MODEL=64 \
