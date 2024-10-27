@@ -36,6 +36,7 @@ $dirs = @(
   "docker\mingw-14",
   "docker\msvc-2017",
   "docker\boost-mingw",
+  "docker\boost-mingw-14",
   "docker\boost-msvc-2017",
   "docker\openssl-mingw",
   "docker\openssl-msvc-2017",
