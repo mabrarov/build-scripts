@@ -1,0 +1,50 @@
+--- ./tools/build/src/tools/msvc.jam	2024-10-27 01:03:50.705233500 +0300
++++ ./tools/build/src/tools/msvc.jam	2024-10-27 01:03:50.705233500 +0300
+@@ -23,6 +23,7 @@
+ tools on Microsoft Windows. The supported products and versions of
+ command line tools are listed below:
+
++* Visual Studio 2019-14.3
+ * Visual Studio 2019-14.2
+ * Visual Studio 2017—14.1
+ * Visual Studio 2015—14.0
+@@ -1137,7 +1138,7 @@
+         }
+         else
+         {
+-            if [ MATCH "(14.3)" : $(version) ]
++            if [ MATCH "(14.[34])" : $(version) ]
+             {
+                 if $(.debug-configuration)
+                 {
+@@ -1316,7 +1317,7 @@
+             # version from the path.
+             # FIXME: We currently detect both Microsoft Visual Studio 9.0 and
+             # 9.0express as 9.0 here.
+-            if [ MATCH "(MSVC\\\\14.3)" : $(command) ]
++            if [ MATCH "(MSVC\\\\14.[34])" : $(command) ]
+             {
+                 version = 14.3 ;
+             }
+--- ./boost/config/compiler/visualc.hpp	2023-08-09 00:02:55.000000000 +0300
++++ ./boost/config/compiler/visualc.hpp	2023-08-09 00:02:55.000000000 +0300
+@@ -365,7 +365,7 @@
+ #     define BOOST_COMPILER_VERSION 14.1
+ #   elif _MSC_VER < 1930
+ #     define BOOST_COMPILER_VERSION 14.2
+-#   elif _MSC_VER < 1940
++#   elif _MSC_VER < 1950
+ #     define BOOST_COMPILER_VERSION 14.3
+ #   else
+ #     define BOOST_COMPILER_VERSION _MSC_VER
+@@ -378,8 +378,8 @@
+ #include <boost/config/pragma_message.hpp>
+ 
+ //
+-// last known and checked version is 19.3x (VS2022):
+-#if (_MSC_VER >= 1940)
++// last known and checked version is 19.4x (VS2022 17.10):
++#if (_MSC_VER >= 1950)
+ #  if defined(BOOST_ASSERT_CONFIG)
+ #     error "Boost.Config is older than your current compiler version."
+ #  elif !defined(BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE)

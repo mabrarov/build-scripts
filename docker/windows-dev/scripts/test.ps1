@@ -52,6 +52,24 @@ if (${LastExitCode} -ne 0) {
   throw "Failed to get version of MSYS2 GNU patch"
 }
 
+Write-Host "Running MSYS2 GNU make in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\msys64\usr\bin\make" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of MSYS2 GNU make"
+}
+
+Write-Host "Running MSYS2 bison in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\msys64\usr\bin\bison" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of MSYS2 bison"
+}
+
+Write-Host "Running MSYS2 diff in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\msys64\usr\bin\diff" --version
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of MSYS2 diff"
+}
+
 Write-Host "Running Strawberry Perl in container created from ${image_repository}:latest image"
 docker run --rm "${image_repository}:latest" "C:\Perl\perl\bin\perl.exe" --version
 if (${LastExitCode} -ne 0) {

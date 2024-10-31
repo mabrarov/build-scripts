@@ -79,7 +79,7 @@ Write-Host "MSYS2 ${env:MSYS2_VERSION} installed into ${env:MSYS_HOME}"
 
 # Download and install Strawberry Perl
 $strawberry_perl_dist_name = "strawberry-perl-${env:STRAWBERRY_PERL_VERSION}-64bit.msi"
-$strawberry_perl_url = "${env:STRAWBERRY_PERL_URL}/${env:STRAWBERRY_PERL_VERSION}/${strawberry_perl_dist_name}"
+$strawberry_perl_url = "${env:STRAWBERRY_PERL_URL}/${strawberry_perl_dist_name}"
 $strawberry_perl_dist = "${env:TMP}\${strawberry_perl_dist_name}"
 Write-Host "Downloading Strawberry Perl from ${strawberry_perl_url} into ${strawberry_perl_dist}"
 (New-Object System.Net.WebClient).DownloadFile("${strawberry_perl_url}", "${strawberry_perl_dist}")
@@ -134,5 +134,11 @@ Write-Host "Extracting Ninja from ${ninja_dist} into ${env:NINJA_HOME} directory
 Write-Host "Ninja ${env:NINJA_VERSION} installed into ${env:NINJA_HOME}"
 
 # Cleanup
-Write-Host "Removing all files and directories from ${env:TMP}"
-Remove-Item -Path "${env:TMP}\*" -Recurse -Force
+$chocolatey_subdir = "chocolatey"
+Write-Host "Removing all files and directories from ${env:TMP} except ${chocolatey_subdir} subdirectory"
+Get-ChildItem -Path "${env:TMP}" -Recurse |
+  Select -ExpandProperty FullName |
+  Where {$_ -notlike "${env:TMP}\${chocolatey_subdir}\*"} |
+  Where {$_ -notlike "${env:TMP}\${chocolatey_subdir}"} |
+  Sort length -Descending |
+  Remove-Item -Recurse -Force
