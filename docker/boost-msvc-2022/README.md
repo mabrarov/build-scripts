@@ -14,7 +14,7 @@ docker build -t abrarov/boost-msvc-2022 docker/boost-msvc-2022/src
 
 | Name | Meaning of variable | Possible values | Default value | Comments |
 |------|---------------------|-----------------|---------------|----------|
-| BOOST_VERSION | Version of Boost to build | One of: `1.78.0`, `1.79.0`, `1.80.0` | `1.80.0` | |
+| BOOST_VERSION | Version of Boost to build | One of: `1.78.0`, `1.79.0`, `1.80.0`, `1.83.0` | `1.83.0` | |
 | BOOST_ADDRESS_MODEL | CPU architecture | One of: `32`, `64` | Undefined | When undefined then both `64` and `32` (in the same order) are built |
 | BOOST_LINKAGE | Linkage of built libraries | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built |
 | BOOST_RUNTIME_LINKAGE | Linkage of C/C++ runtime | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built, when `BOOST_LINKAGE` is `shared` then `static` value of `BOOST_RUNTIME_LINKAGE` is ignored |

@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.15.0
+FROM abrarov/msvc-2017:2.16.0
 
 ENV OPENSSL_VERSION="1.0.2q" \
     OPENSSL_URL="https://www.openssl.org/source" \
