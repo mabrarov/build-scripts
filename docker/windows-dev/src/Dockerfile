@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022
 ENV DOWNLOAD_DIR="C:\download" \
     BUILD_DIR="C:\build" \
     TARGET_DIR="C:\target" \
-    SEVEN_ZIP_VERSION="24.08" \
+    SEVEN_ZIP_VERSION="24.09" \
     SEVEN_ZIP_DOWNLOAD_URL="http://www.7-zip.org/a" \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
     GIT_VERSION="2.47.0.20241025" \
