@@ -10,5 +10,8 @@ $ErrorActionPreference = "Stop"
 $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
 $image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 
-#TODO: add some tests
-Write-Host "No tests found for ${image_repository}:latest image"
+Write-Host "Build ICU4C using default configuration and ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest"
+if (${LastExitCode} -ne 0) {
+  throw "Failed to build ICU4C"
+}
