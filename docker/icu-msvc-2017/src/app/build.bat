@@ -9,7 +9,7 @@ rem
 
 set exit_code=0
 
-set "PATH=%MSYS_HOME%\usr\bin;%PATH%"
+set "PATH=%MSYS_HOME%\usr\bin;%PYTHON3_HOME%;%PYTHON3_HOME%\Scripts;%PATH%"
 
 call "%MSVC_BUILD_DIR%\%MSVC_CMD_BOOTSTRAP%"
 set exit_code=%errorlevel%

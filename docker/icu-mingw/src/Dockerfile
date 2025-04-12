@@ -10,6 +10,10 @@ ENV ICU_VERSION="64.2" \
     ICU_URL="http://download.icu-project.org/files/icu4c" \
     ICU_TEST=""
 
+RUN set "PATH=%PYTHON3_HOME%;%PYTHON3_HOME%\Scripts;%PATH%" && \
+    "%PYTHON3_HOME%\Scripts\pip" --disable-pip-version-check install buildtool && \
+    powershell "Remove-Item -Path \"${env:TMP}\*\" -Recurse -Force"
+
 ADD ["app", "C:/app/"]
 
 VOLUME ["C:/target"]

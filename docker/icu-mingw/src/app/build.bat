@@ -8,7 +8,7 @@ rem
 
 set exit_code=0
 
-set "PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%"
+set "PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PYTHON3_HOME%;%PYTHON3_HOME%\Scripts;%PATH%"
 
 if not "--%ICU_PATCH_FILE%" == "--" (
   patch -uNf -p0 -i "%ICU_PATCH_FILE%"
