@@ -17,8 +17,9 @@ $lib_file_extensions = @("a", "lib", "so", "dll")
 $icu_lib_dirs = @("lib")
 
 $icu_version_underscore = "${env:ICU_VERSION}" -replace "\.", '_'
+$icu_version_dash = "${env:ICU_VERSION}" -replace "\.", '-'
 $icu_archive_file = "${env:DOWNLOAD_DIR}\icu4c-${icu_version_underscore}-src.zip"
-$icu_download_url = "${env:ICU_URL}/${env:ICU_VERSION}/icu4c-${icu_version_underscore}-src.zip"
+$icu_download_url = "${env:ICU_URL}/release-${icu_version_dash}/icu4c-${icu_version_underscore}-src.zip"
 
 # Prepare patch for ICU
 if (-not (Test-Path env:ICU_PATCH_FILE)) {

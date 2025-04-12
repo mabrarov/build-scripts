@@ -7,7 +7,7 @@
 FROM abrarov/mingw:2.17.0
 
 ENV ICU_VERSION="64.2" \
-    ICU_URL="http://download.icu-project.org/files/icu4c" \
+    ICU_URL="https://github.com/unicode-org/icu/releases/download" \
     ICU_TEST=""
 
 RUN set "PATH=%PYTHON3_HOME%;%PYTHON3_HOME%\Scripts;%PATH%" && \
