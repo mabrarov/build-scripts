@@ -6,7 +6,7 @@
 
 FROM abrarov/mingw:2.17.0
 
-ENV ICU_VERSION="64.2" \
+ENV ICU_VERSION="77.1" \
     ICU_URL="https://github.com/unicode-org/icu/releases/download" \
     ICU_TEST=""
 
