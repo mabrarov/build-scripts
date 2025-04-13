@@ -1,0 +1,20 @@
+--- ./boost/stacktrace/detail/frame_msvc.ipp	2023-08-09 00:03:01.000000000 +0300
++++ ./boost/stacktrace/detail/frame_msvc.ipp	2025-04-13 10:27:35.862715600 +0300
+@@ -18,7 +18,17 @@
+ #include <boost/core/noncopyable.hpp>
+ #include <boost/stacktrace/detail/to_dec_array.hpp>
+ #include <boost/stacktrace/detail/to_hex_array.hpp>
++
++#ifdef WIN32_LEAN_AND_MEAN
++#include <windows.h>
++#else
++// Prevent inclusion of extra Windows SDK headers which can cause conflict
++// with other code using Windows SDK
++#define WIN32_LEAN_AND_MEAN
+ #include <windows.h>
++#undef WIN32_LEAN_AND_MEAN
++#endif
++
+ #include "dbgeng.h"
+ 
+ #ifdef BOOST_MSVC
