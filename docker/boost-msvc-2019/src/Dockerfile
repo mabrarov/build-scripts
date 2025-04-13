@@ -12,8 +12,6 @@ ENV BOOST_VERSION="1.83.0" \
 
 ADD ["app", "C:/app/"]
 
-VOLUME ["C:/target"]
-
 CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 
 ARG image_version=""
