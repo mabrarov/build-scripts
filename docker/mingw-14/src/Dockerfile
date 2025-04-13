@@ -21,10 +21,6 @@ ENV MINGW_VERSION="14.2.0" \
     MINGW64_HOME="C:\mingw64" \
     MINGW32_HOME="C:\mingw32"
 
-# Windows 11 SDK
-# https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/
-ENV WINDOWS_SDK_URL="https://go.microsoft.com/fwlink/?linkid=2311806"
-
 ADD ["app", "C:/app/"]
 
 RUN powershell -ExecutionPolicy Bypass -File "C:\app\install.ps1" && \

@@ -32,22 +32,6 @@ Write-Host "Extracting MinGW-w64 x86 from ${mingw32_dist} into ${env:MINGW32_HOM
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${mingw32_dist}" -o"C:" -aoa -y -bd | out-null
 Write-Host "MinGW-w64 x86 ${env:MINGW_VERSION} installed into ${env:MINGW32_HOME}"
 
-# Installing Debugging Tools for Windows
-# (https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/debugger-download-tools)
-# as part of the Windows SDK
-$windows_sdk_dist = "${env:TMP}\winsdksetup.exe"
-Write-Host "Downloading Windows SDK from ${env:WINDOWS_SDK_URL} into ${windows_sdk_dist}"
-(New-Object System.Net.WebClient).DownloadFile("${env:WINDOWS_SDK_URL}", "${windows_sdk_dist}")
-Write-Host "Installing Debugging Tools for Windows"
-$p = Start-Process -FilePath "${windows_sdk_dist}" -ArgumentList `
-  ("/features OptionId.WindowsDesktopDebuggers", `
-   "/q", `
-   "/norestart") `
-  -Wait -PassThru
-if (${p}.ExitCode -ne 0) {
-  throw "Failed to install Debugging Tools for Windows"
-}
-
 # Cleanup
 Write-Host "Removing all files and directories from ${env:TMP}"
 Remove-Item -Path "${env:TMP}\*" -Recurse -Force
