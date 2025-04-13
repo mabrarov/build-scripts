@@ -14,7 +14,7 @@ docker build -t abrarov/icu-mingw docker/icu-mingw/src
 
 | Name | Meaning of variable | Possible values | Default value | Comments |
 |------|---------------------|-----------------|---------------|----------|
-| ICU_VERSION | Version of ICU to build | One of: `57.1`, `58.2`, `64.2` | `64.2` | |
+| ICU_VERSION | Version of ICU to build | `77.1` | `77.1` | |
 | ICU_ADDRESS_MODEL | CPU architecture | One of: `32`, `64` | Undefined | When undefined then both `64` and `32` (in the same order) are built |
 | ICU_LINKAGE | Linkage of built libraries | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built, `static` build uses static C/C++ runtime |
 | ICU_BUILD_TYPE | Linkage of C/C++ runtime | One of: `release`, `debug` | Undefined | When undefined then only `release` is built |
