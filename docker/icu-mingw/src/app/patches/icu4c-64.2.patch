@@ -1,0 +1,115 @@
+--- ./runConfigureICU	2019-04-17 22:42:15 +0300
++++ ./runConfigureICU	2019-08-22 01:07:34 +0300
+@@ -28,6 +28,7 @@
+ Options: -h, --help         Print this message and exit
+          --enable-debug     Enable support for debugging
+          --disable-release  Disable presetting optimization flags
++         --static-runtime   Use a statically linked C/C++ runtime (Cygwin/MSVC only)
+ 
+ If you want to add custom CFLAGS or CXXFLAGS or similar, provide them _before_
+ the runConfigureICU command:
+@@ -72,6 +73,7 @@
+ platform=
+ debug=0
+ release=1
++static_runtime=0
+ 
+ while test $# -ne 0
+ do
+@@ -87,6 +89,9 @@
+         release=0
+         OPTS="$OPTS --disable-release"
+         ;;
++    --static-runtime)
++        static_runtime=1
++        ;;
+     *)
+         platform="$1"
+         shift
+@@ -259,15 +264,21 @@
+         RELEASE_CXXFLAGS='-O3'
+         ;;
+     Cygwin/MSVC)
++        if [ "${static_runtime}" = "0" ]; then
++            RUNTIME_LINKER_OPTION='MD'
++        else
++            RUNTIME_LINKER_OPTION='MT'
++        fi
++        RUNTIME_LINKER_FLAG='/'${RUNTIME_LINKER_OPTION}
+         THE_OS="Windows with Cygwin"
+         THE_COMP="Microsoft Visual C++"
+         CC=cl; export CC
+         CXX=cl; export CXX
+-        RELEASE_CFLAGS='-Gy -MD'
+-        RELEASE_CXXFLAGS='-Gy -MD'
+-        DEBUG_CFLAGS='-FS -Zi -MDd'
+-        DEBUG_CXXFLAGS='-FS -Zi -MDd'
+-        DEBUG_LDFLAGS='-DEBUG'
++        RELEASE_CFLAGS='/Gy '${RUNTIME_LINKER_FLAG}
++        RELEASE_CXXFLAGS='/Gy '${RUNTIME_LINKER_FLAG}
++        DEBUG_CFLAGS='/Zi '${RUNTIME_LINKER_FLAG}d'
++        DEBUG_CXXFLAGS='/Zi '${RUNTIME_LINKER_FLAG}d'
++        DEBUG_LDFLAGS='/DEBUG'
+         ;;
+     Cygwin/MSVC2005)
+         THE_OS="Windows with Cygwin"
+@@ -313,20 +324,32 @@
+     MinGW)
+         THE_OS="MinGW"
+         THE_COMP="the GNU C++"
++        if [ "${static_runtime}" = "0" ]; then
++            RUNTIME_LINKER_FLAGS=''
++        else
++            RUNTIME_LINKER_FLAGS='-static -static-libgcc -static-libstdc++'
++        fi
+         RELEASE_CFLAGS='-O3'
+         RELEASE_CXXFLAGS='-O3'
++        LDFLAGS="${RUNTIME_LINKER_FLAGS}"
+         export CXXFLAGS
++        export LDFLAGS
+         ;;
+     MSYS/MSVC)
+         THE_OS="MSYS"
+         THE_COMP="Microsoft Visual C++"
+         CC=cl; export CC
+         CXX=cl; export CXX
+-        RELEASE_CFLAGS='-Gy -MD'
+-        RELEASE_CXXFLAGS='-Gy -MD'
+-        DEBUG_CFLAGS='-FS -Zi -MDd'
+-        DEBUG_CXXFLAGS='-FS -Zi -MDd'
+-        DEBUG_LDFLAGS='-DEBUG'
++        if [ "${static_runtime}" = "0" ]; then
++            RUNTIME_LINKER_OPTION='MD'
++        else
++            RUNTIME_LINKER_OPTION='MT'
++        fi
++        RUNTIME_LINKER_FLAG='-'${RUNTIME_LINKER_OPTION}
++        RELEASE_CFLAGS='-Gy '${RUNTIME_LINKER_FLAG}
++        RELEASE_CXXFLAGS='-Gy '${RUNTIME_LINKER_FLAG}
++        DEBUG_CFLAGS=${RUNTIME_LINKER_FLAG}d
++        DEBUG_CXXFLAGS=${RUNTIME_LINKER_FLAG}d
+         ;;
+     *BSD)
+         THE_OS="BSD"
+--- ./config/mh-mingw	2019-04-17 22:42:15 +0300
++++ ./config/mh-mingw	2019-08-22 01:11:22 +0300
+@@ -81,7 +81,7 @@
+ A = a
+ 
+ ## An import library is needed for z/OS and MSVC
+-IMPORT_LIB_EXT = .dll.a
++IMPORT_LIB_EXT = .a
+ 
+ LIBPREFIX=lib
+ 
+--- ./config/mh-mingw64	2019-04-17 22:42:15 +0300
++++ ./config/mh-mingw64	2019-08-22 01:12:08 +0300
+@@ -81,7 +81,7 @@
+ A = a
+ 
+ ## An import library is needed for z/OS and MSVC
+-IMPORT_LIB_EXT = .dll.a
++IMPORT_LIB_EXT = .a
+ 
+ LIBPREFIX=
+ 
