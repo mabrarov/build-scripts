@@ -18,6 +18,7 @@ docker build `
   -t "${image_repository}:${image_version}" `
   --build-arg "image_version=${image_version}" `
   --build-arg "image_revision=${image_revision}" `
+  -m "2GB" `
   "${project_dir}\src"
 if (${LastExitCode} -ne 0) {
   throw "Failed to build ${image_repository} image"
