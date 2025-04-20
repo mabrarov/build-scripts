@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2025 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #
@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 
 # Find location of Visual Studio
-$env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.Community -version [15.0,16.0) -requires Microsoft.VisualStudio.Workload.NativeDesktop -property installationPath
+$env:MSVS_INSTALL_DIR = &vswhere --% -latest -products Microsoft.VisualStudio.Product.BuildTools -version [17.0,18.0) -requires Microsoft.VisualStudio.Workload.VCTools -property installationPath
 $env:MSVC_AUXILARY_DIR = "${env:MSVS_INSTALL_DIR}\VC\Auxiliary"
 $env:MSVC_BUILD_DIR = "${env:MSVC_AUXILARY_DIR}\Build"
 
@@ -147,7 +147,7 @@ foreach ($address_model in ${address_models}) {
         Write-Host "Extracted source code archive"
       }
 
-      $env:OPENSSL_INSTALL_DIR = "${env:TARGET_DIR}\openssl-${env:OPENSSL_VERSION}-${address_model_target_dir_suffix}-vs2017-${env:OPENSSL_LINKAGE}"
+      $env:OPENSSL_INSTALL_DIR = "${env:TARGET_DIR}\openssl-${env:OPENSSL_VERSION}-${address_model_target_dir_suffix}-vs2022-${env:OPENSSL_LINKAGE}"
       $env:OPENSSL_STAGE_DIR = "${env:OPENSSL_HOME}\dist"
 
       Set-Location -Path "${env:OPENSSL_HOME}"

@@ -38,11 +38,11 @@ docker run --rm \
 -v C:/Users/Public/Documents/boost-msvc-2017-target:C:/target \
 abrarov/boost-msvc-2017
 ```
- 
+
 Use pre-downloaded source archive located at `C:\Users\Public\Documents\boost-msvc-2017\download\boost_1_74_0.zip` file 
 on Docker Host, build all combinations and put results of build into `C:\Users\Public\Documents\boost-msvc-2017\target` 
 folder of Docker Host:
- 
+
 ```bash
 docker run --rm \
 -v C:/Users/Public/Documents/boost-msvc-2017/target:C:/target \

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
+# Copyright (c) 2025 Marat Abrarov (abrarov@gmail.com)
 #
 # Distributed under the MIT License (see accompanying LICENSE)
 #
@@ -10,7 +10,7 @@ $ErrorActionPreference = "Stop"
 $project_dir = (Get-Item "${PSScriptRoot}").Parent.FullName
 $image_repository = "${env:DOCKER_USER}/$(Split-Path "${project_dir}" -Leaf)"
 #TODO: find way to deal with tags and versions
-$image_version = "2.16.0"
+$image_version = "2.17.0"
 $image_revision = "$(git -C "${project_dir}" rev-parse --verify HEAD)"
 
 Write-Host "Building ${image_repository}:${image_version} image with ${image_revision} revision"

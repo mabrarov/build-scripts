@@ -4,16 +4,14 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.16.0
+FROM abrarov/mingw:2.17.0
 
-ENV BOOST_VERSION="1.80.0" \
-    BOOST_RELEASE_URL="https://boostorg.jfrog.io/artifactory/main/release" \
+ENV BOOST_VERSION="1.82.0" \
+    BOOST_RELEASE_URL="https://archives.boost.io/release" \
     B2_OPTIONS="--without-python --without-mpi --without-graph_parallel" \
     BOOST_MINGW_HOME="C:\MinGW"
 
 ADD ["app", "C:/app/"]
-
-VOLUME ["C:/target"]
 
 CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 

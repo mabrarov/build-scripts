@@ -1,5 +1,5 @@
 # Microsoft Visual C++ 2017
- 
+
 Docker image with Microsoft Visual C++ 2017 installed as part of Microsoft Visual Studio 2017 Community. 
 
 Contains:

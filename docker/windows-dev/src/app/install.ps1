@@ -13,7 +13,8 @@ $ErrorActionPreference = "Stop"
 # Install Chocolatey package manager
 Write-Host "Installing Chocolatey package manager"
 $env:chocolateyUseWindowsCompression = 'true'
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Set-ExecutionPolicy Bypass -Scope Process -Force
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 Write-Host "Chocolatey package manager installed"
 
 # Download and install 7-Zip

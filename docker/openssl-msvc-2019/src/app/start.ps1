@@ -24,9 +24,6 @@ $openssl_lib_dirs = @("lib")
 $openssl_download_url = "${env:OPENSSL_URL}/openssl-${env:OPENSSL_VERSION}.tar.gz"
 
 $openssl_archive_file = "${env:DOWNLOAD_DIR}\openssl-${env:OPENSSL_VERSION}.tar.gz"
-$openssl_tar_archive_dir = "${env:TMP}"
-$openssl_tar_archive_file_name = "openssl-${env:OPENSSL_VERSION}.tar"
-$openssl_tar_archive_file = "${openssl_tar_archive_dir}\${openssl_tar_archive_file_name}"
 
 # Prepare patch for OpenSSL
 if (-not (Test-Path env:OPENSSL_PATCH_FILE)) {

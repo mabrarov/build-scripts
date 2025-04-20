@@ -1,5 +1,5 @@
 # Microsoft Visual C++ 2019
- 
+
 Docker image with Microsoft Visual C++ 2019 installed as part of Microsoft Visual Studio 2019 Community. 
 
 Contains:

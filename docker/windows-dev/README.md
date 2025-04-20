@@ -1,5 +1,5 @@
 # windows-dev
- 
+
 Base Docker image for Docker images building on Windows. 
 
 Contains:
