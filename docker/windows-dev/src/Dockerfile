@@ -30,7 +30,11 @@ ENV DOWNLOAD_DIR="C:\download" \
     PYTHON2_HOME="C:\Python2" \
     NINJA_VERSION="1.12.1" \
     NINJA_URL="https://github.com/ninja-build/ninja/releases/download" \
-    NINJA_HOME="C:\ninja"
+    NINJA_HOME="C:\ninja" \
+    NASM_VERSION="2.16.03" \
+    NASM_URL="https://www.nasm.us/pub/nasm/releasebuilds" \
+    NASM64_HOME="C:\nasm64" \
+    NASM32_HOME="C:\nasm32"
 
 ADD ["app", "C:/app/"]
 

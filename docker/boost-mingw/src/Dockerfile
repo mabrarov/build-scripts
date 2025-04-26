@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.17.0
+FROM abrarov/mingw:2.18.0
 
 ENV BOOST_VERSION="1.83.0" \
     BOOST_RELEASE_URL="https://archives.boost.io/release" \
