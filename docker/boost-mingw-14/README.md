@@ -1,6 +1,6 @@
-# Builder of Boost C++ Libraries with MinGW-w64
+# Builder of Boost C++ Libraries with MinGW-w64 14
 
-Docker image for building [Boost C++ Libraries](http://www.boost.org/) with MinGW-w64.
+Docker image for building [Boost C++ Libraries](http://www.boost.org/) with MinGW-w64 14.
 
 ## Building
 
