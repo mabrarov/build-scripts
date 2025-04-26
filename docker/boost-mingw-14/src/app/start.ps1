@@ -89,6 +89,12 @@ foreach ($address_model in ${address_models}) {
   $mingw_version_suffix = "${env:MINGW_VERSION}" -replace "([0-9]+)\.([0-9]+)\.([0-9]+)", '$1$2'
   $env:BOOST_INSTALL_DIR = "${env:TARGET_DIR}\boost-${env:BOOST_VERSION}-${target_dir_suffix}-mingw${mingw_version_suffix}"
 
+  $boost_build_bin_dir = "${env:BOOST_ROOT_DIR}\bin.v2"
+  if (Test-Path -Path "${boost_build_bin_dir}") {
+    Write-Host "Removing Boost bin directory: ${boost_build_bin_dir}"
+    Remove-Item -Path "${boost_build_bin_dir}" -Recurse -Force
+  }
+
   # Build Boost.Build
   $env:BOOST_BOOTSTRAP = "${env:BOOST_ROOT_DIR}\bootstrap.bat"
   Set-Location -Path "${env:BOOST_ROOT_DIR}"
