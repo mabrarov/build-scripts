@@ -14,7 +14,7 @@ docker build -t abrarov/openssl-mingw-14 docker/openssl-mingw-14/src
 
 | Name | Meaning of variable | Possible values | Default value | Comments |
 |------|---------------------|-----------------|---------------|----------|
-| OPENSSL_VERSION | Version of OpenSSL to build | One of: `1.0.2q` | `1.0.2q` | |
+| OPENSSL_VERSION | Version of OpenSSL to build | One of: `3.5.0` | `3.5.0` | |
 | OPENSSL_ADDRESS_MODEL | CPU architecture | One of: `32`, `64` | Undefined | When undefined then both `64` and `32` (in the same order) are built |
 | OPENSSL_LINKAGE | Linkage of built libraries | One of: `shared`, `static` | Undefined | When undefined then both `shared` and `static` (in the same order) are built, `static` build uses static C/C++ runtime |
 | OPENSSL_PATCH_FILE | Path to file in container with path applied to OpenSSL before building |  | Undefined | When undefined then patch is chosen among embedded patches based on version of OpenSSL. Embedded patches are located in `C:\app\patches` directory of image | 

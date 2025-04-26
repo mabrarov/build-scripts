@@ -8,19 +8,14 @@ rem
 
 set exit_code=0
 
-set "PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%"
+set "PATH=%NASM_HOME%;%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%"
 
-if not "--%OPENSSL_PATCH_FILE%" == "--" (
-  patch -uNf -p0 -i "%OPENSSL_PATCH_FILE%"
-  set exit_code=%errorlevel%
-  if %exit_code% neq 0 goto exit
-)
-
-perl Configure --prefix="%OPENSSL_STAGE_MSYS_DIR%" "%OPENSSL_TOOLSET%" enable-static-engine "%OPENSSL_CONFIGURE_LINKAGE%"
+for /f "tokens=*" %%a in ('cygpath "%OPENSSL_INSTALL_DIR%"') do set openssl_install_dir_msys=%%a
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
-make depend
+cd /d "%OPENSSL_BUILD_DIR%"
+perl "%OPENSSL_HOME%/Configure" --prefix="%openssl_install_dir_msys%" --openssldir="%openssl_install_dir_msys%/ssl" "%OPENSSL_BUILD_TYPE_CONFIG%" "%OPENSSL_TOOLSET%" "%OPENSSL_LINKAGE_CONFIG%"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
