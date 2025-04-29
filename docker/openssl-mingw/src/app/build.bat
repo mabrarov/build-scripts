@@ -8,7 +8,7 @@ rem
 
 set exit_code=0
 
-set "PATH=%NASM_HOME%;%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%"
+set "PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PATH%"
 
 for /f "tokens=*" %%a in ('cygpath "%OPENSSL_INSTALL_DIR%"') do set openssl_install_dir_msys=%%a
 set exit_code=%errorlevel%

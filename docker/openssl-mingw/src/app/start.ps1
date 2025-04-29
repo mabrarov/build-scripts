@@ -83,13 +83,11 @@ foreach ($address_model in ${address_models}) {
       $env:MINGW_HOME = "${env:MINGW32_HOME}"
       $env:OPENSSL_TOOLSET = "mingw"
       $address_model_target_dir_suffix = "x86"
-      $env:NASM_HOME = "${env:NASM32_HOME}"
     }
     "64" {
       $env:MINGW_HOME = "${env:MINGW64_HOME}"
       $env:OPENSSL_TOOLSET = "mingw64"
       $address_model_target_dir_suffix = "x64"
-      $env:NASM_HOME = "${env:NASM64_HOME}"
     }
     default {
       throw "Unsupported address model: ${env:OPENSSL_ADDRESS_MODEL}"
@@ -129,7 +127,6 @@ foreach ($address_model in ${address_models}) {
 
     Write-Host "Building OpenSSL with these parameters:"
     Write-Host "MINGW_HOME            : ${env:MINGW_HOME}"
-    Write-Host "NASM_HOME             : ${env:NASM_HOME}"
     Write-Host "MSYS_HOME             : ${env:MSYS_HOME}"
     Write-Host "OPENSSL_HOME          : ${env:OPENSSL_HOME}"
     Write-Host "OPENSSL_TARGET_DIR    : ${env:OPENSSL_TARGET_DIR}"
