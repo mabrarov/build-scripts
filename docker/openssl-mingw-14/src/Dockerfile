@@ -4,11 +4,11 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/mingw:2.17.0
+FROM abrarov/mingw-14:2.17.0
 
-ENV BOOST_VERSION="1.83.0" \
-    BOOST_RELEASE_URL="https://archives.boost.io/release" \
-    B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
+ENV OPENSSL_VERSION="1.0.2q" \
+    OPENSSL_URL="https://www.openssl.org/source" \
+    OPENSSL_TEST=""
 
 ADD ["app", "C:/app/"]
 
@@ -17,7 +17,7 @@ CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 ARG image_version=""
 ARG image_revision=""
 
-LABEL name="abrarov/boost-mingw" \
+LABEL name="abrarov/openssl-mingw-14" \
     version="${image_version}" \
     revision="${image_revision}" \
-    description="Builder of Boost C++ Libraries with MinGW"
+    description="Builder of OpenSSL with MinGW 14"

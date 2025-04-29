@@ -33,10 +33,13 @@ $auth64 = [Convert]::ToBase64String($auth)
 $dirs = @(
   "docker\windows-dev",
   "docker\mingw",
+  "docker\mingw-14",
   "docker\msvc-2017",
   "docker\boost-mingw",
+  "docker\boost-mingw-14",
   "docker\boost-msvc-2017",
   "docker\openssl-mingw",
+  "docker\openssl-mingw-14",
   "docker\openssl-msvc-2017",
   "docker\msvc-2019",
   "docker\boost-msvc-2019",
