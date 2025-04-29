@@ -44,13 +44,23 @@ if (Test-Path -Path "${env:BOOST_ROOT_DIR}") {
 $env:B2_BIN = "${env:BOOST_ROOT_DIR}\b2.exe"
 $env:B2_TOOLSET = "msvc-14.3"
 
-# Prepare patch for Boost
+# Patch Boost
 if (-not (Test-Path env:BOOST_PATCH_FILE)) {
   $env:BOOST_PATCH_FILE = "${PSScriptRoot}\patches\boost-${env:BOOST_VERSION}.patch"
 }
 if (-not (Test-Path -Path "${env:BOOST_PATCH_FILE}")) {
   Write-Warning "Patch for chosen version of Boost (${env:BOOST_VERSION}) was not found at ${env:BOOST_PATCH_FILE}"
-  $env:BOOST_PATCH_FILE = ""
+} else {
+  Write-Host "Patching Boost C++ Libraries located at ${env:BOOST_ROOT_DIR} with ${env:BOOST_PATCH_FILE}"
+  Set-Location -Path "${env:BOOST_ROOT_DIR}"
+  $path_backup = "${env:PATH}"
+  $env:PATH = "${env:MSYS_HOME}\usr\bin;${env:PATH}"
+  & patch.exe -uNf -p0 -i "${env:BOOST_PATCH_FILE}"
+  $patch_exit_code = ${LastExitCode}
+  $env:PATH = "${path_backup}"
+  if (${patch_exit_code} -ne 0) {
+    throw "Failed to patch Boost C++ Libraries located at ${env:BOOST_ROOT_DIR} with ${env:BOOST_PATCH_FILE}"
+  }
 }
 
 # Build Boost.Build
