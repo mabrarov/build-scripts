@@ -14,7 +14,7 @@ $ErrorActionPreference = "Stop"
 $lib_file_extensions = @("a", "lib", "so", "dll")
 
 # List of sub-directories with libraries in ICU install directory
-$icu_lib_dirs = @("lib")
+$icu_lib_dirs = @("bin", "lib")
 
 $icu_version_underscore = "${env:ICU_VERSION}" -replace "\.", '_'
 $icu_version_dash = "${env:ICU_VERSION}" -replace "\.", '-'
