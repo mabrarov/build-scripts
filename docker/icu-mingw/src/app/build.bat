@@ -10,16 +10,16 @@ set exit_code=0
 
 set "PATH=%MINGW_HOME%\bin;%MSYS_HOME%\usr\bin;%PYTHON3_HOME%;%PYTHON3_HOME%\Scripts;%PATH%"
 
-if not "--%ICU_PATCH_FILE%" == "--" (
-  patch -uNf -p0 -i "%ICU_PATCH_FILE%"
-  set exit_code=%errorlevel%
-  if %exit_code% neq 0 goto exit
-)
+for /f "tokens=*" %%a in ('cygpath "%ICU_INSTALL_DIR%"') do set icu_install_dir_msys=%%a
+set exit_code=%errorlevel%
+if %exit_code% neq 0 goto exit
+
+cd /d "%ICU_HOME%\source"
 
 bash -C ./runConfigureICU ^
   %ICU_CONFIGURE_OPTIONS% ^
-  %ICU_PLATFORM% ^
-  --prefix="%ICU_STAGE_MSYS_DIR%" ^
+  "%ICU_PLATFORM%" ^
+  --prefix="%icu_install_dir_msys%" ^
   --build="%ICU_BUILD_MACHINE%" ^
   %ICU_BUILD_OPTIONS%
 set exit_code=%errorlevel%
@@ -35,6 +35,7 @@ set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
 if not "--%ICU_TEST%" == "--" (
+  set "ICU_DATA=%ICU_HOME%\source\data\out/"
   make check
   set exit_code=%errorlevel%
   if %exit_code% neq 0 goto exit
