@@ -21,7 +21,8 @@ $lib_file_extensions = @("a", "lib", "so", "dll", "pdb")
 # List of sub-directories with libraries in OpenSSL install directory
 $openssl_lib_dirs = @("bin", "lib")
 
-$env:OPENSSL_HOME = "${env:BUILD_DIR}\openssl-${env:OPENSSL_VERSION}"
+$build_src_dir = "${env:BUILD_DIR}\src"
+$env:OPENSSL_HOME = "${build_src_dir}\openssl-${env:OPENSSL_VERSION}"
 if (Test-Path -Path "${env:OPENSSL_HOME}") {
   Write-Host "Found existing folder ${env:OPENSSL_HOME}, assuming that sources are in place and skipping downloading and unpacking of sources"
 } else {
@@ -35,19 +36,16 @@ if (Test-Path -Path "${env:OPENSSL_HOME}") {
     (New-Object System.Net.WebClient).DownloadFile("${openssl_download_url}", "${openssl_archive_file}")
   }
   # Unpack OpenSSL
-  Write-Host "Extracting source code archive from ${openssl_archive_file} to ${env:BUILD_DIR}"
-  $openssl_archive_msys_file = "${openssl_archive_file}" -replace "\\", "/"
-  $openssl_archive_msys_file = "${openssl_archive_msys_file}" -replace "^(C):", "/c"
-  $build_dir_msys = "${env:BUILD_DIR}" -replace "\\", "/"
-  $build_dir_msys = "${build_dir_msys}" -replace "^(C):", "/c"
+  Write-Host "Extracting source code archive from ${openssl_archive_file} to ${build_src_dir}"
+  New-Item -Path "${build_src_dir}" -ItemType "directory" | out-null
   # Path is required to be changed for Gnu tar shipped with MSYS2
   $path_backup = "${env:PATH}"
   $env:PATH = "${env:MSYS_HOME}\usr\bin;${env:PATH}"
-  & tar.exe xzf "${openssl_archive_msys_file}" -C "${build_dir_msys}"
+  & tar.exe xzf "$(cygpath "${openssl_archive_file}")" -C "$(cygpath "${build_src_dir}")"
   $tar_exit_code = ${LastExitCode}
   $env:PATH = "${path_backup}"
   if (${tar_exit_code} -ne 0) {
-    throw "Failed to extract OpenSSL from ${openssl_archive_file} to ${env:OPENSSL_BUILD_DIR}"
+    throw "Failed to extract OpenSSL from ${openssl_archive_file} to ${build_src_dir}"
   }
   Write-Host "Extracted source code archive"
 }
@@ -133,8 +131,8 @@ foreach ($address_model in ${address_models}) {
         $env:OPENSSL_BUILD_TYPE_CONFIG = "--release"
       }
 
-      $env:OPENSSL_BUILD_DIR = "${env:TMP}\openssl-${env:OPENSSL_VERSION}\build\${address_model}\${env:OPENSSL_LINKAGE}\${env:OPENSSL_BUILD_TYPE}"
-      $env:OPENSSL_INSTALL_DIR = "${env:TMP}\openssl-${env:OPENSSL_VERSION}\install\${address_model}\${env:OPENSSL_LINKAGE}\${env:OPENSSL_BUILD_TYPE}"
+      $env:OPENSSL_BUILD_DIR = "${env:BUILD_DIR}\build\openssl-${env:OPENSSL_VERSION}\${address_model}\${env:OPENSSL_LINKAGE}\${env:OPENSSL_BUILD_TYPE}"
+      $env:OPENSSL_INSTALL_DIR = "${env:BUILD_DIR}\install\openssl-${env:OPENSSL_VERSION}\${address_model}\${env:OPENSSL_LINKAGE}\${env:OPENSSL_BUILD_TYPE}"
       $env:OPENSSL_TARGET_DIR = "${env:TARGET_DIR}\openssl-${env:OPENSSL_VERSION}-${address_model_target_dir_suffix}-vs2019-${env:OPENSSL_LINKAGE}"
 
       New-Item -Path "${env:OPENSSL_BUILD_DIR}" -ItemType "directory" | out-null
