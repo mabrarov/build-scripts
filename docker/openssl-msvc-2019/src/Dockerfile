@@ -4,15 +4,13 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2019:2.17.0
+FROM abrarov/msvc-2019:2.18.0
 
-ENV OPENSSL_VERSION="1.0.2q" \
-    OPENSSL_URL="https://www.openssl.org/source" \
+ENV OPENSSL_VERSION="3.5.0" \
+    OPENSSL_URL="https://github.com/openssl/openssl/releases/download" \
     OPENSSL_TEST=""
 
 ADD ["app", "C:/app/"]
-
-VOLUME ["C:/target"]
 
 CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 

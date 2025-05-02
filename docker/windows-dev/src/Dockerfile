@@ -12,7 +12,7 @@ ENV DOWNLOAD_DIR="C:\download" \
     SEVEN_ZIP_VERSION="24.09" \
     SEVEN_ZIP_DOWNLOAD_URL="http://www.7-zip.org/a" \
     SEVEN_ZIP_HOME="C:\Program Files\7-Zip" \
-    GIT_VERSION="2.48.1" \
+    GIT_VERSION="2.49.0" \
     CMAKE_VERSION="3.31.6" \
     CMAKE_URL="https://github.com/Kitware/CMake/releases/download" \
     CMAKE_HOME="C:\cmake" \
@@ -24,13 +24,17 @@ ENV DOWNLOAD_DIR="C:\download" \
     STRAWBERRY_PERL_URL="https://github.com/StrawberryPerl/Perl-Dist-Strawberry/releases/download/SP_54001_64bit_UCRT/" \
     STRAWBERRY_PERL_HOME="C:\Perl" \
     PYTHON_URL="https://www.python.org/ftp/python" \
-    PYTHON3_VERSION="3.13.2" \
+    PYTHON3_VERSION="3.13.3" \
     PYTHON3_HOME="C:\Python3" \
     PYTHON2_VERSION="2.7.18" \
     PYTHON2_HOME="C:\Python2" \
     NINJA_VERSION="1.12.1" \
     NINJA_URL="https://github.com/ninja-build/ninja/releases/download" \
-    NINJA_HOME="C:\ninja"
+    NINJA_HOME="C:\ninja" \
+    NASM_VERSION="2.16.03" \
+    NASM_URL="https://www.nasm.us/pub/nasm/releasebuilds" \
+    NASM64_HOME="C:\nasm64" \
+    NASM32_HOME="C:\nasm32"
 
 ADD ["app", "C:/app/"]
 

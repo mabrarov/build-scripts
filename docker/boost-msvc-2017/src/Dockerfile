@@ -4,15 +4,13 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2017:2.17.0
+FROM abrarov/msvc-2017:2.18.0
 
 ENV BOOST_VERSION="1.83.0" \
     BOOST_RELEASE_URL="https://archives.boost.io/release" \
     B2_OPTIONS="--without-python --without-mpi --without-graph_parallel"
 
 ADD ["app", "C:/app/"]
-
-VOLUME ["C:/target"]
 
 CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 

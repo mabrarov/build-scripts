@@ -4,7 +4,7 @@
 # Distributed under the MIT License (see accompanying LICENSE)
 #
 
-FROM abrarov/msvc-2019:2.17.0
+FROM abrarov/msvc-2019:2.18.0
 
 ENV ICU_VERSION="77.1" \
     ICU_URL="https://github.com/unicode-org/icu/releases/download" \
@@ -15,8 +15,6 @@ RUN set "PATH=%PYTHON3_HOME%;%PYTHON3_HOME%\Scripts;%PATH%" && \
     powershell "Remove-Item -Path \"${env:TMP}\*\" -Recurse -Force"
 
 ADD ["app", "C:/app/"]
-
-VOLUME ["C:/target"]
 
 CMD ["powershell", "-ExecutionPolicy", "Bypass", "-File", "C:\\app\\start.ps1"]
 

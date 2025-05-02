@@ -1,0 +1,127 @@
+--- ./Configurations/10-main.conf	2025-04-08 16:09:06.000000000 +0300
++++ ./Configurations/10-main.conf	2025-04-27 03:51:25.178718000 +0300
+@@ -1543,10 +1543,16 @@
+                                 "UNICODE", "_UNICODE",
+                                 "_CRT_SECURE_NO_DEPRECATE",
+                                 "_WINSOCK_DEPRECATED_NO_WARNINGS"),
+-        lib_cflags       => add("/Zi /Fdossl_static.pdb"),
++        lib_cflags       => add(picker(default => "/Zi",
++                                       debug   => "/Fdossld_static.pdb",
++                                       release => "/Fdossl_static.pdb")),
+         lib_defines      => add("L_ENDIAN"),
+-        dso_cflags       => "/Zi /Fddso.pdb",
+-        bin_cflags       => "/Zi /Fdapp.pdb",
++        dso_cflags       => add(picker(default => "/Zi",
++                                       debug   => "/Fddsod.pdb",
++                                       release => "/Fddso.pdb")),
++        bin_cflags       => add(picker(default => "/Zi",
++                                       debug   => "/Fdappd.pdb",
++                                       release => "/Fdapp.pdb")),
+         # def_flag made to empty string so a .def file gets generated
+         shared_defflag   => '',
+         shared_ldflag    => "/dll",
+@@ -1568,29 +1574,14 @@
+         cflags           => add(picker(default => '/Gs0 /GF /Gy',
+                                        debug   =>
+                                        sub {
+-                                           ($disabled{shared} ? "" : "/MDd");
++                                           ($disabled{shared} ? "/MTd" : "/MDd");
+                                        },
+                                        release =>
+                                        sub {
+-                                           ($disabled{shared} ? "" : "/MD");
++                                           ($disabled{shared} ? "/MT" : "/MD");
+                                        })),
+         defines          => add(picker(default => [], # works as type cast
+                                        debug   => [ "DEBUG", "_DEBUG" ])),
+-        lib_cflags       => add(sub { $disabled{shared} ? "/MT /Zl" : () }),
+-        # Following might/should appears controversial, i.e. defining
+-        # /MDd without evaluating $disabled{shared}. It works in
+-        # non-shared build because static library is compiled with /Zl
+-        # and bares no reference to specific RTL. And it works in
+-        # shared build because multiple /MDd options are not prohibited.
+-        # But why /MDd in static build? Well, basically this is just a
+-        # reference point, which allows to catch eventual errors that
+-        # would prevent those who want to wrap OpenSSL into own .DLL.
+-        # Why not /MD in release build then? Well, some are likely to
+-        # prefer [non-debug] openssl.exe to be free from Micorosoft RTL
+-        # redistributable.
+-        bin_cflags       => add(picker(debug   => "/MDd",
+-                                       release => sub { $disabled{shared} ? "/MT" : () },
+-                                      )),
+         bin_lflags       => add("/subsystem:console /opt:ref"),
+         ex_libs          => add(sub {
+             my @ex_libs = ();
+--- ./Configurations/windows-makefile.tmpl	2025-04-08 16:09:06.000000000 +0300
++++ ./Configurations/windows-makefile.tmpl	2025-04-27 04:26:28.460002800 +0300
+@@ -468,7 +468,7 @@
+ 
+ libclean:
+ 	"$(PERL)" -e "map { m/(.*)\.dll$$/; unlink glob """{.,apps,test,fuzz}/$$1.*"""; } @ARGV" $(SHLIBS)
+-	-del /Q /F $(LIBS) libcrypto.* libssl.* ossl_static.pdb
++	-del /Q /F $(LIBS) libcrypto.* libssl.* ossl*_static.pdb
+ 
+ clean: libclean
+ 	{- join("\n\t", map { "-del /Q /F $_" } @HTMLDOCS1) || "\@rem" -}
+@@ -565,7 +565,7 @@
+ 	@"$(PERL)" "$(SRCDIR)\util\mkdir-p.pl" "$(libdir)"
+ 	@"$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_LIBS) "$(libdir)"
+ 	@if "$(SHLIBS)"=="" \
+-	 "$(PERL)" "$(SRCDIR)\util\copy.pl" ossl_static.pdb "$(libdir)"
++	 "$(PERL)" "$(SRCDIR)\util\copy.pl" ossl*_static.pdb "$(libdir)"
+ 	@"$(PERL)" "$(SRCDIR)\util\mkdir-p.pl" "$(CMAKECONFIGDIR)"
+ 	@"$(PERL)" "$(SRCDIR)\util\copy.pl" $(INSTALL_EXPORTERS_CMAKE) "$(CMAKECONFIGDIR)"
+ 
+--- ./Configurations/platform/Windows.pm	2025-04-08 16:09:06.000000000 +0300
++++ ./Configurations/platform/Windows.pm	2025-04-28 22:44:02.033742600 +0300
+@@ -26,16 +26,21 @@
+ sub shlibextimport      { '.lib' }
+ sub shlibvariant        { $target{shlib_variant} || '' }
+ 
++sub build_type_suffix {
++  return $config{build_type} eq "debug" ? 'd' : ''
++}
++
+ sub staticname {
+     # Non-installed libraries are *always* static, and their names remain
+     # the same, except for the mandatory extension
+-    my $in_libname = platform::BASE->staticname($_[1]);
++    my $in_libname = platform::BASE::__concat(platform::BASE->staticname($_[1]),
++                                              build_type_suffix());
+     return $in_libname
+         if $unified_info{attributes}->{libraries}->{$_[1]}->{noinst};
+ 
+     # To make sure not to clash with an import library, we make the static
+     # variant of our installed libraries get '_static' added to their names.
+-    return platform::BASE->staticname($_[1])
++    return $in_libname
+         . ($disabled{shared} ? '' : '_static');
+ }
+ 
+@@ -47,6 +52,7 @@
+ }
+ sub sharedname {
+     return platform::BASE::__concat(platform::BASE->sharedname($_[1]),
++                                    build_type_suffix(),
+                                     "-",
+                                     $_[0]->shlib_version_as_filename(),
+                                     ($_[0]->shlibvariant() // ''));
+@@ -58,6 +64,7 @@
+ 
+ sub sharedlib_import {
+     return platform::BASE::__concat($_[0]->sharedname_import($_[1]),
++                                    build_type_suffix(),
+                                     $_[0]->shlibextimport());
+ }
+ 
+--- ./Configurations/platform/Windows/MSVC.pm	2025-04-08 16:09:06.000000000 +0300
++++ ./Configurations/platform/Windows/MSVC.pm	2025-04-28 22:51:21.785878200 +0300
+@@ -18,7 +18,7 @@
+ # However, this variant was VC only in 1.1.1, so we maintain that here until
+ # further notice.
+ sub sharedname {
+-    return platform::BASE::__concat(platform::BASE->sharedname($_[1]),
++    return platform::BASE::__concat(platform::Windows->sharedname($_[1]),
+                                     "-",
+                                     $_[0]->shlib_version_as_filename(),
+                                     ($target{multilib} // '' ),
