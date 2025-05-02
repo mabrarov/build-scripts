@@ -157,8 +157,8 @@ foreach ($address_model in ${address_models}) {
         }
       }
 
+      $env:ICU_INSTALL_DIR = "${env:ICU_BUILD_DIR}\install"
       $env:ICU_TARGET_DIR = "${env:TARGET_DIR}\icu4c-${env:ICU_VERSION}-${address_model_target_dir_suffix}-${compiler_target_dir_suffix}-${env:ICU_LINKAGE}"
-      $env:ICU_INSTALL_DIR = "${env:ICU_HOME}\dist"
 
       Write-Host "Building ICU with these parameters:"
       Write-Host "MSVS_INSTALL_DIR     : ${env:MSVS_INSTALL_DIR}"
