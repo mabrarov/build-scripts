@@ -31,6 +31,8 @@ if %exit_code% neq 0 goto exit
 
 rem Workaround for https://unicode-org.atlassian.net/browse/ICU-20531
 mkdir "data\out\tmp"
+rem Workaround for https://unicode-org.atlassian.net/browse/ICU-22417
+mkdir "data\out\tmp\dirs.timestamp"
 set exit_code=%errorlevel%
 if %exit_code% neq 0 goto exit
 
