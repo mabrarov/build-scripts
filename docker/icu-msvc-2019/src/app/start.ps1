@@ -197,6 +197,9 @@ foreach ($address_model in ${address_models}) {
           }
         }
       }
+
+      Remove-Item -Path "${env:ICU_BUILD_DIR}" -Recurse -Force
+      Remove-Item -Path "${env:ICU_INSTALL_DIR}" -Recurse -Force
     }
   }
 }
