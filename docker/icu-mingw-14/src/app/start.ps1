@@ -116,8 +116,12 @@ foreach ($address_model in ${address_models}) {
         }
       }
 
+      $icu_configure_options_build_type = ${icu_configure_options_build_type}.Trim()
+      $icu_build_options_build_type = ${icu_build_options_build_type}.Trim()
       $env:ICU_CONFIGURE_OPTIONS = "${icu_configure_options_linkage} ${icu_configure_options_build_type}"
+      $env:ICU_CONFIGURE_OPTIONS = ${env:ICU_CONFIGURE_OPTIONS}.Trim()
       $env:ICU_BUILD_OPTIONS = "${icu_build_options_linkage} ${icu_build_options_build_type}"
+      $env:ICU_BUILD_OPTIONS = ${env:ICU_BUILD_OPTIONS}.Trim()
       $env:ICU_BUILD_DIR = "${env:BUILD_DIR}\icu-${env:ICU_VERSION}\${address_model}\${env:ICU_LINKAGE}\${env:ICU_BUILD_TYPE}"
       $env:ICU_HOME = "${env:ICU_BUILD_DIR}\icu"
       Write-Host "Assuming root folder for sources is: ${env:ICU_HOME}"
@@ -192,8 +196,8 @@ foreach ($address_model in ${address_models}) {
         }
       }
 
+      Set-Location -Path "${env:BUILD_DIR}"
       Remove-Item -Path "${env:ICU_BUILD_DIR}" -Recurse -Force
-      Remove-Item -Path "${env:ICU_INSTALL_DIR}" -Recurse -Force
     }
   }
 }
