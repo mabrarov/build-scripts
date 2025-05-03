@@ -1,5 +1,4 @@
 @echo off
-setlocal enableextensions
 
 rem
 rem Copyright (c) 2019 Marat Abrarov (abrarov@gmail.com)
