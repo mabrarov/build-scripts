@@ -158,13 +158,14 @@
  CXXFLAGS = @CXXFLAGS@
  ENABLE_RPATH = @ENABLE_RPATH@
 --- ./i18n/unicode/messageformat2_data_model.h	2025-03-13 21:31:23.000000000 +0300
-+++ ./i18n/unicode/messageformat2_data_model.h	2025-05-05 15:06:07.781231900 +0300
-@@ -224,7 +224,7 @@
- // (See measunit_impl.h, datefmt.h, collationiterator.h, erarules.h and others
++++ ./i18n/unicode/messageformat2_data_model.h	2025-05-05 15:09:28.956530300 +0300
+@@ -225,7 +225,9 @@
  // for similar examples.)
  #if U_PF_WINDOWS <= U_PLATFORM && U_PLATFORM <= U_PF_CYGWIN
--#if defined(U_REAL_MSVC) && defined(_MSVC_STL_VERSION)
-+#if defined(U_REAL_MSVC) && defined(_MSVC_STL_VERSION) && (_MSVC_STL_VERSION > 141)
+ #if defined(U_REAL_MSVC) && defined(_MSVC_STL_VERSION)
++#if _MSVC_STL_VERSION > 141
  struct U_I18N_API std::_Nontrivial_dummy_type;
++#endif
  template class U_I18N_API std::_Variant_storage_<false, icu::UnicodeString, icu::message2::data_model::Literal>;
  #endif
+ template class U_I18N_API std::variant<icu::UnicodeString, icu::message2::data_model::Literal>;
