@@ -186,6 +186,14 @@ foreach ($address_model in ${address_models}) {
         throw "Failed to build ICU with ICU_ADDRESS_MODEL = ${env:ICU_ADDRESS_MODEL}, ICU_LINKAGE = ${env:ICU_LINKAGE}, ICU_BUILD_TYPE = ${env:ICU_BUILD_TYPE}"
       }
 
+      $icu_install_bin_dir = "${env:ICU_INSTALL_DIR}\bin"
+      $icu_install_lib_dir = "${env:ICU_INSTALL_DIR}\lib"
+      Write-Host "Moving *${icu_version_major}.dll files from ${icu_install_lib_dir} directory to ${icu_install_bin_dir}"
+      Move-Item -Path "${icu_install_lib_dir}\*${icu_version_major}.dll" -Destination "${icu_install_bin_dir}"
+
+      Write-Host "Removing *.dll files from ${icu_install_lib_dir} directory"
+      Remove-Item -Path "${icu_install_lib_dir}\*.dll"
+      
       if (-not (Test-Path -Path "${env:ICU_TARGET_DIR}")) {
         Write-Host "Copying built ICU from ${env:ICU_INSTALL_DIR} to ${env:ICU_TARGET_DIR}"
         Copy-Item -Force -Recurse -Path "${env:ICU_INSTALL_DIR}" -Destination "${env:ICU_TARGET_DIR}"
@@ -202,14 +210,6 @@ foreach ($address_model in ${address_models}) {
           }
         }
       }
-
-      $icu_target_bin_dir = "${env:ICU_TARGET_DIR}\bin"
-      $icu_target_lib_dir = "${env:ICU_TARGET_DIR}\lib"
-      Write-Host "Moving *${icu_version_major}.dll files from ${icu_target_lib_dir} directory to ${icu_target_bin_dir}"
-      Move-Item -Path "${icu_target_lib_dir}\*${icu_version_major}.dll" -Destination "${icu_target_bin_dir}"
-
-      Write-Host "Removing *.dll files from ${icu_target_lib_dir} directory"
-      Remove-Item -Path "${icu_target_lib_dir}\*.dll"
 
       Set-Location -Path "${env:BUILD_DIR}"
       Remove-Item -Path "${env:ICU_BUILD_DIR}" -Recurse -Force

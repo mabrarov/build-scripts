@@ -16,7 +16,6 @@ $lib_file_extensions = @("a", "lib", "so", "dll")
 # List of sub-directories with libraries in ICU install directory
 $icu_lib_dirs = @("bin", "lib")
 
-$icu_version_major = "${env:ICU_VERSION}" -replace "([0-9]+)(\..*)?", '$1'
 $icu_version_underscore = "${env:ICU_VERSION}" -replace "\.", '_'
 $icu_version_dash = "${env:ICU_VERSION}" -replace "\.", '-'
 $icu_archive_file = "${env:DOWNLOAD_DIR}\icu4c-${icu_version_underscore}-src.zip"
@@ -191,14 +190,6 @@ foreach ($address_model in ${address_models}) {
         }
       }
     }
-
-    $icu_target_bin_dir = "${env:ICU_TARGET_DIR}\bin"
-    $icu_target_lib_dir = "${env:ICU_TARGET_DIR}\lib"
-    Write-Host "Moving *${icu_version_major}.dll files from ${icu_target_lib_dir} directory to ${icu_target_bin_dir}"
-    Move-Item -Path "${icu_target_lib_dir}\*${icu_version_major}.dll" -Destination "${icu_target_bin_dir}"
-
-    Write-Host "Removing *.dll files from ${icu_target_lib_dir} directory"
-    Remove-Item -Path "${icu_target_lib_dir}\*.dll"
 
     Set-Location -Path "${env:BUILD_DIR}"
     Remove-Item -Path "${env:ICU_BUILD_DIR}" -Recurse -Force
