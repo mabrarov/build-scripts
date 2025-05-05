@@ -119,3 +119,17 @@
  CFLAGS = @CFLAGS@
  CXXFLAGS = @CXXFLAGS@
  ENABLE_RPATH = @ENABLE_RPATH@
+--- ./config/mh-msys-msvc	2025-03-13 21:31:23.000000000 +0300
++++ ./config/mh-msys-msvc	2025-05-05 02:54:13.502970900 +0300
+@@ -5,6 +5,11 @@
+ ## Copyright (c) 2014, International Business Machines Corporation and
+ ## others. All Rights Reserved.
+ 
++# On Windows we generally have the DLLs in the bin directory rather than the lib directory.
++# This setting moves the ICU DLLs into the bin folder for MinGW/MSYS2 when "make install" is run.
++# If you prefer to have the DLLs in the lib folder, then set this to NO instead.
++MINGW_MOVEDLLSTOBINDIR = YES
++
+ # We install sbin tools into the same bin directory because
+ # pkgdata needs some of the tools in sbin, and we can't always depend on
+ # icu-config working on Windows.
