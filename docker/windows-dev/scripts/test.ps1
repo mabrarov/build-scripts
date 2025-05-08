@@ -93,3 +93,15 @@ docker run --rm "${image_repository}:latest" "C:\ninja\ninja.exe" --version
 if (${LastExitCode} -ne 0) {
   throw "Failed to get version of Ninja"
 }
+
+Write-Host "Running NASM win64 in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\nasm64\nasm.exe" -v
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of NASM win64"
+}
+
+Write-Host "Running NASM win32 in container created from ${image_repository}:latest image"
+docker run --rm "${image_repository}:latest" "C:\nasm32\nasm.exe" -v
+if (${LastExitCode} -ne 0) {
+  throw "Failed to get version of NASM win32"
+}

@@ -134,6 +134,34 @@ Write-Host "Extracting Ninja from ${ninja_dist} into ${env:NINJA_HOME} directory
 & "${env:SEVEN_ZIP_HOME}\7z.exe" x "${ninja_dist}" -o"${env:NINJA_HOME}" -aoa -y -bd | out-null
 Write-Host "Ninja ${env:NINJA_VERSION} installed into ${env:NINJA_HOME}"
 
+# Download and install NASM x64
+$nasm_platform = "win64"
+$nasm_dist_name = "nasm-${env:NASM_VERSION}-${nasm_platform}.zip"
+$nasm_dist_url = "${env:NASM_URL}/${env:NASM_VERSION}/${nasm_platform}/${nasm_dist_name}"
+$nasm_dist = "${env:TMP}\${nasm_dist_name}"
+Write-Host "Downloading NASM ${env:NASM_VERSION} ${nasm_platform} from ${nasm_dist_url} into ${nasm_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${nasm_dist_url}", "${nasm_dist}")
+$nasm_temp_dir = "${env:TMP}\nasm-${env:NASM_VERSION}"
+Write-Host "Extracting NASM from ${nasm_dist} into ${nasm_temp_dir} directory"
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${nasm_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
+Write-Host "Moving NASM from ${nasm_temp_dir} into ${env:NASM64_HOME}"
+[System.IO.Directory]::Move("${nasm_temp_dir}", "${env:NASM64_HOME}")
+Write-Host "NASM ${env:NASM_VERSION} ${nasm_platform} installed into ${env:NASM64_HOME}"
+
+# Download and install NASM x32
+$nasm_platform = "win32"
+$nasm_dist_name = "nasm-${env:NASM_VERSION}-${nasm_platform}.zip"
+$nasm_dist_url = "${env:NASM_URL}/${env:NASM_VERSION}/${nasm_platform}/${nasm_dist_name}"
+$nasm_dist = "${env:TMP}\${nasm_dist_name}"
+Write-Host "Downloading NASM ${env:NASM_VERSION} ${nasm_platform} from ${nasm_dist_url} into ${nasm_dist}"
+(New-Object System.Net.WebClient).DownloadFile("${nasm_dist_url}", "${nasm_dist}")
+$nasm_temp_dir = "${env:TMP}\nasm-${env:NASM_VERSION}"
+Write-Host "Extracting NASM from ${nasm_dist} into ${nasm_temp_dir} directory"
+& "${env:SEVEN_ZIP_HOME}\7z.exe" x "${nasm_dist}" -o"${env:TMP}" -aoa -y -bd | out-null
+Write-Host "Moving NASM from ${nasm_temp_dir} into ${env:NASM32_HOME}"
+[System.IO.Directory]::Move("${nasm_temp_dir}", "${env:NASM32_HOME}")
+Write-Host "NASM ${env:NASM_VERSION} ${nasm_platform} installed into ${env:NASM32_HOME}"
+
 # Cleanup
 $chocolatey_subdir = "chocolatey"
 Write-Host "Removing all files and directories from ${env:TMP} except ${chocolatey_subdir} subdirectory"
